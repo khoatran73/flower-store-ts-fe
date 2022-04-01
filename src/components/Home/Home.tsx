@@ -1,11 +1,16 @@
+import { Container } from "@mui/material";
 import { FC } from "react";
-import "../../styles/home.scss";
+import Products from "../Product/Products";
+import Slider from "../Slider/Slider";
+import Chatbot from "../Chat/Chatbot/Chatbot";
 
 const Home: FC<{}> = () => {
     return (
-        <div className="home">
-            <div>Home page</div>
-        </div>
+        <Container className="mt-5">
+            <Slider />
+            <Products />
+            {/* <Chatbot /> */}
+        </Container>
     );
 };
 
