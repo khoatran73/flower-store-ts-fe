@@ -1,5 +1,5 @@
-import React from "react";
-import ProductList from "../Home/Product/ProductList";
+import { FC } from "react";
+import ProductItem from "./ProductItem";
 
 interface Product {
     id: number;
@@ -8,7 +8,7 @@ interface Product {
     price: number;
 }
 
-const RelatedProducts: React.FC = () => {
+const HomeProduct: FC<{}> = () => {
     const products: Product[] = [
         {
             id: 1,
@@ -47,31 +47,27 @@ const RelatedProducts: React.FC = () => {
             price: 0,
         },
     ];
+
     return (
         <div className="my-10">
             <div className="text-3xl font-semibold mb-5 text-center uppercase">
-                San pham lien quan
+                Danh sach san pham
             </div>
             <div className=" flex justify-start items-center flex-wrap">
-                {products.map((product, index) =>
-                    index < 5 ? (
-                        <ProductList
-                            key={index}
-                            id={product.id}
-                            name={product.name}
-                            image={product.image}
-                            price={product.price}
-                            width={222}
-                            height={200}
-                            size="small"
-                        />
-                    ) : (
-                        <div key={index}></div>
-                    )
-                )}
+                {products.map((product) => (
+                    <ProductItem
+                        key={product.id}
+                        id={product.id}
+                        name={product.name}
+                        image={product.image}
+                        price={product.price}
+                        width={280}
+                        height={240}
+                    />
+                ))}
             </div>
         </div>
     );
 };
 
-export default RelatedProducts;
+export default HomeProduct;

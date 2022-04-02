@@ -12,7 +12,7 @@ interface Props {
     size?: "small" | undefined;
 }
 
-const ProductList: FC<Props> = (props) => {
+const ProductItem: FC<Props> = (props) => {
     const { id, image, name, price, width, height, size } = props;
 
     const path: string = `/product/${id.toString()}`;
@@ -59,4 +59,4 @@ const ProductList: FC<Props> = (props) => {
     );
 };
 
-export default ProductList;
+export default ProductItem;

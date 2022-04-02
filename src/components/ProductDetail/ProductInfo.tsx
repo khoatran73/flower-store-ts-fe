@@ -6,7 +6,7 @@ import RemoveIcon from "@mui/icons-material/Remove";
 import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
 import { Divider } from "@mui/material";
 
-const ProductDetail: React.FC<{}> = () => {
+const ProductInfo: React.FC<{}> = () => {
     const [count, setCount] = React.useState(1);
 
     return (
@@ -79,4 +79,4 @@ const ProductDetail: React.FC<{}> = () => {
     );
 };
 
-export default ProductDetail;
+export default ProductInfo;

@@ -3,7 +3,7 @@ import Chatbot from "../Chat/Chatbot/Chatbot";
 
 const Footer: FC = () => {
     return (
-        <div className="bg-gray-300 mt-10 flex justify-between p-6">
+        <div className="bg-gray-300 mt-20 flex justify-between p-6">
             <div className="flex">
                 <div>
                     <img

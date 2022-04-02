@@ -1,6 +1,6 @@
-import { FC } from "react";
-import ProductList from "./ProductList";
-import { Pagination } from "@mui/material";
+import React from "react";
+import ProductItem from "../Home/HomeProduct/ProductItem";
+import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 
 interface Product {
     id: number;
@@ -9,7 +9,7 @@ interface Product {
     price: number;
 }
 
-const Products: FC<{}> = () => {
+const RelatedProducts: React.FC = () => {
     const products: Product[] = [
         {
             id: 1,
@@ -48,30 +48,36 @@ const Products: FC<{}> = () => {
             price: 0,
         },
     ];
-
     return (
         <div className="my-10">
-            <div className="text-3xl font-semibold mb-5 text-center uppercase">
-                Danh sach san pham
+            <div className="flex items-center mb-5 justify-between">
+                <div className="text-2xl font-semibold text-left uppercase">
+                    San pham lien quan
+                </div>
+                <div className="flex items-center text-md text-blue-700 hover:cursor-pointer">
+                    Xem them <ChevronRightIcon />
+                </div>
             </div>
             <div className=" flex justify-start items-center flex-wrap">
-                {products.map((product) => (
-                    <ProductList
-                        key={product.id}
-                        id={product.id}
-                        name={product.name}
-                        image={product.image}
-                        price={product.price}
-                        width={280}
-                        height={240}
-                    />
-                ))}
-            </div>
-            <div className="mt-4 flex justify-center">
-                <Pagination count={3} color="primary" />
+                {products.map((product, index) =>
+                    index < 5 ? (
+                        <ProductItem
+                            key={index}
+                            id={product.id}
+                            name={product.name}
+                            image={product.image}
+                            price={product.price}
+                            width={222.4}
+                            height={200}
+                            size="small"
+                        />
+                    ) : (
+                        <div key={index}></div>
+                    )
+                )}
             </div>
         </div>
     );
 };
 
-export default Products;
+export default RelatedProducts;

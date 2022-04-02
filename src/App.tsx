@@ -6,6 +6,7 @@ import Footer from "./components/Footer/Footer";
 import Cart from "./components/Cart/Cart";
 import Purchase from "./components/Purchase/Purchase";
 import Product from "./components/Product/Product";
+import ProductDetail from "./components/ProductDetail/ProductDetail";
 import ScrollTop from "./components/ScrollTop/ScrollTop";
 
 function App() {
@@ -15,7 +16,8 @@ function App() {
                 <Navbar />
                 <Routes>
                     <Route path="/" element={<Home />} />
-                    <Route path="/product/:id" element={<Product />} />
+                    <Route path="/product" element={<Product />} />
+                    <Route path="/product/:id" element={<ProductDetail />} />
                     <Route path="/cart" element={<Cart />} />
                     <Route path="/purchase" element={<Purchase />} />
                 </Routes>

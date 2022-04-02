@@ -71,9 +71,9 @@ const ProductComment: React.FC = () => {
                             src="https://avatars.githubusercontent.com/u/77377243?s=400&u=f1135698dedef3ad6fbb056b8f9e4bed4c1a92e0&v=4"
                         />
                     </div>
-                    <div className="w-[95%] flex items-center justify-end">
+                    <div className="w-[95%] flex items-center justify-between">
                         <TextField
-                            className="w-full"
+                            className="w-[93%] "
                             placeholder="Aa..."
                             variant="outlined"
                             size="small"

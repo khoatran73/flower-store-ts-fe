@@ -21,7 +21,7 @@ import {
 } from "@mui/material";
 
 const pages = ["Home", "Products", "Pricing", "Blog"];
-const routes = ["/", "/product/12", "/cart", "/purchase"];
+const routes = ["/", "/product", "/cart", "/purchase"];
 const settings = ["Profile", "Account", "Dashboard", "Logout"];
 const imageUrl =
     "https://avatars.githubusercontent.com/u/77377243?s=400&u=f1135698dedef3ad6fbb056b8f9e4bed4c1a92e0&v=4";
