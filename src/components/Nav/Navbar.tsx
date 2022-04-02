@@ -24,7 +24,7 @@ const pages = ["Home", "Products", "Pricing", "Blog"];
 const routes = ["/", "/product", "/cart", "/purchase"];
 const settings = ["Profile", "Account", "Dashboard", "Logout"];
 const imageUrl =
-    "https://avatars.githubusercontent.com/u/77377243?s=400&u=f1135698dedef3ad6fbb056b8f9e4bed4c1a92e0&v=4";
+    "https://scontent.fhan3-5.fna.fbcdn.net/v/t39.30808-1/274500305_3163920960531216_3441052918446606780_n.jpg?stp=dst-jpg_s320x320&_nc_cat=109&ccb=1-5&_nc_sid=7206a8&_nc_ohc=ak7-TsSQGcIAX-nyrzX&_nc_ht=scontent.fhan3-5.fna&oh=00_AT_nGtQaOH9RNoCCpvxc6M2MZY7o2Sd7Re-hRjEYHTe3sA&oe=624C7DC9";
 
 interface IOpen {
     open: boolean;
