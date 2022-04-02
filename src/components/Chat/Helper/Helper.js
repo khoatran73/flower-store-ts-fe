@@ -2,7 +2,7 @@ export const analyzeNextSteps = (step, userResponse) => {
     return step === 0
         ? {
               purpose: "specify field",
-              message: `Nice to meet you, ${userResponse}! It feels like I know you already. We have some job positions for you. Which of these call out to you?`,
+              message: `Rất vui được gặp bạn, ${userResponse}! Bạn quan tâm đến chủ đề gì ?`,
               options: ["Frontend", "Backend", "Full Stack"],
           }
         : step === 1

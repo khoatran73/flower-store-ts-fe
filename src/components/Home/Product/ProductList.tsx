@@ -6,19 +6,27 @@ interface Props {
     name: string;
     image: string;
     price: number;
+    width: number;
+    height: number;
+    size?: "small" | undefined;
 }
 
 const ProductList: FC<Props> = (props) => {
-    const { image, name, price } = props;
+    const { image, name, price, width, height, size } = props;
 
     return (
-        <Card className="flex-initial my-1 place-content-stretch w-[280px] mx-[4px] cursor-pointer">
-            <div className="overflow-hidden h-[240px]">
+        <Card
+            className="flex-initial my-1 place-content-stretch mx-[4px] cursor-pointer"
+            style={{ width: width }}
+        >
+            <div className="overflow-hidden" style={{ height: height }}>
                 <CardMedia
-                    className="h-[240px] w-[280px] hover:scale-110"
+                    className=" hover:scale-110"
                     style={{
                         transition: "all 0.5s ease-in-out",
-                        transitionDelay: "0.1s",
+                        // transitionDelay: "0.1s",
+                        width: width,
+                        height: height,
                     }}
                     component="img"
                     image={image}
@@ -34,6 +42,7 @@ const ProductList: FC<Props> = (props) => {
                     <Button
                         variant="outlined"
                         startIcon={<AddShoppingCartIcon />}
+                        size={size}
                     >
                         Them vao gio hang
                     </Button>

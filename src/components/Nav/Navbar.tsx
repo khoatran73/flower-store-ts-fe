@@ -21,7 +21,7 @@ import {
 } from "@mui/material";
 
 const pages = ["Home", "Products", "Pricing", "Blog"];
-const routes = ["/", "/product", "/cart", "/purchase"];
+const routes = ["/", "/product/12", "/cart", "/purchase"];
 const settings = ["Profile", "Account", "Dashboard", "Logout"];
 const imageUrl =
     "https://avatars.githubusercontent.com/u/77377243?s=400&u=f1135698dedef3ad6fbb056b8f9e4bed4c1a92e0&v=4";
@@ -30,7 +30,7 @@ interface IOpen {
     open: boolean;
 }
 
-const Navbar = () => {
+const Navbar: React.FC<{}> = () => {
     const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(
         null
     );
@@ -53,7 +53,7 @@ const Navbar = () => {
     }, [openAlert]);
 
     return (
-        <div className="max-h-[80px] overflow-hidden bg-red-300">
+        <div className="max-h-[80px] overflow-hidden bg-gray-300" id="navbar">
             <Container>
                 <Toolbar
                     disableGutters
@@ -74,7 +74,7 @@ const Navbar = () => {
                         <Box className="ml-6">
                             {pages.map((page, index) => (
                                 <NavLink
-                                    key={page}
+                                    key={index}
                                     to={routes && routes[index]}
                                     className="mr-2 ml-2 hover:text-red-400 transition ease-in-out delay-75 duration-1000"
                                 >
@@ -144,7 +144,6 @@ const Navbar = () => {
                                         variant="contained"
                                         component="span"
                                         style={{ marginRight: "10px" }}
-                                        className="bg-red-200 color-blue-500"
                                     >
                                         Đăng nhập
                                     </Button>
@@ -173,9 +172,9 @@ const Navbar = () => {
                                 open={Boolean(anchorElUser)}
                                 onClose={handleCloseUserMenu}
                             >
-                                {settings.map((setting) => (
+                                {settings.map((setting, index) => (
                                     <MenuItem
-                                        key={setting}
+                                        key={index}
                                         onClick={handleCloseUserMenu}
                                     >
                                         {setting === "Logout" ? (
@@ -202,4 +201,5 @@ const Navbar = () => {
         </div>
     );
 };
+
 export default Navbar;

@@ -1,4 +1,3 @@
-// import Carousel from "react-elastic-carousel";
 import { FC } from "react";
 import Carousel from "react-material-ui-carousel";
 
@@ -55,15 +54,11 @@ const Slider: FC<{}> = () => {
     };
 
     return (
-        <Carousel
-            // className="h-[625px]"
-            {...settings}
-        >
+        <Carousel {...settings}>
             {items.map((item) => (
                 <img key={item.id} alt={item.alt} src={item.url}></img>
             ))}
         </Carousel>
-        // </Container>
     );
 };
 

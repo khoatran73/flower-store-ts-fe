@@ -32,8 +32,7 @@ const Chats: React.FC<Props> = (props) => {
             setMessages([
                 {
                     purpose: "introduction",
-                    message:
-                        "Hi there. If you're here, that means you're looking for a job. Tell me, what's your name?",
+                    message: "Chào bạn, tên bạn là gì ?",
                     sender: "bot",
                 },
             ]);
@@ -62,7 +61,7 @@ const Chats: React.FC<Props> = (props) => {
 
     return (
         <>
-            <div className="bg-gray-500 flex items-center">
+            <div className="bg-gray-500 flex items-center h-[13%]">
                 <Avatar
                     className="m-2"
                     alt="Khoa Henry"
@@ -72,7 +71,7 @@ const Chats: React.FC<Props> = (props) => {
                     Chatbot
                 </div>
             </div>
-            <div className="message-container p-5 " ref={bodyRef}>
+            <div className="message-container p-5 h-[75%]" ref={bodyRef}>
                 {messages.map((chat) => (
                     <div key={chat.message}>
                         <div className={`message ${chat.sender}`}>

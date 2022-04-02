@@ -1,6 +1,5 @@
-import { FC } from "react";
-import ProductList from "./ProductList";
-import { Pagination } from "@mui/material";
+import React from "react";
+import ProductList from "../Home/Product/ProductList";
 
 interface Product {
     name: string;
@@ -8,7 +7,7 @@ interface Product {
     price: number;
 }
 
-const Products: FC<{}> = () => {
+const RelatedProducts: React.FC = () => {
     const products: Product[] = [
         {
             name: "hoa 1",
@@ -41,27 +40,30 @@ const Products: FC<{}> = () => {
             price: 0,
         },
     ];
-
     return (
         <div className="my-10">
             <div className="text-3xl font-semibold mb-5 text-center uppercase">
-                Danh sach san pham
+                San pham lien quan
             </div>
             <div className=" flex justify-start items-center flex-wrap">
-                {products.map((product, index) => (
-                    <ProductList
-                        key={index}
-                        name={product.name}
-                        image={product.image}
-                        price={product.price}
-                    />
-                ))}
-            </div>
-            <div className="mt-4 flex justify-center">
-                <Pagination count={3} color="primary" />
+                {products.map((product, index) =>
+                    index < 5 ? (
+                        <ProductList
+                            key={index}
+                            name={product.name}
+                            image={product.image}
+                            price={product.price}
+                            width={222}
+                            height={200}
+                            size="small"
+                        />
+                    ) : (
+                        <div key={index}></div>
+                    )
+                )}
             </div>
         </div>
     );
 };
 
-export default Products;
+export default RelatedProducts;

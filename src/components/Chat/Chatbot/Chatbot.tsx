@@ -59,7 +59,7 @@ const Chatbot: React.FC = () => {
             />
             <form
                 onSubmit={(e) => handleSubmit(e)}
-                className="flex items-center justify-between mx-3 mb-2"
+                className="flex items-center justify-between mx-3 mb-2 h-[10%]"
             >
                 <TextField
                     onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
