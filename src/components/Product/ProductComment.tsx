@@ -1,16 +1,60 @@
 import React from "react";
 import Comment from "./Comment";
-import {
-    Button,
-    Paper,
-    TextField,
-    IconButton,
-    Divider,
-    Avatar,
-} from "@mui/material";
+import { Button, Paper, TextField, IconButton, Avatar } from "@mui/material";
 import SendIcon from "@mui/icons-material/Send";
 
+interface IComment {
+    numberLike: number;
+    desc: string;
+}
+
 const ProductComment: React.FC = () => {
+    const [comment, setComment] = React.useState<string>("");
+
+    const commentList: IComment[] = [
+        {
+            numberLike: 1,
+            desc: "comment 1",
+        },
+        {
+            numberLike: 2,
+            desc: "comment 2",
+        },
+    ];
+
+    const renderCommentList = () => {
+        return commentList.map((comment, index) =>
+            index + 1 < commentList.length ? (
+                <Comment
+                    key={index}
+                    numberLike={comment.numberLike}
+                    liked={true}
+                    desc={comment.desc}
+                />
+            ) : (
+                <Comment
+                    key={index}
+                    numberLike={comment.numberLike}
+                    liked={true}
+                    desc={comment.desc}
+                    hideDivider={true}
+                />
+            )
+        );
+    };
+
+    const handleSubmitComment = () => {
+        if (!comment) return;
+        const newComment: IComment = {
+            numberLike: 0,
+            desc: comment,
+        };
+
+        commentList.push(newComment);
+        console.log(commentList);
+        setComment("");
+    };
+
     return (
         <div className="my-10">
             <div>
@@ -19,9 +63,7 @@ const ProductComment: React.FC = () => {
                 </Button>
             </div>
             <Paper className="p-4 mt-3">
-                <Comment desc="bong hoa dep qua" />
-                <Comment desc="hoa dep. 10 diem" />
-                <Comment desc="hoa dep. 10 diem" />
+                {renderCommentList()}
                 <div className="flex p-4">
                     <div className="w-[5%]">
                         <Avatar
@@ -35,11 +77,17 @@ const ProductComment: React.FC = () => {
                             placeholder="Aa..."
                             variant="outlined"
                             size="small"
+                            value={comment}
+                            onChange={(e) => setComment(e.target.value)}
+                            onKeyDown={(e) => {
+                                if (e.keyCode === 13) handleSubmitComment();
+                            }}
                         />
                         <IconButton
                             color="primary"
                             sx={{ p: "10px" }}
                             aria-label="directions"
+                            onClick={handleSubmitComment}
                         >
                             <SendIcon />
                         </IconButton>

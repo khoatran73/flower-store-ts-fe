@@ -34,7 +34,7 @@ const Navbar: React.FC<{}> = () => {
     const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(
         null
     );
-    const [isLogin, setIsLogin] = React.useState<Boolean>(false);
+    const [isLogin, setIsLogin] = React.useState<boolean>(false);
     const [openAlert, setOpenAlert] = React.useState<IOpen>({ open: false });
 
     const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {

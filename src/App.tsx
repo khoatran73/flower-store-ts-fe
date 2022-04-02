@@ -10,7 +10,7 @@ import ScrollTop from "./components/ScrollTop/ScrollTop";
 
 function App() {
     return (
-        <div>
+        <div className="select-none">
             <Router>
                 <Navbar />
                 <Routes>
