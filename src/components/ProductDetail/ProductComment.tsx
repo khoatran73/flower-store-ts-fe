@@ -8,19 +8,21 @@ interface IComment {
     desc: string;
 }
 
+const initCommentList: IComment[] = [
+    {
+        numberLike: 1,
+        desc: "comment 1",
+    },
+    {
+        numberLike: 2,
+        desc: "comment 2",
+    },
+];
+
 const ProductComment: React.FC = () => {
     const [comment, setComment] = React.useState<string>("");
-
-    const commentList: IComment[] = [
-        {
-            numberLike: 1,
-            desc: "comment 1",
-        },
-        {
-            numberLike: 2,
-            desc: "comment 2",
-        },
-    ];
+    const [commentList, setCommentList] =
+        React.useState<IComment[]>(initCommentList);
 
     const renderCommentList = () => {
         return commentList.map((comment, index) =>
@@ -28,14 +30,14 @@ const ProductComment: React.FC = () => {
                 <Comment
                     key={index}
                     numberLike={comment.numberLike}
-                    liked={true}
+                    liked={false}
                     desc={comment.desc}
                 />
             ) : (
                 <Comment
                     key={index}
                     numberLike={comment.numberLike}
-                    liked={true}
+                    liked={false}
                     desc={comment.desc}
                     hideDivider={true}
                 />
@@ -45,13 +47,13 @@ const ProductComment: React.FC = () => {
 
     const handleSubmitComment = () => {
         if (!comment) return;
+
         const newComment: IComment = {
             numberLike: 0,
             desc: comment,
         };
 
-        commentList.push(newComment);
-        console.log(commentList);
+        setCommentList((cL) => [...commentList, newComment]);
         setComment("");
     };
 
