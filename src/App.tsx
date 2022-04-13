@@ -1,29 +1,14 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import React from "react";
-import Home from "./components/Home/Home";
-import Navbar from "./components/Nav/Navbar";
-import Footer from "./components/Footer/Footer";
-import Cart from "./components/Cart/Cart";
-import Purchase from "./components/Purchase/Purchase";
-import Product from "./components/Product/Product";
-import ProductDetail from "./components/ProductDetail/ProductDetail";
-import ScrollTop from "./components/ScrollTop/ScrollTop";
+import { AppProvider } from "./components/providers/AppProvider";
+import { AppRoute } from "./components/routes";
+// import AppR
 
 function App() {
     return (
         <div className="select-none">
-            <Router>
-                <Navbar />
-                <Routes>
-                    <Route path="/" element={<Home />} />
-                    <Route path="/product" element={<Product />} />
-                    <Route path="/product/:id" element={<ProductDetail />} />
-                    <Route path="/cart" element={<Cart />} />
-                    <Route path="/purchase" element={<Purchase />} />
-                </Routes>
-                <Footer />
-                <ScrollTop />
-            </Router>
+            <AppProvider>
+                <AppRoute />
+            </AppProvider>
         </div>
     );
 }
