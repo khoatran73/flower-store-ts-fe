@@ -14,7 +14,7 @@ const ProductInfo: React.FC = () => {
             <div className="flex justify-between items-start">
                 <div>
                     <img
-                        src="https://hasuflora.com/resize/640x630/1/upload/baiviet/binhhoatuoidep023-3110.png"
+                        src="https://d1kwj86ddez2oj.cloudfront.net/14052020/c6Bg8DmWut8COQbz88b2PB9Yd4Rb3QLMXCPg2gah.jpg"
                         alt="Hoa"
                         className="max-w-[480px] "
                     />
@@ -25,6 +25,8 @@ const ProductInfo: React.FC = () => {
                     </div>
                     <Divider />
                     <div className="text-3xl text-red-800 py-2">Lien he</div>
+                    <Divider />
+                    <div className="text-xl text-red-800 py-2">200.000</div>
                     <Divider />
                     <div>
                         Lorem ipsum dolor, sit amet consectetur adipisicing
