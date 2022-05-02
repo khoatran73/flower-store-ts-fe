@@ -82,7 +82,7 @@ const Dashboard: React.FC = () => {
                 <AppBar position='absolute' open={open}>
                     <Toolbar
                         sx={{
-                            pr: '24px', // keep right padding when drawer closed
+                            pr: '24px',
                         }}
                     >
                         <IconButton
@@ -150,11 +150,12 @@ const Dashboard: React.FC = () => {
                     }}
                 >
                     <Toolbar />
-                    <Container maxWidth='lg' sx={{ mt: 4, mb: 4 }}>
-                        <Grid container>
-                            <Outlet />
-                        </Grid>
-                    </Container>
+                    <Grid
+                        container
+                        className='w-[100%] h-[calc(100%-120px)] mt-3 px-2'
+                    >
+                        <Outlet />
+                    </Grid>
                 </Box>
             </Box>
         </ThemeProvider>

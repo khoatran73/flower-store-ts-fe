@@ -1,13 +1,14 @@
 import AssignmentIcon from '@mui/icons-material/Assignment';
 import BarChartIcon from '@mui/icons-material/BarChart';
 import DashboardIcon from '@mui/icons-material/Dashboard';
+import LocalFloristIcon from '@mui/icons-material/LocalFlorist';
 import PeopleIcon from '@mui/icons-material/People';
+import PersonIcon from '@mui/icons-material/Person';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import ListSubheader from '@mui/material/ListSubheader';
-import PersonIcon from '@mui/icons-material/Person';
 import * as React from 'react';
 import { Link } from 'react-router-dom';
 
@@ -19,6 +20,14 @@ export const mainListItems = (
                     <DashboardIcon />
                 </ListItemIcon>
                 <ListItemText primary='Bảng điều khiển' />
+            </ListItemButton>
+        </Link>
+        <Link to='/dashboard/product'>
+            <ListItemButton>
+                <ListItemIcon>
+                    <LocalFloristIcon />
+                </ListItemIcon>
+                <ListItemText primary='Quản lí sản phẩm' />
             </ListItemButton>
         </Link>
         <Link to='/dashboard/order'>

@@ -5,6 +5,7 @@ import Dashboard from '../features/Dashboard';
 import Chart from '../features/Dashboard/components/Chart';
 import Customer from '../features/Dashboard/components/Customer';
 import Orders from '../features/Dashboard/components/Orders';
+import ProductManager from '../features/Dashboard/components/ProductManager';
 import Report from '../features/Dashboard/components/Report';
 import Staff from '../features/Dashboard/components/Staff';
 import Home from '../features/Home';
@@ -15,22 +16,8 @@ import Product from '../features/Product';
 import ProductDetail from '../features/ProductDetail';
 import Purchase from '../features/Purchase';
 import Register from '../features/Register';
-// import { NotFound } from '~/components/Layout/NotFound';
-
-// const { UserAliveListView } = lazyImport(
-//     () => import('~/features/ums/user/components/UserAlive.ListView'),
-//     'UserAliveListView',
-// );
 
 const routeList = [
-    // {
-    //     path: "/",
-    //     element: <Navigate to={"/"} />,
-    // },
-    // {
-    //     path: '/login',
-    //     element: <LoginForm />,
-    // },
     {
         path: '/',
         element: <LayoutPage />,
@@ -62,6 +49,10 @@ const routeList = [
                     {
                         path: '/dashboard',
                         element: <Chart />,
+                    },
+                    {
+                        path: '/dashboard/product',
+                        element: <ProductManager />,
                     },
                     {
                         path: '/dashboard/order',

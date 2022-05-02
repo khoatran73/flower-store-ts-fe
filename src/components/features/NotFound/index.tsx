@@ -1,7 +1,7 @@
 // @flow
-import { Button, Result } from "antd";
-import * as React from "react";
-import { useNavigate } from "react-router-dom";
+import { Button, Result } from 'antd';
+import * as React from 'react';
+import { useNavigate } from 'react-router-dom';
 
 export const NotFound = () => {
     const navigate = useNavigate();
@@ -9,28 +9,28 @@ export const NotFound = () => {
     return (
         <Result
             style={{
-                display: "flex",
-                flexDirection: "column",
-                justifyItems: "center",
-                justifyContent: "center",
-                width: "100%",
-                height: "100%",
+                display: 'flex',
+                flexDirection: 'column',
+                justifyItems: 'center',
+                justifyContent: 'center',
+                width: '100%',
+                height: '100%',
             }}
-            status="404"
-            title="404"
-            subTitle={"404 - Trang không tồn tại"}
+            status='404'
+            title='404'
+            subTitle={'404 - Trang không tồn tại'}
             extra={[
                 <Button
-                    key="primary"
-                    type="primary"
+                    key='primary'
+                    type='primary'
                     onClick={() => {
-                        navigate("/");
+                        navigate('/');
                     }}
                 >
-                    {"Trở về trang chủ"}
+                    {'Trở về trang chủ'}
                 </Button>,
-                <Button key="ghost" type="ghost" onClick={() => navigate(-1)}>
-                    {"Trở về trang trước đó"}
+                <Button key='ghost' type='ghost' onClick={() => navigate(-1)}>
+                    {'Trở về trang trước đó'}
                 </Button>,
             ]}
         />

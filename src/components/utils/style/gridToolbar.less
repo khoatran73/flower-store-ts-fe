@@ -1,0 +1,96 @@
+.id-grid {
+    .grid-filter {
+        .idtek-fieldset {
+            border-color: #e9e9e9 !important;
+            background: #f5f7f7;
+            border-radius: 4px !important;
+
+            legend {
+                > span {
+                    font-weight: 600;
+                    text-transform: uppercase;
+                }
+
+                .anticon {
+                    font-size: 16px;
+                    margin-right: 5px;
+                }
+            }
+
+            .idtek-fieldset-body {
+                height: 100%;
+                width: 100%;
+
+                .label-field-text {
+                    font-weight: 600;
+                }
+            }
+        }
+    }
+
+    .grid-toolbar {
+        margin-bottom: 4px;
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+
+        .grid-left-toolbar {
+            display: flex;
+        }
+
+        .grid-right-toolbar {
+            flex: 1;
+            display: flex;
+            flex-flow: row;
+            justify-content: flex-end;
+
+            .wrap-form {
+                width: unset !important;
+            }
+        }
+
+        .idtek-fieldset {
+            border-color: #b3b3b3 !important;
+
+            .idtek-fieldset-body {
+                height: 100%;
+                justify-content: flex-end;
+                flex: 1;
+                display: flex;
+                flex-direction: row;
+                align-items: end;
+            }
+        }
+    }
+
+    &.id-sheet {
+        .grid-toolbar {
+            display: flex;
+            justify-content: flex-end;
+            margin: 0 0 5px 0;
+
+            .id-sheet-tool-bar {
+                flex: 1;
+                display: flex;
+                justify-content: flex-end;
+                margin-right: 3px;
+
+                form {
+                    display: flex;
+
+                    .row-field {
+                        flex: 1;
+                    }
+                }
+            }
+        }
+
+        .base-tool-button {
+            display: flex;
+
+            button {
+                margin: 0 3px;
+            }
+        }
+    }
+}

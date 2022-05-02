@@ -3,11 +3,40 @@
 @tailwind utilities;
 
 body {
-    font-family: "Roboto";
+    font-family: 'Roboto';
 }
 
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+}
+
+.grid-button {
+    margin-bottom: 10px;
+    text-align: right;
+}
+
+.grid {
+    .ag-header-cell-label {
+        justify-content: center;
+    }
+    .ag-cell {
+        align-items: center;
+    }
+    .ag-cell-value {
+        .grid-cell-image-wrapper {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            .grid-cell-image {
+                width: 100px;
+            }
+        }
+    }
+
+    .ag-root-wrapper {
+        overflow-x: auto;
+        overflow-y: auto;
+    }
 }
