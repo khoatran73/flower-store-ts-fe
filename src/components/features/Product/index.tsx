@@ -1,6 +1,6 @@
-import { Container, Pagination } from "@mui/material";
-import * as React from "react";
-import ProductItem from "../Home/components/ProductItem";
+import { Container, Pagination } from '@mui/material';
+import * as React from 'react';
+import ProductItem from '../Home/components/ProductItem';
 
 interface IProduct {
     id: number;
@@ -13,50 +13,50 @@ const Product: React.FC = () => {
     const products: IProduct[] = [
         {
             id: 1,
-            name: "hoa 1",
-            image: "https://d1kwj86ddez2oj.cloudfront.net/14052020/c6Bg8DmWut8COQbz88b2PB9Yd4Rb3QLMXCPg2gah.jpg",
+            name: 'hoa 1',
+            image: 'https://d1kwj86ddez2oj.cloudfront.net/14052020/c6Bg8DmWut8COQbz88b2PB9Yd4Rb3QLMXCPg2gah.jpg',
             price: 0,
         },
         {
             id: 2,
-            name: "hoa 2",
-            image: "https://d1kwj86ddez2oj.cloudfront.net/14052020/c6Bg8DmWut8COQbz88b2PB9Yd4Rb3QLMXCPg2gah.jpg",
+            name: 'hoa 2',
+            image: 'https://d1kwj86ddez2oj.cloudfront.net/14052020/c6Bg8DmWut8COQbz88b2PB9Yd4Rb3QLMXCPg2gah.jpg',
             price: 0,
         },
         {
             id: 3,
-            name: "hoa 3",
-            image: "https://d1kwj86ddez2oj.cloudfront.net/14052020/c6Bg8DmWut8COQbz88b2PB9Yd4Rb3QLMXCPg2gah.jpg",
+            name: 'hoa 3',
+            image: 'https://d1kwj86ddez2oj.cloudfront.net/14052020/c6Bg8DmWut8COQbz88b2PB9Yd4Rb3QLMXCPg2gah.jpg',
             price: 0,
         },
         {
             id: 4,
-            name: "hoa 4",
-            image: "https://d1kwj86ddez2oj.cloudfront.net/14052020/c6Bg8DmWut8COQbz88b2PB9Yd4Rb3QLMXCPg2gah.jpg",
+            name: 'hoa 4',
+            image: 'https://d1kwj86ddez2oj.cloudfront.net/14052020/c6Bg8DmWut8COQbz88b2PB9Yd4Rb3QLMXCPg2gah.jpg',
             price: 0,
         },
         {
             id: 5,
-            name: "hoa 5",
-            image: "https://d1kwj86ddez2oj.cloudfront.net/14052020/c6Bg8DmWut8COQbz88b2PB9Yd4Rb3QLMXCPg2gah.jpg",
+            name: 'hoa 5',
+            image: 'https://d1kwj86ddez2oj.cloudfront.net/14052020/c6Bg8DmWut8COQbz88b2PB9Yd4Rb3QLMXCPg2gah.jpg',
             price: 0,
         },
         {
             id: 6,
-            name: "hoa 6",
-            image: "https://d1kwj86ddez2oj.cloudfront.net/14052020/c6Bg8DmWut8COQbz88b2PB9Yd4Rb3QLMXCPg2gah.jpg",
+            name: 'hoa 6',
+            image: 'https://d1kwj86ddez2oj.cloudfront.net/14052020/c6Bg8DmWut8COQbz88b2PB9Yd4Rb3QLMXCPg2gah.jpg',
             price: 0,
         },
     ];
 
     return (
         <Container>
-            <div className="my-10">
-                <div className="text-3xl font-semibold mb-5 text-center uppercase">
+            <div className='my-10'>
+                <div className='text-3xl font-semibold mb-5 text-center uppercase'>
                     Danh sach san pham
                 </div>
-                <div className=" flex justify-start items-center flex-wrap">
-                    {products.map((product) => (
+                <div className=' flex justify-start items-center flex-wrap'>
+                    {/* {products.map((product) => (
                         <ProductItem
                             key={product.id}
                             id={product.id}
@@ -66,10 +66,10 @@ const Product: React.FC = () => {
                             width={280}
                             height={240}
                         />
-                    ))}
+                    ))} */}
                 </div>
-                <div className="mt-4 flex justify-center">
-                    <Pagination count={3} color="primary" />
+                <div className='mt-4 flex justify-center'>
+                    <Pagination count={3} color='primary' />
                 </div>
             </div>
         </Container>

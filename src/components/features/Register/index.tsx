@@ -9,19 +9,37 @@ import Paper from '@mui/material/Paper';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
+import axios from 'axios';
 import * as React from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2';
+import { API_REGISTER } from '../../../constant';
 
 const theme = createTheme();
 
 export default function Register() {
+    const navigate = useNavigate();
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+        const formData = new FormData(event.currentTarget);
         event.preventDefault();
-        const data = new FormData(event.currentTarget);
-        console.log({
-            username: data.get('username'),
-            password: data.get('password'),
-        });
+
+        axios
+            .post(API_REGISTER, {
+                username: formData.get('username'),
+                password: formData.get('password'),
+                confirmPassword: formData.get('confirmPassword'),
+            })
+            .then((res) => {
+                const data = res.data;
+                if (data.success) {
+                    Swal.fire(
+                        'Thông báo',
+                        'Đăng ký tài khoản thành công',
+                        'success'
+                    );
+                    navigate('/login', { replace: true });
+                }
+            });
     };
 
     return (
@@ -95,13 +113,12 @@ export default function Register() {
                                 label='Mật khẩu'
                                 type='password'
                                 id='password'
-                                // autoComplete='current-password'
                             />
                             <TextField
                                 margin='normal'
                                 required
                                 fullWidth
-                                name='confirm-password'
+                                name='confirmPassword'
                                 label='Nhập lại mật khẩu'
                                 type='password'
                                 id='confirm-password'

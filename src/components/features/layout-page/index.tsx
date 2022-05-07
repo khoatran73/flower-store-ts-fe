@@ -8,9 +8,9 @@ const LayoutPage: React.FC = () => {
 
     return (
         <>
-            {path.includes('/dashboard') ? <></> : <Navbar />}
+            {!path.includes('/dashboard') && <Navbar />}
             <Outlet />
-            {path.includes('/dashboard') ? <></> : <Footer />}
+            {!path.includes('/dashboard') && <Footer />}
             <ScrollTop />
         </>
     );

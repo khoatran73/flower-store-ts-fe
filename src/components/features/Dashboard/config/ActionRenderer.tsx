@@ -2,7 +2,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import { IconButton } from '@mui/material';
 
-export const ProductManagerActionRenderer = () => {
+export const ActionRenderer = () => {
     return (
         <div className='grid-cell-image-wrapper'>
             <IconButton color='primary' component='span' data-action='edit'>

@@ -3,15 +3,31 @@ export interface ProductDto {
     name: string;
     unitPrice: number;
     image: string;
-    expiry: number; //ngay het han
+    totalQuantity: number; // so luong
     description?: string;
+    category: CategoryDto;
 }
 
+export interface CategoryDto {
+    id: string;
+    name: string;
+}
 export interface ProductCreateDto {
     name: string;
+    categoryId: string;
     unitPrice: number;
-    // image: string;
-    expiry: number; //ngay het han
+    totalQuantity?: number;
     description?: string;
     file?: File;
+}
+
+export interface ProductUpdateDto {
+    id: string;
+    name: string;
+    categoryId: string;
+    unitPrice: number;
+    totalQuantity?: number;
+    description?: string;
+    file?: File;
+    image: string;
 }

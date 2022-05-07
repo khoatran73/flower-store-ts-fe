@@ -43,7 +43,7 @@ export const mainListItems = (
                 <ListItemIcon>
                     <PersonIcon />
                 </ListItemIcon>
-                <ListItemText primary='Quản lí nhân viên' />
+                <ListItemText primary='Quản lý nhân viên' />
             </ListItemButton>
         </Link>
         <Link to='/dashboard/customer'>

@@ -21,6 +21,7 @@ import * as React from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import { CartDto } from '../../../types/cart/Cart';
 import Cart from './components/Cart';
+// import { isLogin } from '../../../constant';
 
 const pages = ['Home', 'Products', 'Pricing', 'Blog'];
 const routes = ['/', '/product', '/cart', '/purchase'];
@@ -41,7 +42,13 @@ const Navbar: React.FC = () => {
     const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(
         null
     );
-    const [isLogin, setIsLogin] = React.useState<boolean>(false);
+    const [isLogin, setIsLogin] = React.useState<string | null>();
+    const [isAdmin, setIsAdmin] = React.useState<string | null>();
+
+    React.useEffect(() => {
+        setIsLogin(localStorage.getItem('isLogin'));
+        setIsAdmin(localStorage.getItem('isAdmin'));
+    }, []);
 
     const [openModal, setOpenModal] = React.useState<boolean>(false);
     const handleOpenModal = () => setOpenModal(true);
@@ -52,6 +59,15 @@ const Navbar: React.FC = () => {
     };
     const handleCloseUserMenu = () => {
         setAnchorElUser(null);
+    };
+
+    console.log(isLogin);
+
+    const logout = () => {
+        localStorage.removeItem('isLogin');
+        localStorage.removeItem('isAdmin');
+        setIsLogin(null);
+        setIsAdmin(null);
     };
 
     const carts: CartDto[] = [
@@ -138,28 +154,6 @@ const Navbar: React.FC = () => {
                                             onClick={handleOpenUserMenu}
                                         />
                                     </Typography>
-                                    {/* <Collapse
-                                        in={openAlert.open}
-                                        className="z-10"
-                                        id="alert success"
-                                    >
-                                        <Alert
-                                            style={{
-                                                position: "fixed",
-                                                bottom: "30px",
-                                                right: "30px",
-                                            }}
-                                            severity="success"
-                                            color="info"
-                                            onClose={() =>
-                                                setOpenAlert({ open: false })
-                                            }
-                                        >
-                                            <AlertTitle>Success</AlertTitle>
-                                            This is a success alert — check it
-                                            out!
-                                        </Alert>
-                                    </Collapse> */}
                                 </>
                             ) : (
                                 <>
@@ -209,7 +203,7 @@ const Navbar: React.FC = () => {
                                 <MenuItem onClick={handleCloseUserMenu}>
                                     <Typography
                                         textAlign='center'
-                                        onClick={() => setIsLogin(!isLogin)}
+                                        onClick={logout}
                                     >
                                         Logout
                                     </Typography>

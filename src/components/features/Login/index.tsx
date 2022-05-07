@@ -9,19 +9,32 @@ import Paper from '@mui/material/Paper';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
+import axios from 'axios';
 import * as React from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
+import { API_LOGIN } from '../../../constant';
 
 const theme = createTheme();
 
 export default function Login() {
+    const navigate = useNavigate();
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
-        console.log({
-            username: data.get('username'),
-            password: data.get('password'),
-        });
+        axios
+            .post(API_LOGIN, {
+                username: data.get('username'),
+                password: data.get('password'),
+            })
+            .then((res) => {
+                const data = res.data;
+                if (data.success) {
+                    localStorage.setItem('isLogin', data.result.username);
+                    localStorage.setItem('role', data.result.role);
+                    navigate('/', { replace: true });
+                }
+            })
+            .catch((err) => console.error(err));
     };
 
     return (
