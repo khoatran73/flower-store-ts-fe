@@ -19,7 +19,7 @@ const ProductItem: FC<Props> = (props) => {
     return (
         <Link to={path}>
             <Card
-                className='flex-initial my-1 place-content-stretch mx-[4px] cursor-pointer'
+                className='flex-initial my-3 place-content-stretch mx-[10px] cursor-pointer'
                 style={{ width: width }}
             >
                 <div className='overflow-hidden' style={{ height: height }}>
@@ -27,7 +27,6 @@ const ProductItem: FC<Props> = (props) => {
                         className=' hover:scale-110'
                         style={{
                             transition: 'all 0.5s ease-in-out',
-                            // transitionDelay: "0.1s",
                             width: width,
                             height: height,
                         }}
@@ -37,9 +36,12 @@ const ProductItem: FC<Props> = (props) => {
                     />
                 </div>
                 <CardContent>
-                    <h3 className='text-center text-xl font-semibold'>
+                    <div
+                        className='text-center text-md font-semibold truncate overflow-hidden'
+                        title={name}
+                    >
                         {name}
-                    </h3>
+                    </div>
                     <div className='text-center mt-1 text-md text-red-500'>
                         Giá: {unitPrice}
                     </div>
@@ -49,7 +51,7 @@ const ProductItem: FC<Props> = (props) => {
                             startIcon={<AddShoppingCartIcon />}
                             size={size}
                         >
-                            Them vao gio hang
+                            Thêm vào giỏ hàng
                         </Button>
                     </div>
                 </CardContent>

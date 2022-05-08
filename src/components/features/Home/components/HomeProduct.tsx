@@ -18,20 +18,20 @@ const HomeProduct: FC = () => {
         };
 
         fetchProducts();
-    });
+    }, []);
 
     return (
         <div className='my-10'>
             <div className='text-3xl font-semibold mb-5 text-center uppercase'>
                 Danh sach san pham
             </div>
-            <div className=' flex justify-start items-center flex-wrap'>
+            <div className='flex justify-start items-center flex-wrap'>
                 {products.map((product) => (
                     <ProductItem
                         key={product.id}
                         product={product}
-                        width={280}
-                        height={240}
+                        width={268}
+                        height={220}
                     />
                 ))}
             </div>

@@ -25,8 +25,6 @@ import Cart from './components/Cart';
 
 const pages = ['Home', 'Products', 'Pricing', 'Blog'];
 const routes = ['/', '/product', '/cart', '/purchase'];
-const imageUrl =
-    'https://avatars.githubusercontent.com/u/77377243?s=400&u=f1135698dedef3ad6fbb056b8f9e4bed4c1a92e0&v=4';
 
 const style = {
     position: 'absolute' as 'absolute',
@@ -43,11 +41,11 @@ const Navbar: React.FC = () => {
         null
     );
     const [isLogin, setIsLogin] = React.useState<string | null>();
-    const [isAdmin, setIsAdmin] = React.useState<string | null>();
+    const [role, setRole] = React.useState<string | null>();
 
     React.useEffect(() => {
         setIsLogin(localStorage.getItem('isLogin'));
-        setIsAdmin(localStorage.getItem('isAdmin'));
+        setRole(localStorage.getItem('role'));
     }, []);
 
     const [openModal, setOpenModal] = React.useState<boolean>(false);
@@ -61,13 +59,11 @@ const Navbar: React.FC = () => {
         setAnchorElUser(null);
     };
 
-    console.log(isLogin);
-
     const logout = () => {
         localStorage.removeItem('isLogin');
-        localStorage.removeItem('isAdmin');
+        localStorage.removeItem('role');
         setIsLogin(null);
-        setIsAdmin(null);
+        setRole(null);
     };
 
     const carts: CartDto[] = [
@@ -92,24 +88,27 @@ const Navbar: React.FC = () => {
     ];
 
     return (
-        <div className='max-h-[80px] overflow-hidden bg-gray-300' id='navbar'>
+        <div
+            className='max-h-[100px] overflow-hidden bg-white shadow-md w-full fixed z-50 top-0'
+            id='navbar'
+        >
             <Container>
                 <Toolbar
                     disableGutters
                     className='flex h-[100%] align-center p-3 items-center justify-between '
                 >
+                    <Typography variant='h6' noWrap component='div'>
+                        <Link to='/'>
+                            <Card className=''>
+                                <CardMedia
+                                    component='img'
+                                    height='60'
+                                    image='https://res.cloudinary.com/dqrkqvtjg/image/upload/v1651974807/Flower-store/logo_otxw9r.webp'
+                                />
+                            </Card>
+                        </Link>
+                    </Typography>
                     <div className='flex justify-between items-center'>
-                        <Typography variant='h6' noWrap component='div'>
-                            <Link to='/'>
-                                <Card className='w-[60px]'>
-                                    <CardMedia
-                                        component='img'
-                                        height='60'
-                                        image={imageUrl}
-                                    />
-                                </Card>
-                            </Link>
-                        </Typography>
                         <Box className='ml-6'>
                             {pages.map((page, index) => (
                                 <NavLink
@@ -139,20 +138,30 @@ const Navbar: React.FC = () => {
                         <Box className='w-[240px] flex justify-end items-center'>
                             {isLogin ? (
                                 <>
-                                    <Typography className='w-[100%] flex justify-end items-center cursor-pointer'>
-                                        <IconButton
-                                            sx={{ p: '10px' }}
-                                            aria-label='cart'
-                                            onClick={handleOpenModal}
-                                        >
-                                            <ShoppingCartIcon />
-                                        </IconButton>
+                                    <Typography className='w-[100%] flex justify-end items-center'>
+                                        {role === 'customer' && (
+                                            <IconButton
+                                                sx={{ p: '10px' }}
+                                                aria-label='cart'
+                                                onClick={handleOpenModal}
+                                            >
+                                                <ShoppingCartIcon />
+                                            </IconButton>
+                                        )}
                                         <Avatar
                                             className='ml-5'
                                             alt='Khoa Henry'
-                                            src={imageUrl}
                                             onClick={handleOpenUserMenu}
                                         />
+
+                                        <Button
+                                            size='small'
+                                            onClick={logout}
+                                            variant='contained'
+                                            sx={{ marginLeft: '10px' }}
+                                        >
+                                            Đăng xuất
+                                        </Button>
                                     </Typography>
                                 </>
                             ) : (
@@ -162,6 +171,7 @@ const Navbar: React.FC = () => {
                                             variant='contained'
                                             component='span'
                                             style={{ marginRight: '10px' }}
+                                            size='small'
                                         >
                                             Đăng nhập
                                         </Button>
@@ -170,45 +180,13 @@ const Navbar: React.FC = () => {
                                         <Button
                                             variant='contained'
                                             component='span'
+                                            size='small'
                                         >
                                             Đăng ký
                                         </Button>
                                     </Link>
                                 </>
                             )}
-
-                            <Menu
-                                sx={{ mt: '45px' }}
-                                id='menu-appbar'
-                                anchorEl={anchorElUser}
-                                anchorOrigin={{
-                                    vertical: 'top',
-                                    horizontal: 'right',
-                                }}
-                                keepMounted
-                                transformOrigin={{
-                                    vertical: 'top',
-                                    horizontal: 'right',
-                                }}
-                                open={Boolean(anchorElUser)}
-                                onClose={handleCloseUserMenu}
-                            >
-                                <MenuItem onClick={handleCloseUserMenu}>
-                                    <Link to='/dashboard'>
-                                        <Typography textAlign='center'>
-                                            Dashboard
-                                        </Typography>
-                                    </Link>
-                                </MenuItem>
-                                <MenuItem onClick={handleCloseUserMenu}>
-                                    <Typography
-                                        textAlign='center'
-                                        onClick={logout}
-                                    >
-                                        Logout
-                                    </Typography>
-                                </MenuItem>
-                            </Menu>
                         </Box>
                     </div>
                 </Toolbar>

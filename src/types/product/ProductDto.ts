@@ -6,6 +6,7 @@ export interface ProductDto {
     totalQuantity: number; // so luong
     description?: string;
     category: CategoryDto;
+    categoryId: string;
 }
 
 export interface CategoryDto {

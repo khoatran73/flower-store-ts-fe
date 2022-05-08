@@ -7,15 +7,14 @@ import {
     DialogContent,
     DialogTitle,
     FormControl,
-    InputLabel,
-    Select,
-    TextField,
-    MenuItem,
     FormControlLabel,
     FormLabel,
-    RadioGroup,
+    InputLabel,
+    MenuItem,
     Radio,
-    Grid,
+    RadioGroup,
+    Select,
+    TextField,
 } from '@mui/material';
 import Divider from '@mui/material/Divider';
 import 'ag-grid-community/dist/styles/ag-grid.css';
@@ -23,43 +22,42 @@ import 'ag-grid-community/dist/styles/ag-theme-alpine.css';
 import 'ag-grid-enterprise';
 import { AgGridReact } from 'ag-grid-react';
 import axios from 'axios';
-import _ from 'lodash';
 import React, { useEffect, useRef, useState } from 'react';
+import Swal from 'sweetalert2';
 import { customRowData } from '../../../../lib/Grid';
-import { ProductDto } from '../../../../types/product/ProductDto';
-import { StoreDto } from '../../../../types/store/StoreDto';
-import { UserCreateDto } from '../../../../types/user/UserDto';
+import { ProductDto } from 'src/types/product/ProductDto';
+import { StoreDto } from 'src/types/store/StoreDto';
 import { StaffManagerColDef } from '../config/StaffManager.ColDef';
 import {
     STAFF_CREATE_API,
     STAFF_INDEX_API,
     STORE_LIST_API,
 } from './../api/index';
-import { serializeToFromData } from '../../../../lib/formFileData';
-import Swal from 'sweetalert2';
+import Loading from '../../../../components/utils/Loading';
 
 const StaffManager = () => {
     const gridRef = useRef<AgGridReact>(null);
     const [openDialog, setOpenDialog] = React.useState(false);
-    const [errorMessage, setErrorMessage] = useState<string | undefined>();
-
-    const [formType, setFormType] = React.useState<string>('create');
     const [rowData, setRowData] = useState<ProductDto[] | any[]>([]);
     const [stores, setStores] = useState<StoreDto[]>([]);
+    const [loading, setLoading] = useState<boolean>(false);
 
     useEffect(() => {
         getRowData();
 
         const getStores = async () => {
+            setLoading(true);
             await axios
                 .get(STORE_LIST_API)
                 .then((res) => {
                     if (res.data.success) {
+                        setLoading(false);
                         const result = res.data.result as StoreDto[];
                         setStores(result);
                     }
                 })
                 .catch((err) => {
+                    setLoading(false);
                     console.log(err);
                 });
         };
@@ -68,13 +66,17 @@ const StaffManager = () => {
     }, []);
 
     const getRowData = async () => {
+        setLoading(true);
         await axios
             .get(STAFF_INDEX_API)
             .then((res) => {
-                if (res.data.success)
+                if (res.data.success) {
+                    setLoading(false);
                     setRowData(customRowData(res.data.result));
+                }
             })
             .catch((err) => {
+                setLoading(false);
                 console.log(err);
             });
     };
@@ -111,12 +113,14 @@ const StaffManager = () => {
             },
         };
 
+        setLoading(true);
         axios
             .post(STAFF_CREATE_API, staff)
             .then((res) => {
                 if (res.data.success) {
                     setOpenDialog(false);
                     getRowData();
+                    setLoading(false);
 
                     Swal.fire(
                         'Thông báo',
@@ -126,9 +130,10 @@ const StaffManager = () => {
                 }
             })
             .catch((err) => {
+                setLoading(false);
                 console.log(err.message);
-                // setOpenDialog(false);
-                // Swal.fire('Thông báo', 'Thêm sản phẩm thất bại!', 'error');
+                setOpenDialog(false);
+                Swal.fire('Thông báo', 'Thêm sản phẩm thất bại!', 'error');
             });
     };
 
@@ -150,24 +155,9 @@ const StaffManager = () => {
         defaultColDef: {
             floatingFilter: true,
         },
-        onCellClicked(params: any) {
-            if (
-                params.column.colId === 'action' &&
-                params.event.target.dataset.action
-            ) {
-                const id = params.data.id;
-                const action = params.event.target.dataset.action;
-                const data = params.data;
-
-                if (action === 'edit') {
-                }
-
-                if (action === 'delete') {
-                }
-            }
-        },
     };
 
+    if (loading) return <Loading loading={loading} />;
     return (
         <div className='w-full'>
             <div className='grid-button'>
@@ -190,9 +180,7 @@ const StaffManager = () => {
             <Dialog open={openDialog} onClose={handleCloseDialog}>
                 <Box component='form' onSubmit={handleSubmit}>
                     <DialogTitle sx={{ fontWeight: 'bold' }}>
-                        {formType === 'create'
-                            ? 'Thêm nhân viên'
-                            : 'Cập nhật nhân viên'}
+                        Thêm nhân viên
                     </DialogTitle>
                     <Divider />
                     <DialogContent

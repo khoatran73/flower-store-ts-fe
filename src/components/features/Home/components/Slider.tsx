@@ -1,5 +1,5 @@
-import { FC } from "react";
-import Carousel from "react-material-ui-carousel";
+import { FC } from 'react';
+import Carousel from 'react-material-ui-carousel';
 
 interface ISlider {
     id: number;
@@ -9,7 +9,7 @@ interface ISlider {
 
 interface CarouselSetting {
     autoPlay: boolean;
-    animation: "fade" | "slide";
+    animation: 'fade' | 'slide';
     indicators: boolean;
     duration: number;
     navButtonsAlwaysVisible: boolean;
@@ -25,26 +25,26 @@ const Slider: FC = () => {
     const items: ISlider[] = [
         {
             id: 1,
-            url: "https://dc.flowercorner.vn/uploads/P620b411321ca81.64685312_1.jpg",
-            alt: "Slider",
+            url: 'https://res.cloudinary.com/dqrkqvtjg/image/upload/v1651975262/Flower-store/t%E1%BA%A3i_xu%E1%BB%91ng_3_ytcanm.png',
+            alt: 'Slider',
         },
         {
             id: 2,
-            url: "https://dc.flowercorner.vn/uploads/P620dd604b502e5.09606159_dat-hoa-online-giam-den-25.jpg",
-            alt: "Slider",
+            url: 'https://res.cloudinary.com/dqrkqvtjg/image/upload/v1651975262/Flower-store/t%E1%BA%A3i_xu%E1%BB%91ng_2_wlu5no.png',
+            alt: 'Slider',
         },
         {
             id: 3,
-            url: "https://dc.flowercorner.vn/uploads/P620dd64fbbc6e3.58140733_dat-hoa-online-giao-mien-phi.jpg",
-            alt: "Slider",
+            url: 'https://res.cloudinary.com/dqrkqvtjg/image/upload/v1651975262/Flower-store/logo_j7etei.webp',
+            alt: 'Slider',
         },
     ];
 
     const settings: CarouselSetting = {
         autoPlay: true,
-        animation: "slide",
+        animation: 'slide',
         indicators: true,
-        duration: 500,
+        duration: 300,
         navButtonsAlwaysVisible: false,
         navButtonsAlwaysInvisible: false,
         cycleNavigation: true,

@@ -28,7 +28,7 @@ import {
     ProductCreateDto,
     ProductDto,
     ProductUpdateDto,
-} from '../../../../types/product/ProductDto';
+} from 'src/types/product/ProductDto';
 import { ProductManagerColDef } from '../config/ProductManagerColDef';
 import {
     PRODUCT_CREATE_API,
@@ -37,6 +37,7 @@ import {
     PRODUCT_UPDATE_API,
     CATEGORY_INDEX_API,
 } from './../api/index';
+import Loading from '../../../../components/utils/Loading';
 
 const ProductManager = () => {
     const gridRef = useRef<AgGridReact>(null);
@@ -56,19 +57,24 @@ const ProductManager = () => {
     const [description, setDescription] = useState<string | undefined>();
     const [categoryId, setCategoryId] = useState<string>('');
 
+    const [loading, setLoading] = useState<boolean>(false);
+
     useEffect(() => {
         getRowData();
 
         const getCategories = async () => {
+            setLoading(true);
             await axios
                 .get(CATEGORY_INDEX_API)
                 .then((res) => {
                     if (res.data.success) {
+                        setLoading(false);
                         const result = res.data.result as CategoryDto[];
                         setCategories(result);
                     }
                 })
                 .catch((err) => {
+                    setLoading(false);
                     console.log(err);
                 });
         };
@@ -77,13 +83,17 @@ const ProductManager = () => {
     }, []);
 
     const getRowData = async () => {
+        setLoading(true);
         await axios
             .get(PRODUCT_INDEX_API)
             .then((res) => {
-                if (res.data.success)
+                if (res.data.success) {
+                    setLoading(false);
                     setRowData(customRowData(res.data.result));
+                }
             })
             .catch((err) => {
+                setLoading(false);
                 console.log(err);
             });
     };
@@ -133,10 +143,12 @@ const ProductManager = () => {
             ''
         );
 
+        setLoading(true);
         axios
             .post(PRODUCT_CREATE_API, formData)
             .then((res) => {
                 if (res.data.success) {
+                    setLoading(false);
                     setDefault();
                     setOpenDialog(false);
                     getRowData();
@@ -149,6 +161,7 @@ const ProductManager = () => {
                 }
             })
             .catch((err) => {
+                setLoading(false);
                 setOpenDialog(false);
                 Swal.fire('Thông báo', 'Thêm sản phẩm thất bại!', 'error');
             });
@@ -182,14 +195,15 @@ const ProductManager = () => {
             ''
         );
 
+        setLoading(true);
         axios
             .put(`${PRODUCT_UPDATE_API}/${id}`, formData)
             .then((res) => {
                 if (res.data.success) {
+                    setLoading(false);
                     setDefault();
                     setOpenDialog(false);
                     getRowData();
-
                     gridRef?.current?.api.setRowData(rowData);
 
                     Swal.fire(
@@ -200,6 +214,7 @@ const ProductManager = () => {
                 }
             })
             .catch((err) => {
+                setLoading(false);
                 setOpenDialog(false);
                 Swal.fire('Thông báo', 'Cập nhật sản phẩm thất bại!', 'error');
             });
@@ -214,10 +229,12 @@ const ProductManager = () => {
             icon: 'warning',
         }).then((willDelete) => {
             if (willDelete.isConfirmed) {
+                setLoading(true);
                 axios
                     .delete(`${PRODUCT_DELETE_API}/${id}`)
                     .then((res) => {
                         if (res.data.success) {
+                            setLoading(false);
                             getRowData();
                             Swal.fire(
                                 'Thông báo',
@@ -227,6 +244,7 @@ const ProductManager = () => {
                         }
                     })
                     .catch((err) => {
+                        setLoading(false);
                         Swal.fire(
                             'Thông báo',
                             'Xóa sản phẩm thất bại',
@@ -292,6 +310,7 @@ const ProductManager = () => {
         }
     };
 
+    if (loading) return <Loading loading={loading} />;
     return (
         <div className='w-full'>
             <div className='grid-button'>

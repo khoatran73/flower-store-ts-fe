@@ -10,13 +10,14 @@ $floating-filter-color: #e8f9fd;
 $row-hover-color: rgba(33, 150, 243, 0.1);
 
 body {
-    font-family: 'Roboto';
+    font-family: 'K2D', sans-serif;
 }
 
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    font-weight: 300;
 }
 
 .grid-button {

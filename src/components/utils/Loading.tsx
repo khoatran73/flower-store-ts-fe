@@ -13,12 +13,11 @@ const Loading = (props: LoadingProps) => {
             className='loading'
             style={{
                 display: props.loading ? 'flex' : 'none',
-                flexDirection: 'column',
-                justifyContent: 'center',
-                alignItems: 'center',
                 width: '100%',
                 height: '100%',
-                position: 'absolute',
+                position: 'fixed',
+                top: '50%',
+                left: '50%',
                 zIndex: 999,
             }}
         >

@@ -1,5 +1,8 @@
 import { FC } from 'react';
 import { Link } from 'react-router-dom';
+import { Container } from '@mui/material';
+import LocationOnIcon from '@mui/icons-material/LocationOn';
+import PhoneIcon from '@mui/icons-material/Phone';
 
 const Footer: FC = () => {
     const footerCategories = [
@@ -105,53 +108,54 @@ const Footer: FC = () => {
     ];
 
     return (
-        <div className='bg-gray-300 mt-20  p-6'>
-            <div className='flex justify-between'>
-                <div>
-                    <img
-                        className='w-[180px]'
-                        src='https://d1kwj86ddez2oj.cloudfront.net/14052020/c6Bg8DmWut8COQbz88b2PB9Yd4Rb3QLMXCPg2gah.jpg'
-                        alt='Logo'
-                    />
-                    <div className='text-2xl mt-6'>
-                        Hasu thay bạn trao lời yêu thương !
+        <div className='bg-white p-6 border-y border-gray-200'>
+            <Container>
+                <div className='flex justify-between'>
+                    <div>
+                        <img
+                            src='https://res.cloudinary.com/dqrkqvtjg/image/upload/v1651974807/Flower-store/logo_otxw9r.webp'
+                            alt=''
+                        />
+                        <div className='text-xl mt-6 font-semibold'>
+                            Hasu thay bạn trao lời yêu thương !
+                        </div>
+                        <div className='text-md mt-2'>
+                            Shop hoa tươi uy tín - chất lượng - giá ưu đãi
+                        </div>
                     </div>
-                    <div className='text-md mt-2'>
-                        Hasu thay bạn trao lời yêu thương !
-                    </div>
-                </div>
-                <div className='flex justify-between ml-10'>
-                    {footerCategories.map((item, index) => (
+                    <div className='flex justify-between '>
                         <div className='ml-14'>
-                            <div
-                                className='text-xl font-semibold uppercase mb-2'
-                                key={index}
-                            >
-                                {item.name}
+                            <div className='text-xl font-medium  mb-2'>
+                                Find us at:
                             </div>
                             <ul>
-                                {item.children.map((child, i) => (
-                                    <li className='py-1'>
-                                        {child.content ? (
-                                            <>
-                                                <span>{child.name}</span>
-                                                <strong className='ml-1'>
-                                                    {child.content}
-                                                </strong>
-                                            </>
-                                        ) : (
-                                            <Link to={child.link} key={i}>
-                                                {child.name}
-                                            </Link>
-                                        )}
-                                    </li>
-                                ))}
+                                <li className='py-1'>
+                                    <div className='flex'>
+                                        <LocationOnIcon fontSize='small' />
+                                        <div className='ml-1'>
+                                            Quận 7, TP HCM
+                                        </div>
+                                    </div>
+                                    <div className='flex'>
+                                        <PhoneIcon fontSize='small' />
+                                        <div className='ml-1'>07989 12 333</div>
+                                    </div>
+                                </li>
                             </ul>
                         </div>
-                    ))}
+                    </div>
+                    <div>
+                        <iframe
+                            title='page'
+                            src='https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2Ftonducthanguniversity&tabs=timeline&width=500&height=200&small_header=true&adapt_container_width=true&hide_cover=false&show_facepile=true&appId=313007600488566'
+                            width='500'
+                            height='200'
+                            scrolling='no'
+                            allow='autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share'
+                        ></iframe>
+                    </div>
                 </div>
-            </div>
-            <div className='mt-4 flex justify-center'>© 2022 FlowerStore</div>
+            </Container>
         </div>
     );
 };
