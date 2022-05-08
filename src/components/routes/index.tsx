@@ -17,7 +17,7 @@ import ProductDetail from '../features/ProductDetail';
 import Purchase from '../features/Purchase';
 import Register from '../features/Register';
 import PrivateRoute from './PrivateRoute';
-import { Checkout } from './../shared/CheckOut/Checkout';
+import Checkout from './../shared/CheckOut/Checkout';
 
 const routeList = [
     {
