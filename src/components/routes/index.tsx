@@ -17,6 +17,7 @@ import ProductDetail from '../features/ProductDetail';
 import Purchase from '../features/Purchase';
 import Register from '../features/Register';
 import PrivateRoute from './PrivateRoute';
+import { Checkout } from './../shared/CheckOut/Checkout';
 
 const routeList = [
     {
@@ -43,44 +44,6 @@ const routeList = [
                 path: '/purchase',
                 element: <Purchase />,
             },
-            {
-                path: '/dashboard',
-                element: (
-                    <PrivateRoute>
-                        <Dashboard />,
-                    </PrivateRoute>
-                ),
-                children: [
-                    {
-                        path: '/dashboard',
-                        element: <Chart />,
-                    },
-                    {
-                        path: '/dashboard/product',
-                        element: <ProductManager />,
-                    },
-                    {
-                        path: '/dashboard/order',
-                        element: <Orders />,
-                    },
-                    {
-                        path: '/dashboard/staff',
-                        element: <StaffManager />,
-                    },
-                    {
-                        path: '/dashboard/customer',
-                        element: <Customer />,
-                    },
-                    {
-                        path: '/dashboard/report',
-                        element: <Report />,
-                    },
-                ],
-            },
-            {
-                path: '/*',
-                element: <NotFound />,
-            },
         ],
     },
     {
@@ -90,6 +53,48 @@ const routeList = [
     {
         path: '/register',
         element: <Register />,
+    },
+    {
+        path: '/checkout/:id',
+        element: <Checkout />,
+    },
+    {
+        path: '/dashboard',
+        element: (
+            <PrivateRoute>
+                <Dashboard />,
+            </PrivateRoute>
+        ),
+        children: [
+            {
+                path: '/dashboard',
+                element: <Chart />,
+            },
+            {
+                path: '/dashboard/product',
+                element: <ProductManager />,
+            },
+            {
+                path: '/dashboard/order',
+                element: <Orders />,
+            },
+            {
+                path: '/dashboard/staff',
+                element: <StaffManager />,
+            },
+            {
+                path: '/dashboard/customer',
+                element: <Customer />,
+            },
+            {
+                path: '/dashboard/report',
+                element: <Report />,
+            },
+        ],
+    },
+    {
+        path: '/*',
+        element: <NotFound />,
     },
 ] as RouteObject[];
 

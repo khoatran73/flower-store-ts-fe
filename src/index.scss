@@ -136,3 +136,25 @@ body {
 ::-webkit-scrollbar-thumb:hover {
     opacity: 1;
 }
+
+.custom-button {
+    background-color: #eb2066;
+    border: 1px solid #eb2066;
+    padding: 6px 12px;
+    color: #fff;
+    border-radius: 3px;
+    transition: all 0.3s ease-in-out;
+}
+
+.custom-button:hover {
+    color: #eb2066;
+    background-color: #fff;
+}
+
+.custom-button.outlined {
+    color: #eb2066;
+    background-color: #fff;
+}
+
+.custom-button.outlined:hover {
+}

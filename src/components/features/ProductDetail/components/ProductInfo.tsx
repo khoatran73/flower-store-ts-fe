@@ -1,10 +1,12 @@
 import AddIcon from '@mui/icons-material/Add';
-import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import RemoveIcon from '@mui/icons-material/Remove';
 import Button from '@mui/material/Button';
 import ButtonGroup from '@mui/material/ButtonGroup';
-import React from 'react';
-import { ProductDto } from 'src/types/product/ProductDto';
+import axios from 'axios';
+import React, { useEffect, useState } from 'react';
+import Loading from '../../../../components/utils/Loading';
+import { ProductDto } from '../../../../types/product/ProductDto';
+import { CREATE_CART_DETAIL_API } from '../api';
 
 interface Props {
     product: ProductDto | undefined;
@@ -13,7 +15,44 @@ interface Props {
 const ProductInfo: React.FC<Props> = (props: Props) => {
     const { product } = props;
     const [count, setCount] = React.useState(1);
+    const [isLogin, setIsLogin] = useState<string | null>();
+    const [role, setRole] = useState<string | null>();
+    const [loading, setLoading] = useState<boolean>(false);
 
+    useEffect(() => {
+        setIsLogin(localStorage.getItem('isLogin'));
+        setRole(localStorage.getItem('role'));
+    }, []);
+
+    const onAddCart = () => {
+        const params = {
+            cartCreateDto: {
+                accountId: isLogin,
+                account: {
+                    accountId: isLogin,
+                    role: role,
+                },
+            },
+            cartDetailCreateDto: {
+                productId: product?.id,
+                quantity: count,
+                price: product?.unitPrice * count,
+            },
+        };
+
+        setLoading(true);
+
+        axios
+            .post(CREATE_CART_DETAIL_API, params)
+            .then((res) => {
+                if (res.data.success) {
+                    setLoading(false);
+                } else {
+                }
+            })
+            .catch((err) => setLoading(false));
+    };
+    // if (loading) return <Loading loading={loading} />;
     return (
         <div className='my-10'>
             <div className='flex justify-between items-start'>
@@ -24,8 +63,8 @@ const ProductInfo: React.FC<Props> = (props: Props) => {
                     <div className='text-xl font-semibold uppercase pb-2 border-b border-gray-200'>
                         {product?.name}
                     </div>
-                    <div className='text-lg text-red-400 py-2 border-b border-gray-200'>
-                        {product?.unitPrice}đ
+                    <div className='text-lg font-semibold text-red-400 py-2 border-b border-gray-200'>
+                        {product?.unitPrice.toLocaleString()}đ
                     </div>
                     <div className='py-2'>
                         <div className='font-semibold'>Mô tả:</div>
@@ -64,7 +103,7 @@ const ProductInfo: React.FC<Props> = (props: Props) => {
                                 <Button
                                     variant='outlined'
                                     onClick={() => {
-                                        setCount(Math.max(count - 1, 0));
+                                        setCount(Math.max(count - 1, 1));
                                     }}
                                     size='small'
                                 >
@@ -86,13 +125,16 @@ const ProductInfo: React.FC<Props> = (props: Props) => {
                         </div>
                     </div>
                     <div className='mt-5'>
-                        <Button
-                            variant='contained'
-                            startIcon={<AddShoppingCartIcon />}
-                            color='success'
+                        <button
+                            className='custom-button w-full text-md uppercase font-semibold'
+                            style={{
+                                paddingTop: '10px',
+                                paddingBottom: '10px',
+                            }}
+                            onClick={onAddCart}
                         >
                             Thêm vào giỏ hàng
-                        </Button>
+                        </button>
                     </div>
                 </div>
             </div>

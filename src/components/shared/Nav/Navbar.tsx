@@ -1,27 +1,28 @@
+import DeleteIcon from '@mui/icons-material/Delete';
+import LogoutIcon from '@mui/icons-material/Logout';
 import SearchIcon from '@mui/icons-material/Search';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import {
     Avatar,
+    Badge,
     Box,
-    Button,
     Card,
     CardMedia,
     Container,
     Divider,
     IconButton,
     InputBase,
-    Menu,
-    MenuItem,
     Modal,
     Paper,
     Toolbar,
     Typography,
 } from '@mui/material';
-import * as React from 'react';
+import axios from 'axios';
+import React, { useState } from 'react';
 import { Link, NavLink } from 'react-router-dom';
-import { CartDto } from '../../../types/cart/Cart';
-import Cart from './components/Cart';
-// import { isLogin } from '../../../constant';
+import { CartDetailDto, CartDto } from '../../../types/cart/Cart';
+import { CART_INDEX_API } from '../../features/ProductDetail/api';
+import { REMOVE_CART_API } from './api';
 
 const pages = ['Home', 'Products', 'Pricing', 'Blog'];
 const routes = ['/', '/product', '/cart', '/purchase'];
@@ -31,33 +32,65 @@ const style = {
     top: '50%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
-    width: 400,
+    width: 500,
     bgcolor: 'background.paper',
     boxShadow: 24,
+    border: 'none',
+    outline: 'none',
 };
 
 const Navbar: React.FC = () => {
-    const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(
-        null
+    const [isLogin, setIsLogin] = React.useState<string | null>(
+        localStorage.getItem('isLogin')
     );
-    const [isLogin, setIsLogin] = React.useState<string | null>();
-    const [role, setRole] = React.useState<string | null>();
+    const [role, setRole] = React.useState<string | null>(
+        localStorage.getItem('role')
+    );
+    const [cart, setCart] = React.useState<CartDto>();
+    const [countCartDetail, setCountCartDetail] = React.useState<number>(0);
+    const [loading, setLoading] = useState<boolean>(false);
 
     React.useEffect(() => {
-        setIsLogin(localStorage.getItem('isLogin'));
-        setRole(localStorage.getItem('role'));
-    }, []);
+        fetchCart();
+    }, [cart]);
+
+    const onDelete = (cartDetailDto: CartDetailDto) => {
+        setLoading(true);
+        axios
+            .delete(REMOVE_CART_API, {
+                params: {
+                    cartId: cartDetailDto.cartId,
+                    productId: cartDetailDto.productId,
+                },
+            })
+            .then((res) => {
+                if (res.data.success) {
+                    // fetchCart();
+                }
+            })
+            .catch((err) => setLoading(false));
+    };
+
+    const fetchCart = () => {
+        setLoading(true);
+        axios
+            .get(CART_INDEX_API, { params: { accountId: isLogin } })
+            .then((res) => {
+                if (res.data.success) {
+                    setCart(res.data.result[0]);
+                    setCountCartDetail(cart?.cartDetails?.length || 0);
+                    setLoading(false);
+                }
+            })
+            .catch((err) => setLoading(false));
+    };
 
     const [openModal, setOpenModal] = React.useState<boolean>(false);
-    const handleOpenModal = () => setOpenModal(true);
+    const handleOpenModal = () => {
+        // fetchCart();
+        setOpenModal(true);
+    };
     const handleCloseModal = () => setOpenModal(false);
-
-    const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
-        setAnchorElUser(event.currentTarget);
-    };
-    const handleCloseUserMenu = () => {
-        setAnchorElUser(null);
-    };
 
     const logout = () => {
         localStorage.removeItem('isLogin');
@@ -66,30 +99,10 @@ const Navbar: React.FC = () => {
         setRole(null);
     };
 
-    const carts: CartDto[] = [
-        {
-            name: 'hoa 1',
-            unitPrice: 120000,
-            totalQuantity: 2,
-            totalPrice: 2400000,
-        },
-        {
-            name: 'hoa 2',
-            unitPrice: 130000,
-            totalQuantity: 1,
-            totalPrice: 2400000,
-        },
-        {
-            name: 'hoa 3',
-            unitPrice: 140000,
-            totalQuantity: 1,
-            totalPrice: 2400000,
-        },
-    ];
-
+    // if (loading) return <Loading loading={loading} />;
     return (
         <div
-            className='max-h-[100px] overflow-hidden bg-white shadow-md w-full fixed z-50 top-0'
+            className='max-h-[100px] overflow-hidden bg-white  w-full border-b border-gray-200 '
             id='navbar'
         >
             <Container>
@@ -140,52 +153,51 @@ const Navbar: React.FC = () => {
                                 <>
                                     <Typography className='w-[100%] flex justify-end items-center'>
                                         {role === 'customer' && (
-                                            <IconButton
-                                                sx={{ p: '10px' }}
-                                                aria-label='cart'
-                                                onClick={handleOpenModal}
+                                            <Badge
+                                                badgeContent={
+                                                    countCartDetail || '0'
+                                                }
+                                                color='error'
+                                                className='cursor-pointer mr-'
                                             >
-                                                <ShoppingCartIcon />
-                                            </IconButton>
+                                                <ShoppingCartIcon
+                                                    sx={{ color: '#eb2066' }}
+                                                    onClick={handleOpenModal}
+                                                />
+                                            </Badge>
                                         )}
                                         <Avatar
                                             className='ml-5'
                                             alt='Khoa Henry'
-                                            onClick={handleOpenUserMenu}
+                                            src='https://res.cloudinary.com/dqrkqvtjg/image/upload/v1651996030/Flower-store/avt_ui1vae.png'
                                         />
 
-                                        <Button
-                                            size='small'
+                                        <IconButton
+                                            sx={{
+                                                p: '10px',
+                                                marginLeft: '10px',
+                                                color: '#eb2066',
+                                            }}
+                                            aria-label='cart'
                                             onClick={logout}
-                                            variant='contained'
-                                            sx={{ marginLeft: '10px' }}
                                         >
-                                            Đăng xuất
-                                        </Button>
+                                            <LogoutIcon />
+                                        </IconButton>
                                     </Typography>
                                 </>
                             ) : (
-                                <>
+                                <div>
                                     <Link to='/login'>
-                                        <Button
-                                            variant='contained'
-                                            component='span'
-                                            style={{ marginRight: '10px' }}
-                                            size='small'
-                                        >
+                                        <button className='custom-button'>
                                             Đăng nhập
-                                        </Button>
+                                        </button>
                                     </Link>
-                                    <Link to='/register'>
-                                        <Button
-                                            variant='contained'
-                                            component='span'
-                                            size='small'
-                                        >
+                                    <Link to='/register' className='ml-3'>
+                                        <button className='custom-button'>
                                             Đăng ký
-                                        </Button>
+                                        </button>
                                     </Link>
-                                </>
+                                </div>
                             )}
                         </Box>
                     </div>
@@ -197,25 +209,101 @@ const Navbar: React.FC = () => {
                 aria-labelledby='modal-modal-title'
                 aria-describedby='modal-modal-description'
             >
-                <Box sx={style} className='h-[400px] overflow-hidden'>
-                    {/* <Typography
-                        id="modal-modal-description bg-white"
-                        sx={{ mt: 2 }}
-                    >
-                        Duis mollis, est non commodo luctus, nisi erat porttitor
-                        ligula.
-                    </Typography> */}
-                    <div className='h-[350px] overflow-y-auto overflow-x-hidden'>
-                        {carts.map((cart, index) => (
-                            <>
-                                <Cart key={index} cart={cart} />
-                                <Divider />
-                            </>
-                        ))}
+                <Box sx={style} className='h-[490px] overflow-hidden'>
+                    <div className='uppercase text-md font-semibold text-center py-3 bg-gray-100'>
+                        Giỏ hàng
+                    </div>
+                    <div className='h-[338px]  overflow-y-auto overflow-x-hidden'>
+                        <div>
+                            {cart?.cartDetails?.map(
+                                (cartDetail: CartDetailDto, index: number) => (
+                                    <>
+                                        <div className='flex justify-between align-center p-6 text-sm'>
+                                            <div className='flex align-center flex-auto w-3/4'>
+                                                <img
+                                                    src={
+                                                        cartDetail.product
+                                                            ?.image
+                                                    }
+                                                    alt=''
+                                                    className='w-16'
+                                                />
+                                                <div className='ml-3 w-[240px]'>
+                                                    <Link
+                                                        to={
+                                                            '/product/' +
+                                                            cartDetail.product
+                                                                ?.id
+                                                        }
+                                                    >
+                                                        <div className='font-semibold cursor-pointer text-sm truncate '>
+                                                            {
+                                                                cartDetail
+                                                                    .product
+                                                                    ?.name
+                                                            }
+                                                        </div>
+                                                    </Link>
+                                                    <div className='font-semibold text-gray-600'>
+                                                        {cartDetail.product?.unitPrice.toLocaleString()}
+                                                        đ
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div className='flex justify-between align-center flex-1'>
+                                                <div className='w-[75px]'>
+                                                    <div className='border border-gray-100 bg-gray-100 text-center w-6 h-6 rounded'>
+                                                        {cartDetail.quantity}
+                                                    </div>
+                                                    <div className='font-semibold  '>
+                                                        {cartDetail.price?.toLocaleString()}
+                                                        đ
+                                                    </div>
+                                                </div>
+                                                <div
+                                                    className='cursor-pointer text-red-500 text-lg'
+                                                    onClick={() =>
+                                                        onDelete(cartDetail)
+                                                    }
+                                                >
+                                                    x
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </>
+                                )
+                            )}
+                        </div>
+                        {cart?.cartDetails?.length === 0 && (
+                            <div className='flex items-center justify-center flex-col h-full'>
+                                <img
+                                    className='w-40'
+                                    src='https://res.cloudinary.com/dqrkqvtjg/image/upload/v1651994769/Flower-store/Pngtree_man_shopping_in_grocery_market_7299097_pebjyx.png'
+                                    alt=''
+                                />
+                                <div className='text-lg mt-5'>
+                                    Hiện chưa có sản phẩm
+                                </div>
+                            </div>
+                        )}
                     </div>
                     <Divider />
-                    <div className='h-[50px] flex items-center justify-center'>
-                        <Button variant='contained'>Thanh toan</Button>
+                    <div className='flex flex-col justify-between px-6 py-3'>
+                        <div className='flex justify-between mb-3'>
+                            <div className='uppercase font-normal text-sm'>
+                                Tổng tiền:
+                            </div>
+                            <div className='text-red-500'>
+                                {cart?.totalPrice?.toLocaleString()}đ
+                            </div>
+                        </div>
+                        <div className='text-center'>
+                            <Link to={'/checkout/' + cart?.id}>
+                                <button className='custom-button w-3/4'>
+                                    Thanh toán
+                                </button>
+                            </Link>
+                        </div>
                     </div>
                 </Box>
             </Modal>

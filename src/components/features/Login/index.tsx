@@ -10,17 +10,21 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import axios from 'axios';
-import * as React from 'react';
+import React, { useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
+import Loading from '../../../components/utils/Loading';
 import { API_LOGIN } from '../../../constant';
 
 const theme = createTheme();
 
 export default function Login() {
     const navigate = useNavigate();
+    const [loading, setLoading] = useState<boolean>(false);
+
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
+        setLoading(true);
         axios
             .post(API_LOGIN, {
                 username: data.get('username'),
@@ -29,14 +33,16 @@ export default function Login() {
             .then((res) => {
                 const data = res.data;
                 if (data.success) {
-                    localStorage.setItem('isLogin', data.result.username);
+                    setLoading(false);
+                    localStorage.setItem('isLogin', data.result.id);
                     localStorage.setItem('role', data.result.role);
                     navigate('/', { replace: true });
                 }
             })
-            .catch((err) => console.error(err));
+            .catch((err) => setLoading(false));
     };
 
+    if (loading) return <Loading loading={loading} />;
     return (
         <ThemeProvider theme={theme}>
             <Grid container component='main' sx={{ height: '100vh' }}>

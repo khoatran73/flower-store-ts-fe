@@ -25,8 +25,8 @@ import axios from 'axios';
 import React, { useEffect, useRef, useState } from 'react';
 import Swal from 'sweetalert2';
 import { customRowData } from '../../../../lib/Grid';
-import { ProductDto } from 'src/types/product/ProductDto';
-import { StoreDto } from 'src/types/store/StoreDto';
+import { ProductDto } from '../../../../types/product/ProductDto';
+import { StoreDto } from '../../../../types/store/StoreDto';
 import { StaffManagerColDef } from '../config/StaffManager.ColDef';
 import {
     STAFF_CREATE_API,

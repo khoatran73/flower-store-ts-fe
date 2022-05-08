@@ -20,7 +20,7 @@ function ScrollTop(props: Props) {
     const handleScrollTop = (event: React.MouseEvent<HTMLDivElement>) => {
         const anchor = (
             (event.target as HTMLDivElement).ownerDocument || document
-        ).querySelector('#navbar');
+        ).querySelector('#scroll-to');
 
         if (anchor) {
             anchor.scrollIntoView({

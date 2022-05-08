@@ -1,44 +1,51 @@
 import { Container, Pagination } from '@mui/material';
 import React, { useEffect, useState } from 'react';
-import { CategoryDto, ProductDto } from 'src/types/product/ProductDto';
+import { CategoryDto, ProductDto } from '../../../types/product/ProductDto';
 import ProductItem from '../Home/components/ProductItem';
 import axios from 'axios';
 import { PRODUCT_DETAIL_API } from '../ProductDetail/api';
 import { CATEGORY_INDEX_API } from '../Dashboard/api';
+import Loading from '../../../components/utils/Loading';
 
 const Product: React.FC = () => {
     const [products, setProducts] = useState<ProductDto[]>([]);
     const [categories, setCategories] = useState<CategoryDto[]>([]);
+    const [loading, setLoading] = useState<boolean>(false);
 
     useEffect(() => {
         const fetchProducts = async () => {
+            setLoading(true);
             await axios
                 .get(PRODUCT_DETAIL_API)
                 .then((res) => {
+                    setLoading(false);
                     if (res.data.success) setProducts(res.data.result);
                 })
-                .catch((err) => console.log(err));
+                .catch((err) => setLoading(false));
         };
 
         fetchProducts();
 
         const getCategories = async () => {
+            setLoading(true);
             await axios
                 .get(CATEGORY_INDEX_API)
                 .then((res) => {
                     if (res.data.success) {
+                        setLoading(false);
                         const result = res.data.result as CategoryDto[];
                         setCategories(result);
                     }
                 })
                 .catch((err) => {
-                    console.log(err);
+                    setLoading(false);
                 });
         };
 
         getCategories();
     }, []);
 
+    if (loading) return <Loading loading={loading} />;
     return (
         <Container>
             <div className='my-10'>

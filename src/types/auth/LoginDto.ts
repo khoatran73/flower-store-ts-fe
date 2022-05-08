@@ -18,6 +18,11 @@ export interface AccountDto {
     birthday: Date;
 }
 
+export interface SimpleAccount {
+    role: string;
+    id: string;
+}
+
 export interface AccountCreateDto {
     username: string;
     password: string;

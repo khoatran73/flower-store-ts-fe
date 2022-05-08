@@ -10,19 +10,22 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import axios from 'axios';
-import * as React from 'react';
+import React, { useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
+import Loading from '../../../components/utils/Loading';
 import { API_REGISTER } from '../../../constant';
 
 const theme = createTheme();
 
 export default function Register() {
     const navigate = useNavigate();
+    const [loading, setLoading] = useState<boolean>(false);
+
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         const formData = new FormData(event.currentTarget);
         event.preventDefault();
-
+        setLoading(true);
         axios
             .post(API_REGISTER, {
                 username: formData.get('username'),
@@ -32,6 +35,7 @@ export default function Register() {
             .then((res) => {
                 const data = res.data;
                 if (data.success) {
+                    setLoading(false);
                     Swal.fire(
                         'Thông báo',
                         'Đăng ký tài khoản thành công',
@@ -39,9 +43,11 @@ export default function Register() {
                     );
                     navigate('/login', { replace: true });
                 }
-            });
+            })
+            .catch((err) => setLoading(false));
     };
 
+    if (loading) return <Loading loading={loading} />;
     return (
         <ThemeProvider theme={theme}>
             <Grid container component='main' sx={{ height: '100vh' }}>

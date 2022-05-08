@@ -43,16 +43,10 @@ const ProductItem: FC<Props> = (props) => {
                         {name}
                     </div>
                     <div className='text-center mt-1 text-md text-red-500'>
-                        Giá: {unitPrice}
+                        Giá: {unitPrice.toLocaleString()}đ
                     </div>
                     <div className='mt-3 text-center'>
-                        <Button
-                            variant='outlined'
-                            startIcon={<AddShoppingCartIcon />}
-                            size={size}
-                        >
-                            Thêm vào giỏ hàng
-                        </Button>
+                        <button className='custom-button'>Mua ngay</button>
                     </div>
                 </CardContent>
             </Card>

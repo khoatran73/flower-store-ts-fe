@@ -28,7 +28,7 @@ import {
     ProductCreateDto,
     ProductDto,
     ProductUpdateDto,
-} from 'src/types/product/ProductDto';
+} from '../../../../types/product/ProductDto';
 import { ProductManagerColDef } from '../config/ProductManagerColDef';
 import {
     PRODUCT_CREATE_API,

@@ -27,6 +27,11 @@ export const ProductManagerColDef: ColumnDef[] = [
         headerName: 'Giá bán',
         field: 'unitPrice',
         cellStyle: { textAlign: 'center' },
+        valueGetter: function (params) {
+            if (params.data) {
+                return params.data.unitPrice.toLocaleString() + 'đ';
+            }
+        },
         filter: true,
         width: 120,
     },
@@ -35,6 +40,11 @@ export const ProductManagerColDef: ColumnDef[] = [
         field: 'totalQuantity',
         headerAlign: 'center',
         cellStyle: { textAlign: 'center' },
+        valueGetter: function (params) {
+            if (params.data) {
+                return params.data.totalQuantity.toLocaleString();
+            }
+        },
         width: 150,
         filter: true,
     },
