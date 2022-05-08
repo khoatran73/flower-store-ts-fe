@@ -66,12 +66,12 @@ const routeList = [
             </PrivateRoute>
         ),
         children: [
+            // {
+            //     path: '/dashboard',
+            //     element: <Chart />,
+            // },
             {
                 path: '/dashboard',
-                element: <Chart />,
-            },
-            {
-                path: '/dashboard/product',
                 element: <ProductManager />,
             },
             {
@@ -86,10 +86,10 @@ const routeList = [
                 path: '/dashboard/customer',
                 element: <Customer />,
             },
-            {
-                path: '/dashboard/report',
-                element: <Report />,
-            },
+            // {
+            //     path: '/dashboard/report',
+            //     element: <Report />,
+            // },
         ],
     },
     {

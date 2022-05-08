@@ -17,3 +17,10 @@ export const STORE_LIST_API = `${API_URL}/store`;
 
 // staff
 export const STAFF_CREATE_API = `${API_URL}/user/create-staff`;
+
+//order
+
+export const INDEX_ORDER_API = `${API_URL}/order`;
+
+// customer
+export const CUSTOMER_INDEX_API = `${API_URL}/user/list-customer`;

@@ -24,8 +24,8 @@ import { CartDetailDto, CartDto } from '../../../types/cart/Cart';
 import { CART_INDEX_API } from '../../features/ProductDetail/api';
 import { REMOVE_CART_API } from './api';
 
-const pages = ['Home', 'Products', 'Pricing', 'Blog'];
-const routes = ['/', '/product', '/cart', '/purchase'];
+const pages = ['Home', 'Products', 'Dashboard'];
+const routes = ['/', '/product', '/dashboard'];
 
 const style = {
     position: 'absolute' as 'absolute',
@@ -123,19 +123,51 @@ const Navbar: React.FC = () => {
                     </Typography>
                     <div className='flex justify-between items-center'>
                         <Box className='ml-6'>
-                            {pages.map((page, index) => (
+                            <div>
                                 <NavLink
-                                    key={index}
-                                    to={routes && routes[index]}
+                                    to={'/'}
                                     className='mr-2 ml-2 hover:text-red-400 transition ease-in-out delay-75 duration-1000'
                                 >
-                                    {page}
+                                    Trang Chủ
                                 </NavLink>
-                            ))}
+                                <NavLink
+                                    to={'/product'}
+                                    className='mr-2 ml-2 hover:text-red-400 transition ease-in-out delay-75 duration-1000'
+                                >
+                                    Sản Phẩm
+                                </NavLink>
+
+                                <NavLink
+                                    to={'/contact'}
+                                    className='mr-2 ml-2 hover:text-red-400 transition ease-in-out delay-75 duration-1000'
+                                >
+                                    Liên hệ
+                                </NavLink>
+                                <NavLink
+                                    to={'/reply'}
+                                    className='mr-2 ml-2 hover:text-red-400 transition ease-in-out delay-75 duration-1000'
+                                >
+                                    Phản hồi
+                                </NavLink>
+                                <NavLink
+                                    to={'/help'}
+                                    className='mr-2 ml-2 hover:text-red-400 transition ease-in-out delay-75 duration-1000'
+                                >
+                                    Trợ giúp
+                                </NavLink>
+                                {role === 'admin' && (
+                                    <NavLink
+                                        to={'/dashboard'}
+                                        className='mr-2 ml-2 text-red-400 transition ease-in-out delay-75 duration-1000'
+                                    >
+                                        Trang Quản Trị
+                                    </NavLink>
+                                )}
+                            </div>
                         </Box>
                     </div>
                     <div className='flex justify-between items-center'>
-                        <Paper component='form' className='mr-2'>
+                        {/* <Paper component='form' className='mr-2'>
                             <InputBase
                                 className='ml-3 '
                                 placeholder='Tìm kiếm sản phẩm'
@@ -147,7 +179,7 @@ const Navbar: React.FC = () => {
                             >
                                 <SearchIcon />
                             </IconButton>
-                        </Paper>
+                        </Paper> */}
                         <Box className='w-[240px] flex justify-end items-center'>
                             {isLogin ? (
                                 <>

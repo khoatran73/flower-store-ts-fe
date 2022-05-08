@@ -155,6 +155,9 @@ const StaffManager = () => {
         defaultColDef: {
             floatingFilter: true,
         },
+        autoGroupColumnDef: {
+            headerName: 'Chi nhánh',
+        },
     };
 
     if (loading) return <Loading loading={loading} />;

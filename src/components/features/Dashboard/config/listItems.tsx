@@ -14,15 +14,15 @@ import { Link } from 'react-router-dom';
 
 export const mainListItems = (
     <React.Fragment>
-        <Link to='/dashboard'>
+        {/* <Link to='/dashboard'>
             <ListItemButton>
                 <ListItemIcon>
                     <DashboardIcon />
                 </ListItemIcon>
                 <ListItemText primary='Bảng điều khiển' />
             </ListItemButton>
-        </Link>
-        <Link to='/dashboard/product'>
+        </Link> */}
+        <Link to='/dashboard'>
             <ListItemButton>
                 <ListItemIcon>
                     <LocalFloristIcon />
@@ -54,14 +54,14 @@ export const mainListItems = (
                 <ListItemText primary='Khách hàng' />
             </ListItemButton>
         </Link>
-        <Link to='/dashboard/report'>
+        {/* <Link to='/dashboard/report'>
             <ListItemButton>
                 <ListItemIcon>
                     <BarChartIcon />
                 </ListItemIcon>
                 <ListItemText primary='Báo cáo' />
             </ListItemButton>
-        </Link>
+        </Link> */}
         {/* <ListItemButton>
             <ListItemIcon>
                 <LayersIcon />
@@ -73,7 +73,7 @@ export const mainListItems = (
 
 export const secondaryListItems = (
     <React.Fragment>
-        <ListSubheader component='div' inset>
+        {/* <ListSubheader component='div' inset>
             Báo cáo đã lưu
         </ListSubheader>
         <ListItemButton>
@@ -87,7 +87,7 @@ export const secondaryListItems = (
                 <AssignmentIcon />
             </ListItemIcon>
             <ListItemText primary='Quý trước' />
-        </ListItemButton>
+        </ListItemButton> */}
         {/* <ListItemButton>
             <ListItemIcon>
                 <AssignmentIcon />

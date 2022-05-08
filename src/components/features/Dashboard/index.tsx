@@ -107,13 +107,13 @@ const Dashboard: React.FC = () => {
                                     Trang chủ
                                 </Typography>
                             </NavLink>
-                            <IconButton color='inherit'>
+                            {/* <IconButton color='inherit'>
                                 <Avatar
                                     className=''
                                     alt='Khoa Henry'
                                     src='https://avatars.githubusercontent.com/u/77377243?s=400&u=f1135698dedef3ad6fbb056b8f9e4bed4c1a92e0&v=4'
                                 />
-                            </IconButton>
+                            </IconButton> */}
                         </div>
                     </Toolbar>
                 </AppBar>

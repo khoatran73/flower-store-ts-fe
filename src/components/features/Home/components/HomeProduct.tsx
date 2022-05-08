@@ -30,8 +30,8 @@ const HomeProduct: FC = () => {
     if (loading) return <Loading loading={loading} />;
     return (
         <div className='my-10'>
-            <div className='text-3xl font-semibold mb-5 text-center uppercase'>
-                Danh sach san pham
+            <div className='text-2xl font-semibold mb-5 text-center uppercase'>
+                danh sách sản phẩm
             </div>
             <div className='flex justify-start items-center flex-wrap'>
                 {products.map((product) => (

@@ -24,8 +24,8 @@ const RelatedProducts: React.FC<Props> = (props) => {
                     <ProductItem
                         key={product.id}
                         product={product}
-                        width={222.4}
-                        height={200}
+                        width={210}
+                        height={180}
                         size='small'
                     />
                 ))}

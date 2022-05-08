@@ -39,6 +39,8 @@ body {
             .ag-header-cell-label {
                 justify-content: center;
                 .ag-header-cell-text {
+                    font-weight: 600;
+                    font-size: 14px;
                     color: #112b3c;
                 }
             }
@@ -70,6 +72,15 @@ body {
             padding: 0 12px;
             border-right: 1px solid $border-color;
             align-items: center;
+            font-weight: 400;
+            font-size: 14px;
+
+            .ag-cell-wrapper {
+                .ag-group-value,
+                .ag-group-child-count {
+                    font-weight: 400;
+                }
+            }
 
             .grid-cell-image-wrapper {
                 display: flex;
