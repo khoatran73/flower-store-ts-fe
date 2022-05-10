@@ -6,11 +6,23 @@ import axios from 'axios';
 import { PRODUCT_DETAIL_API } from '../ProductDetail/api';
 import { CATEGORY_INDEX_API } from '../Dashboard/api';
 import Loading from '../../../components/utils/Loading';
+import { usePagination } from './config/usePagination';
 
 const Product: React.FC = () => {
     const [products, setProducts] = useState<ProductDto[]>([]);
     const [categories, setCategories] = useState<CategoryDto[]>([]);
     const [loading, setLoading] = useState<boolean>(false);
+
+    const [page, setPage] = useState<number>(1);
+    const PER_PAGE = 8;
+
+    const count = Math.ceil(products.length / PER_PAGE);
+    const _DATA = usePagination(products, PER_PAGE);
+
+    const handleChange = (e: React.ChangeEvent<unknown>, p: number) => {
+        setPage(p);
+        _DATA.jump(p);
+    };
 
     useEffect(() => {
         const fetchProducts = async () => {
@@ -60,7 +72,7 @@ const Product: React.FC = () => {
                     ))}
                 </div>
                 <div className=' flex justify-start items-center flex-wrap'>
-                    {products.map((product) => (
+                    {_DATA.currentData().map((product) => (
                         <ProductItem
                             key={product.id}
                             product={product}
@@ -70,7 +82,12 @@ const Product: React.FC = () => {
                     ))}
                 </div>
                 <div className='mt-4 flex justify-center'>
-                    <Pagination count={3} color='primary' />
+                    <Pagination
+                        color='primary'
+                        count={count}
+                        page={page}
+                        onChange={handleChange}
+                    />
                 </div>
             </div>
         </Container>

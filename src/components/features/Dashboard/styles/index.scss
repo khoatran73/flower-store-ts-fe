@@ -1,0 +1,40 @@
+$bg-color: #0f172a;
+$text-color: #fffff6;
+
+.css-cvumne-MuiDrawer-docked {
+    .MuiDrawer-paper {
+        background-color: $bg-color;
+        color: $text-color;
+    }
+}
+
+.css-mkzahr-MuiListSubheader-root {
+    background-color: $bg-color !important;
+    color: $text-color !important;
+}
+
+.css-i4bv87-MuiSvgIcon-root {
+    color: $text-color;
+}
+
+.MuiToolbar-root {
+    .css-i4bv87-MuiSvgIcon-root {
+        color: #778599;
+    }
+}
+
+.css-10hburv-MuiTypography-root {
+    font-size: 14px !important;
+}
+
+@media only screen and (min-width: 600px) {
+    .css-aq1gdx-MuiDrawer-docked {
+        .MuiDrawer-paper {
+            background-color: $bg-color;
+        }
+    }
+}
+
+.css-11lq3yg-MuiGrid-root {
+    background-color: #f1f5f9;
+}

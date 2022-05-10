@@ -7,6 +7,7 @@ import Customer from '../features/Dashboard/components/Customer';
 import Orders from '../features/Dashboard/components/Orders';
 import ProductManager from '../features/Dashboard/components/ProductManager';
 import Report from '../features/Dashboard/components/Report';
+import { TrafficStatistics } from '../features/Dashboard/components/TrafficStatistics';
 import StaffManager from '../features/Dashboard/components/StaffManager';
 import Home from '../features/Home';
 import LayoutPage from '../features/layout-page';
@@ -62,7 +63,7 @@ const routeList = [
         path: '/dashboard',
         element: (
             <PrivateRoute>
-                <Dashboard />,
+                <Dashboard />
             </PrivateRoute>
         ),
         children: [
@@ -86,10 +87,21 @@ const routeList = [
                 path: '/dashboard/customer',
                 element: <Customer />,
             },
-            // {
-            //     path: '/dashboard/report',
-            //     element: <Report />,
-            // },
+            {
+                path: '/dashboard/report',
+                children: [
+                    // { path: '/dashboard/report', element: <Customer /> },
+                ],
+            },
+            {
+                path: '/dashboard/statistics',
+                children: [
+                    {
+                        path: '/dashboard/statistics/traffic',
+                        element: <TrafficStatistics />,
+                    },
+                ],
+            },
         ],
     },
     {

@@ -15,7 +15,8 @@ import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import * as React from 'react';
 import { NavLink, Outlet } from 'react-router-dom';
-import { mainListItems, secondaryListItems } from './config/listItems';
+import { mainListItems, SecondListItem } from './config/ListItem';
+import './styles/index.scss';
 
 const drawerWidth: number = 240;
 
@@ -83,16 +84,19 @@ const Dashboard: React.FC = () => {
                     <Toolbar
                         sx={{
                             pr: '24px',
+                            backgroundColor: '#fff',
+                            color: '#778599',
                         }}
                     >
                         <IconButton
                             edge='start'
-                            color='inherit'
+                            color='secondary'
                             aria-label='open drawer'
                             onClick={toggleDrawer}
                             sx={{
                                 marginRight: '36px',
                                 ...(open && { display: 'none' }),
+                                color: '#123 !important',
                             }}
                         >
                             <MenuIcon />
@@ -107,13 +111,6 @@ const Dashboard: React.FC = () => {
                                     Trang chủ
                                 </Typography>
                             </NavLink>
-                            {/* <IconButton color='inherit'>
-                                <Avatar
-                                    className=''
-                                    alt='Khoa Henry'
-                                    src='https://avatars.githubusercontent.com/u/77377243?s=400&u=f1135698dedef3ad6fbb056b8f9e4bed4c1a92e0&v=4'
-                                />
-                            </IconButton> */}
                         </div>
                     </Toolbar>
                 </AppBar>
@@ -122,19 +119,28 @@ const Dashboard: React.FC = () => {
                         sx={{
                             display: 'flex',
                             alignItems: 'center',
-                            justifyContent: 'flex-end',
+                            justifyContent: 'space-between',
                             px: [1],
+                            backgroundColor: '#0f172a',
+                            color: '#fffff6',
                         }}
                     >
+                        <img
+                            src='https://res.cloudinary.com/dqrkqvtjg/image/upload/v1652195303/Flower-store/logo-white_uohlt8.png'
+                            className='h-16 object-cover'
+                            alt=''
+                        />
                         <IconButton onClick={toggleDrawer}>
                             <ChevronLeftIcon />
                         </IconButton>
                     </Toolbar>
-                    <Divider />
-                    <List component='nav'>
+                    <List
+                        component='nav'
+                        sx={{ backgroundColor: '#0f172a', color: '#fffff6' }}
+                    >
                         {mainListItems}
                         <Divider sx={{ my: 1 }} />
-                        {secondaryListItems}
+                        <SecondListItem />
                     </List>
                 </Drawer>
                 <Box

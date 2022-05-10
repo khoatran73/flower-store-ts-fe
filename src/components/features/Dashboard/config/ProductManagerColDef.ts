@@ -12,7 +12,7 @@ export const ProductManagerColDef: ColumnDef[] = [
     {
         headerName: 'Tên sản phẩm',
         field: 'name',
-        minWidth: 300,
+        minWidth: 500,
         filter: true,
     },
     {
@@ -52,7 +52,7 @@ export const ProductManagerColDef: ColumnDef[] = [
         headerName: 'Mô tả',
         headerAlign: 'center',
         field: 'description',
-        minWidth: 300,
+        minWidth: 500,
     },
     {
         headerName: 'Hành động',
