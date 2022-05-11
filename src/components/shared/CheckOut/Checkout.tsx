@@ -325,6 +325,7 @@ export default function Checkout() {
 
         await axios.post(CREATE_ORDER_API, body);
 
+        console.log('newx');
         handleNext();
     };
 

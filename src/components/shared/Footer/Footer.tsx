@@ -144,7 +144,7 @@ const Footer: FC = () => {
                             </ul>
                         </div>
                     </div>
-                    <div>
+                    {/* <div>
                         <iframe
                             title='page'
                             src='https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2Ftonducthanguniversity&tabs=timeline&width=500&height=200&small_header=true&adapt_container_width=true&hide_cover=false&show_facepile=true&appId=313007600488566'
@@ -153,7 +153,7 @@ const Footer: FC = () => {
                             scrolling='no'
                             allow='autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share'
                         ></iframe>
-                    </div>
+                    </div> */}
                 </div>
             </Container>
         </div>

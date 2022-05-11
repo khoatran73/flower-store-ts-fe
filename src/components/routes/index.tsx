@@ -100,6 +100,10 @@ const routeList = [
                         path: '/dashboard/statistics/traffic',
                         element: <TrafficStatistics />,
                     },
+                    {
+                        path: '/dashboard/statistics/best-seller',
+                        element: <Chart />,
+                    },
                 ],
             },
         ],

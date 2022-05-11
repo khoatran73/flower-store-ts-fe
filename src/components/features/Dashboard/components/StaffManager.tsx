@@ -1,4 +1,5 @@
 import AddBoxIcon from '@mui/icons-material/AddBox';
+import RefreshIcon from '@mui/icons-material/Refresh';
 import {
     Box,
     Button,
@@ -24,16 +25,17 @@ import { AgGridReact } from 'ag-grid-react';
 import axios from 'axios';
 import React, { useEffect, useRef, useState } from 'react';
 import Swal from 'sweetalert2';
+import Loading from '../../../../components/utils/Loading';
 import { customRowData } from '../../../../lib/Grid';
 import { ProductDto } from '../../../../types/product/ProductDto';
 import { StoreDto } from '../../../../types/store/StoreDto';
 import { StaffManagerColDef } from '../config/StaffManager.ColDef';
+import { PAGE_SIZE } from '../constant';
 import {
     STAFF_CREATE_API,
     STAFF_INDEX_API,
     STORE_LIST_API,
 } from './../api/index';
-import Loading from '../../../../components/utils/Loading';
 
 const StaffManager = () => {
     const gridRef = useRef<AgGridReact>(null);
@@ -149,7 +151,7 @@ const StaffManager = () => {
         columnDefs: StaffManagerColDef,
         rowData: rowData,
         pagination: true,
-        paginationPageSize: 10,
+        paginationPageSize: PAGE_SIZE,
         groupDefaultExpanded: 1,
         rowSelection: 'single',
         defaultColDef: {
@@ -158,6 +160,10 @@ const StaffManager = () => {
         autoGroupColumnDef: {
             headerName: 'Chi nhánh',
         },
+    };
+
+    const onRefresh = () => {
+        getRowData();
     };
 
     if (loading) return <Loading loading={loading} />;
@@ -172,6 +178,16 @@ const StaffManager = () => {
                     onClick={handleOpenDialog}
                 >
                     Tạo mới
+                </Button>
+                <Button
+                    variant='contained'
+                    color='primary'
+                    size='small'
+                    startIcon={<RefreshIcon />}
+                    sx={{ marginLeft: '10px' }}
+                    onClick={onRefresh}
+                >
+                    Refresh
                 </Button>
             </div>
             <div

@@ -35,9 +35,15 @@ function ScrollTop(props: Props) {
             <Box
                 onClick={handleScrollTop}
                 role='presentation'
-                sx={{ position: 'fixed', bottom: 16, right: 16 }}
+                sx={{
+                    position: 'fixed',
+                    bottom: 16,
+                    right: 16,
+                    // background: 'red',
+                }}
+                className='scroll'
             >
-                <Fab color='primary' size='large'>
+                <Fab color='inherit' size='large'>
                     <KeyboardArrowUpIcon fontSize='large' />
                 </Fab>
             </Box>

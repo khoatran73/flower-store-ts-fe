@@ -7,6 +7,9 @@ import { PRODUCT_DETAIL_API } from '../ProductDetail/api';
 import { CATEGORY_INDEX_API } from '../Dashboard/api';
 import Loading from '../../../components/utils/Loading';
 import { usePagination } from './config/usePagination';
+import { Tabs } from 'antd';
+
+const { TabPane } = Tabs;
 
 const Product: React.FC = () => {
     const [products, setProducts] = useState<ProductDto[]>([]);
@@ -24,20 +27,19 @@ const Product: React.FC = () => {
         _DATA.jump(p);
     };
 
+    const fetchProducts = async (categoryId: string | null) => {
+        const params = categoryId ? { categoryId: categoryId } : '';
+        setLoading(true);
+        await axios
+            .get(PRODUCT_DETAIL_API, { params })
+            .then((res) => {
+                setLoading(false);
+                if (res.data.success) setProducts(res.data.result);
+            })
+            .catch((err) => setLoading(false));
+    };
+
     useEffect(() => {
-        const fetchProducts = async () => {
-            setLoading(true);
-            await axios
-                .get(PRODUCT_DETAIL_API)
-                .then((res) => {
-                    setLoading(false);
-                    if (res.data.success) setProducts(res.data.result);
-                })
-                .catch((err) => setLoading(false));
-        };
-
-        fetchProducts();
-
         const getCategories = async () => {
             setLoading(true);
             await axios
@@ -55,9 +57,14 @@ const Product: React.FC = () => {
         };
 
         getCategories();
+
+        fetchProducts(null);
     }, []);
 
-    if (loading) return <Loading loading={loading} />;
+    const onTabChange = (key: string) => {
+        fetchProducts(key);
+    };
+
     return (
         <Container>
             <div className='my-10'>
@@ -65,11 +72,21 @@ const Product: React.FC = () => {
                     Danh sách sản phẩm
                 </div>
                 <div className='flex mb-5'>
-                    {categories.map((category) => (
-                        <div className='mr-5 uppercase text-lg'>
-                            {category.name}
-                        </div>
-                    ))}
+                    <Tabs
+                        defaultActiveKey='1'
+                        size='large'
+                        onChange={onTabChange}
+                        // type='card'
+                    >
+                        <TabPane tab={'Tất cả sản phẩm'} key={''}>
+                            Tất cả sản phẩm
+                        </TabPane>
+                        {categories.map((category) => (
+                            <TabPane tab={category.name} key={category.id}>
+                                tab={category.name}
+                            </TabPane>
+                        ))}
+                    </Tabs>
                 </div>
                 <div className=' flex justify-start items-center flex-wrap'>
                     {_DATA.currentData().map((product) => (
@@ -81,7 +98,7 @@ const Product: React.FC = () => {
                         />
                     ))}
                 </div>
-                <div className='mt-4 flex justify-center'>
+                <div className='mt-4 flex justify-center pagination'>
                     <Pagination
                         color='primary'
                         count={count}

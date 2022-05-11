@@ -2,6 +2,7 @@
 import { Button, Result } from 'antd';
 import * as React from 'react';
 import { useNavigate } from 'react-router-dom';
+import 'antd/dist/antd.css';
 
 export const NotFound = () => {
     const navigate = useNavigate();
@@ -26,6 +27,7 @@ export const NotFound = () => {
                     onClick={() => {
                         navigate('/');
                     }}
+                    className='text-blue-400 hover:text-white '
                 >
                     {'Trở về trang chủ'}
                 </Button>,

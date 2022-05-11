@@ -7,7 +7,6 @@ export const ProductManagerColDef: ColumnDef[] = [
         field: 'stt',
         width: 100,
         cellStyle: { textAlign: 'center' },
-        // sortable: true,
     },
     {
         headerName: 'Tên sản phẩm',
@@ -20,8 +19,8 @@ export const ProductManagerColDef: ColumnDef[] = [
         field: 'category.name',
         minWidth: 300,
         filter: true,
-        // rowGroup: true,
-        // hide: true,
+        rowGroup: true,
+        hide: true,
     },
     {
         headerName: 'Giá bán',
@@ -52,7 +51,7 @@ export const ProductManagerColDef: ColumnDef[] = [
         headerName: 'Mô tả',
         headerAlign: 'center',
         field: 'description',
-        minWidth: 500,
+        minWidth: 800,
     },
     {
         headerName: 'Hành động',

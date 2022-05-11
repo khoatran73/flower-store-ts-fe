@@ -52,6 +52,7 @@ const ProductInfo: React.FC<Props> = (props: Props) => {
             })
             .catch((err) => setLoading(false));
     };
+
     // if (loading) return <Loading loading={loading} />;
     return (
         <div className='my-10'>
@@ -62,6 +63,20 @@ const ProductInfo: React.FC<Props> = (props: Props) => {
                 <div className='ml-5 w-2/5'>
                     <div className='text-xl font-semibold uppercase pb-2 border-b border-gray-200'>
                         {product?.name}
+                    </div>
+                    <div className='flex'>
+                        <div>
+                            Đã bán:{' '}
+                            <span className='text-red-400 font-semibold'>
+                                {product?.countSold}
+                            </span>
+                        </div>
+                        <div className='ml-2'>
+                            Kho:{' '}
+                            <span className='text-red-400 font-semibold'>
+                                {product?.totalQuantity}
+                            </span>
+                        </div>
                     </div>
                     <div className='text-lg font-semibold text-red-400 py-2 border-b border-gray-200'>
                         {product?.unitPrice.toLocaleString()}đ

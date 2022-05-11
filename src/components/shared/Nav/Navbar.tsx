@@ -1,6 +1,4 @@
-import DeleteIcon from '@mui/icons-material/Delete';
 import LogoutIcon from '@mui/icons-material/Logout';
-import SearchIcon from '@mui/icons-material/Search';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import {
     Avatar,
@@ -11,21 +9,18 @@ import {
     Container,
     Divider,
     IconButton,
-    InputBase,
     Modal,
-    Paper,
     Toolbar,
     Typography,
 } from '@mui/material';
 import axios from 'axios';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import { CartDetailDto, CartDto } from '../../../types/cart/Cart';
 import { CART_INDEX_API } from '../../features/ProductDetail/api';
 import { REMOVE_CART_API } from './api';
-
-const pages = ['Home', 'Products', 'Dashboard'];
-const routes = ['/', '/product', '/dashboard'];
+import FiberManualRecordIcon from '@mui/icons-material/FiberManualRecord';
+import SearchIcon from '@mui/icons-material/Search';
 
 const style = {
     position: 'absolute' as 'absolute',
@@ -39,20 +34,33 @@ const style = {
     outline: 'none',
 };
 
-const Navbar: React.FC = () => {
-    const [isLogin, setIsLogin] = React.useState<string | null>(
+const Navbar = () => {
+    const [isLogin, setIsLogin] = useState<string | null>(
         localStorage.getItem('isLogin')
     );
-    const [role, setRole] = React.useState<string | null>(
+    const [role, setRole] = useState<string | null>(
         localStorage.getItem('role')
     );
-    const [cart, setCart] = React.useState<CartDto>();
-    const [countCartDetail, setCountCartDetail] = React.useState<number>(0);
+    const [cart, setCart] = useState<CartDto>();
     const [loading, setLoading] = useState<boolean>(false);
 
-    React.useEffect(() => {
+    const fetchCart = async () => {
+        setLoading(true);
+        await axios
+            .get(CART_INDEX_API, { params: { accountId: isLogin } })
+            .then((res) => {
+                if (res.data.success) {
+                    setCart(res.data.result[0]);
+                    setLoading(false);
+                }
+            })
+            .catch((err) => setLoading(false));
+    };
+
+    useEffect(() => {
         fetchCart();
-    }, [cart]);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     const onDelete = (cartDetailDto: CartDetailDto) => {
         setLoading(true);
@@ -65,29 +73,15 @@ const Navbar: React.FC = () => {
             })
             .then((res) => {
                 if (res.data.success) {
-                    // fetchCart();
+                    fetchCart();
                 }
             })
             .catch((err) => setLoading(false));
     };
 
-    const fetchCart = () => {
-        setLoading(true);
-        axios
-            .get(CART_INDEX_API, { params: { accountId: isLogin } })
-            .then((res) => {
-                if (res.data.success) {
-                    setCart(res.data.result[0]);
-                    setCountCartDetail(cart?.cartDetails?.length || 0);
-                    setLoading(false);
-                }
-            })
-            .catch((err) => setLoading(false));
-    };
-
-    const [openModal, setOpenModal] = React.useState<boolean>(false);
+    const [openModal, setOpenModal] = useState<boolean>(false);
     const handleOpenModal = () => {
-        // fetchCart();
+        fetchCart();
         setOpenModal(true);
     };
     const handleCloseModal = () => setOpenModal(false);
@@ -123,42 +117,42 @@ const Navbar: React.FC = () => {
                     </Typography>
                     <div className='flex justify-between items-center'>
                         <Box className='ml-6'>
-                            <div>
+                            <div className='text-base'>
                                 <NavLink
                                     to={'/'}
-                                    className='mr-2 ml-2 hover:text-red-400 transition ease-in-out delay-75 duration-1000'
+                                    className='mr-2 ml-2 nav-item transition ease-in-out delay-75 duration-700'
                                 >
                                     Trang Chủ
                                 </NavLink>
                                 <NavLink
                                     to={'/product'}
-                                    className='mr-2 ml-2 hover:text-red-400 transition ease-in-out delay-75 duration-1000'
+                                    className='mr-2 ml-2 nav-item transition ease-in-out delay-75 duration-700'
                                 >
                                     Sản Phẩm
                                 </NavLink>
 
                                 <NavLink
                                     to={'/contact'}
-                                    className='mr-2 ml-2 hover:text-red-400 transition ease-in-out delay-75 duration-1000'
+                                    className='mr-2 ml-2 nav-item transition ease-in-out delay-75 duration-700'
                                 >
                                     Liên hệ
                                 </NavLink>
                                 <NavLink
                                     to={'/reply'}
-                                    className='mr-2 ml-2 hover:text-red-400 transition ease-in-out delay-75 duration-1000'
+                                    className='mr-2 ml-2 nav-item transition ease-in-out delay-75 duration-700'
                                 >
                                     Phản hồi
                                 </NavLink>
                                 <NavLink
                                     to={'/help'}
-                                    className='mr-2 ml-2 hover:text-red-400 transition ease-in-out delay-75 duration-1000'
+                                    className='mr-2 ml-2 nav-item transition ease-in-out delay-75 duration-700'
                                 >
                                     Trợ giúp
                                 </NavLink>
                                 {role === 'admin' && (
                                     <NavLink
                                         to={'/dashboard'}
-                                        className='mr-2 ml-2 text-red-400 transition ease-in-out delay-75 duration-1000'
+                                        className='mr-2 ml-2 text-red-400 transition ease-in-out delay-75 duration-700'
                                     >
                                         Trang Quản Trị
                                     </NavLink>
@@ -185,18 +179,38 @@ const Navbar: React.FC = () => {
                                 <>
                                     <Typography className='w-[100%] flex justify-end items-center'>
                                         {role === 'customer' && (
-                                            <Badge
-                                                badgeContent={
-                                                    countCartDetail || '0'
-                                                }
-                                                color='error'
-                                                className='cursor-pointer mr-'
-                                            >
-                                                <ShoppingCartIcon
-                                                    sx={{ color: '#eb2066' }}
-                                                    onClick={handleOpenModal}
-                                                />
-                                            </Badge>
+                                            <>
+                                                <IconButton
+                                                    sx={{
+                                                        p: '10px',
+                                                        marginRight: '10px',
+                                                        color: '#eb2066',
+                                                    }}
+                                                    aria-label='cart'
+                                                >
+                                                    <SearchIcon />
+                                                </IconButton>
+                                                <Badge
+                                                    badgeContent={
+                                                        // cart?.cartDetails?.length
+                                                        <FiberManualRecordIcon
+                                                            fontSize='inherit'
+                                                            color='error'
+                                                        />
+                                                    }
+                                                    color='error'
+                                                    className='cursor-pointer mr-'
+                                                >
+                                                    <ShoppingCartIcon
+                                                        sx={{
+                                                            color: '#eb2066',
+                                                        }}
+                                                        onClick={
+                                                            handleOpenModal
+                                                        }
+                                                    />
+                                                </Badge>
+                                            </>
                                         )}
                                         <Avatar
                                             className='ml-5'
@@ -249,7 +263,7 @@ const Navbar: React.FC = () => {
                         <div>
                             {cart?.cartDetails?.map(
                                 (cartDetail: CartDetailDto, index: number) => (
-                                    <>
+                                    <div key={index}>
                                         <div className='flex justify-between align-center p-6 text-sm'>
                                             <div className='flex align-center flex-auto w-3/4'>
                                                 <img
@@ -302,11 +316,13 @@ const Navbar: React.FC = () => {
                                                 </div>
                                             </div>
                                         </div>
-                                    </>
+                                    </div>
                                 )
                             )}
                         </div>
-                        {cart?.cartDetails?.length === 0 && (
+                        {(!cart ||
+                            !cart?.cartDetails ||
+                            cart?.cartDetails?.length === 0) && (
                             <div className='flex items-center justify-center flex-col h-full'>
                                 <img
                                     className='w-40'

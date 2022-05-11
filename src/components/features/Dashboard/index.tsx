@@ -1,9 +1,8 @@
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
+import LogoutIcon from '@mui/icons-material/Logout';
 import MenuIcon from '@mui/icons-material/Menu';
-import { Avatar } from '@mui/material';
 import MuiAppBar, { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
-import Container from '@mui/material/Container';
 import CssBaseline from '@mui/material/CssBaseline';
 import Divider from '@mui/material/Divider';
 import MuiDrawer from '@mui/material/Drawer';
@@ -14,10 +13,9 @@ import { createTheme, styled, ThemeProvider } from '@mui/material/styles';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import * as React from 'react';
-import { NavLink, Outlet } from 'react-router-dom';
+import { Outlet, useNavigate } from 'react-router-dom';
+import Forbidden from './../../utils/Forbidden';
 import { mainListItems, SecondListItem } from './config/ListItem';
-import './styles/index.scss';
-
 const drawerWidth: number = 240;
 
 interface AppBarProps extends MuiAppBarProps {
@@ -72,13 +70,31 @@ const mdTheme = createTheme();
 
 const Dashboard: React.FC = () => {
     const [open, setOpen] = React.useState(true);
+    const [isLogin, setIsLogin] = React.useState<string | null>(
+        localStorage.getItem('isLogin')
+    );
+    const [role, setRole] = React.useState<string | null>(
+        localStorage.getItem('role')
+    );
+
+    const navigate = useNavigate();
+
     const toggleDrawer = () => {
         setOpen(!open);
     };
 
+    const logout = () => {
+        localStorage.removeItem('isLogin');
+        localStorage.removeItem('role');
+        setIsLogin(null);
+        setRole(null);
+        navigate('/');
+    };
+
+    if (!isLogin && role !== 'admin') return <Forbidden />;
     return (
         <ThemeProvider theme={mdTheme}>
-            <Box sx={{ display: 'flex' }}>
+            <Box sx={{ display: 'flex' }} className='dashboard'>
                 <CssBaseline />
                 <AppBar position='absolute' open={open}>
                     <Toolbar
@@ -102,15 +118,26 @@ const Dashboard: React.FC = () => {
                             <MenuIcon />
                         </IconButton>
                         <div className='flex justify-between items-center w-full'>
-                            <NavLink to='/'>
-                                <Typography
-                                    component='h1'
-                                    variant='h6'
-                                    color='inherit'
-                                >
-                                    Trang chủ
-                                </Typography>
-                            </NavLink>
+                            {/* <NavLink to='/'> */}
+                            <Typography
+                                component='h1'
+                                variant='h6'
+                                color='inherit'
+                            >
+                                DASHBOARD
+                            </Typography>
+                            {/* </NavLink> */}
+                            <IconButton
+                                sx={{
+                                    p: '10px',
+                                    marginLeft: '10px',
+                                    color: '#eb2066',
+                                }}
+                                aria-label='cart'
+                                onClick={logout}
+                            >
+                                <LogoutIcon />
+                            </IconButton>
                         </div>
                     </Toolbar>
                 </AppBar>

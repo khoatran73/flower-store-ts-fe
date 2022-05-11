@@ -17,7 +17,7 @@ export const OrderColDef: ColumnDef[] = [
     {
         headerName: 'Địa chỉ',
         field: 'customer.account.address',
-        minWidth: 220,
+        minWidth: 400,
     },
     {
         headerName: 'Số điện thoại',
@@ -58,6 +58,7 @@ export const OrderColDef: ColumnDef[] = [
     {
         headerName: 'Email',
         field: 'customer.account.email',
+        minWidth: 150,
     },
 
     {
@@ -71,7 +72,7 @@ export const OrderColDef: ColumnDef[] = [
                     .toString();
             }
         },
-        width: 160,
+        minWidth: 200,
         cellStyle: { textAlign: 'center' },
     },
 ];

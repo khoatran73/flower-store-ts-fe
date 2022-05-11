@@ -7,6 +7,7 @@ export interface ProductDto {
     description?: string;
     category: CategoryDto;
     categoryId: string;
+    countSold?: number;
 }
 
 export interface CategoryDto {

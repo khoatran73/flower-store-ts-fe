@@ -11,6 +11,8 @@ import { customRowData } from '../../../../lib/Grid';
 import { ProductDto } from '../../../../types/product/ProductDto';
 import { OrderColDef } from '../config/Order.ColDef';
 import { INDEX_ORDER_API } from './../api/index';
+import RefreshIcon from '@mui/icons-material/Refresh';
+import { PAGE_SIZE } from '../constant';
 
 const Orders: React.FC = () => {
     const gridRef = useRef<AgGridReact>(null);
@@ -26,7 +28,7 @@ const Orders: React.FC = () => {
         columnDefs: OrderColDef,
         rowData: rowData,
         pagination: true,
-        paginationPageSize: 10,
+        paginationPageSize: PAGE_SIZE,
         groupDefaultExpanded: 1,
         rowSelection: 'single',
         defaultColDef: {
@@ -53,6 +55,10 @@ const Orders: React.FC = () => {
             });
     };
 
+    const onRefresh = () => {
+        getRowData();
+    };
+
     if (loading) return <Loading loading={loading} />;
     return (
         <div className='w-full'>
@@ -65,6 +71,16 @@ const Orders: React.FC = () => {
                     sx={{ opacity: 0 }}
                 >
                     tao moi
+                </Button>
+                <Button
+                    variant='contained'
+                    color='primary'
+                    size='small'
+                    startIcon={<RefreshIcon />}
+                    sx={{ marginLeft: '10px' }}
+                    onClick={onRefresh}
+                >
+                    Refresh
                 </Button>
             </div>
             <div

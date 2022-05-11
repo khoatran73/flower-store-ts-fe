@@ -1,6 +1,7 @@
 import React from 'react';
 import { Result } from 'antd';
 import { Link } from 'react-router-dom';
+import 'antd/dist/antd.css';
 
 interface Props {
     text?: string;

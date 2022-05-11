@@ -38,6 +38,9 @@ import {
     CATEGORY_INDEX_API,
 } from './../api/index';
 import Loading from '../../../../components/utils/Loading';
+import RefreshIcon from '@mui/icons-material/Refresh';
+import { Notify } from './../../../utils/Notify';
+import { PAGE_SIZE } from '../constant';
 
 const ProductManager = () => {
     const gridRef = useRef<AgGridReact>(null);
@@ -260,11 +263,13 @@ const ProductManager = () => {
         columnDefs: ProductManagerColDef,
         rowData: rowData,
         pagination: true,
-        paginationPageSize: 10,
+        paginationPageSize: PAGE_SIZE,
         groupDefaultExpanded: 1,
         rowSelection: 'single',
+        sizeColumnsToFit: true,
         defaultColDef: {
             floatingFilter: true,
+            // sortable: true,
         },
         onCellClicked(params: any) {
             if (
@@ -310,6 +315,10 @@ const ProductManager = () => {
         }
     };
 
+    const onRefresh = () => {
+        getRowData();
+    };
+
     if (loading) return <Loading loading={loading} />;
     return (
         <div className='w-full'>
@@ -322,6 +331,16 @@ const ProductManager = () => {
                     onClick={handleOpenDialog}
                 >
                     Tạo mới
+                </Button>
+                <Button
+                    variant='contained'
+                    color='primary'
+                    size='small'
+                    startIcon={<RefreshIcon />}
+                    sx={{ marginLeft: '10px' }}
+                    onClick={onRefresh}
+                >
+                    Refresh
                 </Button>
             </div>
             <div
