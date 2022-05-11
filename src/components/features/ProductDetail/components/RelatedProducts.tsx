@@ -1,5 +1,6 @@
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { ProductDto } from 'src/types/product/ProductDto';
 import ProductItem from '../../Home/components/ProductItem';
 
@@ -15,9 +16,11 @@ const RelatedProducts: React.FC<Props> = (props) => {
                 <div className='text-2xl font-semibold text-left uppercase'>
                     Sản phẩm liên quan
                 </div>
-                <div className='flex items-center text-md text-blue-700 hover:cursor-pointer'>
-                    Xem thêm <ChevronRightIcon />
-                </div>
+                <Link to='/product'>
+                    <div className='flex items-center text-md text-blue-600 hover:cursor-pointer'>
+                        Xem thêm <ChevronRightIcon fontSize='small' />
+                    </div>
+                </Link>
             </div>
             <div className=' flex justify-start items-center flex-wrap'>
                 {relatedProducts.map((product) => (

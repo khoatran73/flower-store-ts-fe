@@ -12,6 +12,8 @@ import {
     Modal,
     Toolbar,
     Typography,
+    InputBase,
+    Paper,
 } from '@mui/material';
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
@@ -93,6 +95,7 @@ const Navbar = () => {
         setRole(null);
     };
 
+    console.log(cart && cart.cartDetails && cart.cartDetails.length > 0);
     // if (loading) return <Loading loading={loading} />;
     return (
         <div
@@ -160,43 +163,44 @@ const Navbar = () => {
                             </div>
                         </Box>
                     </div>
-                    <div className='flex justify-between items-center'>
-                        {/* <Paper component='form' className='mr-2'>
-                            <InputBase
-                                className='ml-3 '
-                                placeholder='Tìm kiếm sản phẩm'
-                            />
-                            <IconButton
-                                sx={{ p: '10px' }}
-                                aria-label='search'
-                                onClick={(e) => e.preventDefault()}
-                            >
-                                <SearchIcon />
-                            </IconButton>
-                        </Paper> */}
+                    <div className='flex justify-between items-center relative'>
                         <Box className='w-[240px] flex justify-end items-center'>
                             {isLogin ? (
                                 <>
                                     <Typography className='w-[100%] flex justify-end items-center'>
                                         {role === 'customer' && (
-                                            <>
-                                                <IconButton
-                                                    sx={{
-                                                        p: '10px',
-                                                        marginRight: '10px',
-                                                        color: '#eb2066',
-                                                    }}
-                                                    aria-label='cart'
-                                                >
-                                                    <SearchIcon />
-                                                </IconButton>
+                                            <div className=''>
+                                                {/* <div className=''>
+                                                    <Paper className='mr-2'>
+                                                        <InputBase
+                                                            className='ml-3 '
+                                                            placeholder='Tìm kiếm sản phẩm'
+                                                        />
+                                                        <IconButton
+                                                            sx={{
+                                                                p: '10px',
+                                                            }}
+                                                            aria-label='search'
+                                                            onClick={(e) =>
+                                                                e.preventDefault()
+                                                            }
+                                                        >
+                                                            <SearchIcon />
+                                                        </IconButton>
+                                                    </Paper>
+                                                </div> */}
                                                 <Badge
                                                     badgeContent={
                                                         // cart?.cartDetails?.length
-                                                        <FiberManualRecordIcon
-                                                            fontSize='inherit'
-                                                            color='error'
-                                                        />
+                                                        cart &&
+                                                        cart.cartDetails &&
+                                                        cart.cartDetails
+                                                            .length > 0 && (
+                                                            <FiberManualRecordIcon
+                                                                fontSize='inherit'
+                                                                color='error'
+                                                            />
+                                                        )
                                                     }
                                                     color='error'
                                                     className='cursor-pointer mr-'
@@ -210,7 +214,7 @@ const Navbar = () => {
                                                         }
                                                     />
                                                 </Badge>
-                                            </>
+                                            </div>
                                         )}
                                         <Avatar
                                             className='ml-5'

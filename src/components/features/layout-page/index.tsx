@@ -46,7 +46,7 @@ const LayoutPage: React.FC = () => {
                     </Container>
                 </div>
                 <Footer />
-                <div className='my-4 flex justify-center text-base'>
+                <div className='py-4 flex justify-center text-base'>
                     Copyright © 2022 Hasu Flora. Powered by Khoa Tran
                 </div>
             </>

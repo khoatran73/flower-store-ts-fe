@@ -2,6 +2,7 @@ import { Container } from '@mui/material';
 import { FC } from 'react';
 import HomeProduct from './components/HomeProduct';
 import Slider from './components/Slider';
+import { Banner } from './components/Banner';
 
 const Home: FC = () => {
     return (
@@ -10,6 +11,7 @@ const Home: FC = () => {
             <Container className='mt-5'>
                 <HomeProduct />
             </Container>
+            <Banner />
         </div>
     );
 };

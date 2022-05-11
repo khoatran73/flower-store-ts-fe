@@ -83,7 +83,7 @@ const Product: React.FC = () => {
                         </TabPane>
                         {categories.map((category) => (
                             <TabPane tab={category.name} key={category.id}>
-                                tab={category.name}
+                                {category.name}
                             </TabPane>
                         ))}
                     </Tabs>
