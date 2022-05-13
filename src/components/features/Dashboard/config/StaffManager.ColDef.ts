@@ -11,13 +11,13 @@ export const StaffManagerColDef: ColumnDef[] = [
     },
     {
         headerName: 'Tên nhân viên',
-        field: 'account.fullname',
+        field: 'fullname',
         minWidth: 300,
         filter: true,
     },
     {
         headerName: 'Username',
-        field: 'account.username',
+        field: 'username',
     },
     {
         headerName: 'Cửa hàng',
@@ -27,14 +27,14 @@ export const StaffManagerColDef: ColumnDef[] = [
     },
     {
         headerName: 'Email',
-        field: 'account.email',
+        field: 'email',
     },
     {
         headerName: 'Role',
-        field: 'account.role',
+        field: 'role',
         valueGetter: function (params) {
             if (params.data) {
-                let role = params.data.account.role;
+                let role = params.data.role;
                 if (role === 'warehouse') return 'Nhân viên kho';
                 else if (role === 'sales') return 'Nhân viên bán hàng';
 
@@ -44,22 +44,22 @@ export const StaffManagerColDef: ColumnDef[] = [
     },
     {
         headerName: 'Giới tính',
-        field: 'account.gender',
+        field: 'gender',
         width: 120,
         cellStyle: { textAlign: 'center' },
         valueGetter: function (params) {
             if (params.data) {
-                if (params.data.account.gender) return 'Nam';
+                if (params.data.gender) return 'Nam';
                 return 'Nữ';
             }
         },
     },
     {
         headerName: 'Ngày sinh',
-        field: 'account.birthday',
+        field: 'birthday',
         valueGetter: function (params) {
             if (params.data) {
-                const birthday = params.data.account.birthday;
+                const birthday = params.data.birthday;
                 return moment(birthday).format('DD/MM/YYYY').toString();
             }
         },
@@ -68,12 +68,12 @@ export const StaffManagerColDef: ColumnDef[] = [
     },
     {
         headerName: 'SDT',
-        field: 'account.phone',
+        field: 'phone',
         width: 120,
     },
     {
         headerName: 'Địa chỉ',
-        field: 'account.address',
+        field: 'address',
         minWidth: 300,
     },
     // {

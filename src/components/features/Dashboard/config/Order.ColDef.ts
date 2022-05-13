@@ -10,18 +10,19 @@ export const OrderColDef: ColumnDef[] = [
     },
     {
         headerName: 'Tên khách hàng',
-        field: 'customer.account.fullname',
+        field: 'customer.fullname',
         rowGroup: true,
         hide: true,
     },
     {
         headerName: 'Địa chỉ',
-        field: 'customer.account.address',
+        field: 'customer.address',
         minWidth: 400,
+        filter: true,
     },
     {
         headerName: 'Số điện thoại',
-        field: 'customer.account.phone',
+        field: 'customer.phone',
     },
     {
         headerName: 'Discount',
@@ -57,10 +58,9 @@ export const OrderColDef: ColumnDef[] = [
     },
     {
         headerName: 'Email',
-        field: 'customer.account.email',
+        field: 'customer.email',
         minWidth: 150,
     },
-
     {
         headerName: 'Ngày mua hàng',
         field: 'createdAt',
@@ -73,6 +73,23 @@ export const OrderColDef: ColumnDef[] = [
             }
         },
         minWidth: 200,
+        cellStyle: { textAlign: 'center' },
+    },
+    {
+        headerName: 'Trạng thái',
+        field: 'deliveryAt',
+        valueGetter: function (params) {
+            if (params.data) {
+                const deliveryAt = params.data.deliveryAt;
+                if (deliveryAt === null) {
+                    return 'Chưa giao hàng';
+                } else {
+                    return moment(deliveryAt)
+                        .format('DD/MM/YYYY hh:mm:ss')
+                        .toString();
+                }
+            }
+        },
         cellStyle: { textAlign: 'center' },
     },
 ];

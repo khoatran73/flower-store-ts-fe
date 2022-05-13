@@ -1,6 +1,4 @@
-import moment from 'moment';
 import { ColumnDef } from '../../../../types/utils/ColumnDef';
-import { ActionRenderer } from './ActionRenderer';
 
 export const CustomerColDef: ColumnDef[] = [
     {
@@ -11,34 +9,36 @@ export const CustomerColDef: ColumnDef[] = [
     },
     {
         headerName: 'Tên khách hàng',
-        field: 'account.fullname',
-        minWidth: 300,
+        field: 'fullname',
+        minWidth: 500,
         filter: true,
     },
     {
         headerName: 'Username',
-        field: 'account.username',
+        field: 'username',
     },
     {
         headerName: 'Email',
-        field: 'account.email',
+        field: 'email',
+        minWidth: 300,
     },
     {
         headerName: 'Role',
-        field: 'account.role',
+        field: 'role',
         valueGetter: function (params) {
             return 'Khách hàng';
         },
     },
     {
         headerName: 'SDT',
-        field: 'account.phone',
+        field: 'phone',
         width: 120,
     },
     {
         headerName: 'Địa chỉ',
-        field: 'account.address',
-        minWidth: 300,
+        field: 'address',
+        minWidth: 500,
+        filter: true,
     },
     // {
     //     headerName: 'Hành động',

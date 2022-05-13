@@ -1,44 +1,22 @@
 import AddBoxIcon from '@mui/icons-material/AddBox';
-import {
-    Box,
-    Button,
-    Dialog,
-    DialogActions,
-    DialogContent,
-    DialogTitle,
-    FormControl,
-    FormControlLabel,
-    FormLabel,
-    InputLabel,
-    MenuItem,
-    Radio,
-    RadioGroup,
-    Select,
-    TextField,
-} from '@mui/material';
-import Divider from '@mui/material/Divider';
+import { Button } from '@mui/material';
 import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-alpine.css';
 import 'ag-grid-enterprise';
 import { AgGridReact } from 'ag-grid-react';
 import axios from 'axios';
 import React, { useEffect, useRef, useState } from 'react';
-import Swal from 'sweetalert2';
+import Loading from '../../../../components/utils/Loading';
 import { customRowData } from '../../../../lib/Grid';
-import { ProductDto } from '../../../../types/product/ProductDto';
 import { StoreDto } from '../../../../types/store/StoreDto';
 import { CustomerColDef } from '../config/Customer.ColDef';
-import {
-    CUSTOMER_INDEX_API,
-    STAFF_INDEX_API,
-    STORE_LIST_API,
-} from './../api/index';
-import Loading from '../../../../components/utils/Loading';
+import { UserDto } from './../../../../types/user/UserDto';
+import { CUSTOMER_INDEX_API } from './../api/index';
 
 const Customer: React.FC = () => {
     const gridRef = useRef<AgGridReact>(null);
     const [openDialog, setOpenDialog] = React.useState(false);
-    const [rowData, setRowData] = useState<ProductDto[] | any[]>([]);
+    const [rowData, setRowData] = useState<UserDto[] | any[]>([]);
     const [stores, setStores] = useState<StoreDto[]>([]);
     const [loading, setLoading] = useState<boolean>(false);
 

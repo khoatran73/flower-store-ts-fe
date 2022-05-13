@@ -31,6 +31,8 @@ import { ProductDto } from '../../../../types/product/ProductDto';
 import { StoreDto } from '../../../../types/store/StoreDto';
 import { StaffManagerColDef } from '../config/StaffManager.ColDef';
 import { PAGE_SIZE } from '../constant';
+import { UserDto } from './../../../../types/user/UserDto';
+
 import {
     STAFF_CREATE_API,
     STAFF_INDEX_API,
@@ -40,7 +42,7 @@ import {
 const StaffManager = () => {
     const gridRef = useRef<AgGridReact>(null);
     const [openDialog, setOpenDialog] = React.useState(false);
-    const [rowData, setRowData] = useState<ProductDto[] | any[]>([]);
+    const [rowData, setRowData] = useState<UserDto[] | any[]>([]);
     const [stores, setStores] = useState<StoreDto[]>([]);
     const [loading, setLoading] = useState<boolean>(false);
 

@@ -1,8 +1,7 @@
 import { AccountCreateDto, AccountDto } from '../auth/LoginDto';
 import { StoreDto } from '../store/StoreDto';
 
-export interface UserDto {
-    account: AccountDto;
+export interface UserDto extends AccountDto {
     store: StoreDto;
 }
 

@@ -28,10 +28,10 @@ const ProductInfo: React.FC<Props> = (props: Props) => {
         const params = {
             cartCreateDto: {
                 accountId: isLogin,
-                account: {
-                    accountId: isLogin,
-                    role: role,
-                },
+                // account: {
+                //     accountId: isLogin,
+                //     role: role,
+                // },
             },
             cartDetailCreateDto: {
                 productId: product?.id,
