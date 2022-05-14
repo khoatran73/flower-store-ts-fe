@@ -85,19 +85,6 @@ const StaffManager = () => {
             .catch((err) => console.log(err));
     };
 
-    const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
-        const form = new FormData(e.currentTarget);
-        const wardCode = form.get('ward');
-        let provinceR = province?.name;
-        let districtR = district.name;
-        let wardR = district?.wards.find(
-            (ward: any) => ward.code == wardCode
-        ).name;
-
-        console.log(`${wardR} - ${districtR} - ${provinceR}`);
-    };
-
     useEffect(() => {
         getRowData();
         fetchProvinces();
@@ -271,94 +258,99 @@ const StaffManager = () => {
                         <FormControl
                             fullWidth
                             size='small'
-                            sx={{ margin: '10px 0' }}
+                            sx={{
+                                margin: '10px 0',
+                                display: 'flex',
+                                flexDirection: 'row',
+                                justifyContent: 'space-between',
+                            }}
                         >
-                            <TextField
-                                autoFocus
-                                name='fullName'
-                                label='Họ và tên'
+                            <FormControl
                                 size='small'
-                            />
-                        </FormControl>
-                        <FormControl
-                            fullWidth
-                            size='small'
-                            sx={{ margin: '10px 0' }}
-                        >
-                            <TextField
-                                autoFocus
-                                name='username'
-                                label='Tên đăng nhập'
-                                size='small'
-                            />
-                        </FormControl>
-                        <FormControl
-                            fullWidth
-                            size='small'
-                            sx={{ margin: '10px 0' }}
-                        >
-                            <TextField
-                                name='password'
-                                label='Mật khẩu'
-                                type='password'
-                                size='small'
-                            />
-                        </FormControl>
-                        <FormControl
-                            fullWidth
-                            size='small'
-                            sx={{ margin: '10px 0' }}
-                        >
-                            <TextField
-                                size='small'
-                                name='confirmPassword'
-                                label='Nhập lại mật khẩu'
-                                type='password'
-                            />
-                        </FormControl>
-
-                        <FormControl
-                            fullWidth
-                            size='small'
-                            sx={{ margin: '10px 0' }}
-                        >
-                            <TextField
-                                autoFocus
-                                name='email'
-                                label='Email'
-                                size='small'
-                            />
-                        </FormControl>
-                        <FormControl
-                            fullWidth
-                            size='small'
-                            sx={{ margin: '10px 0' }}
-                        >
-                            <TextField
-                                autoFocus
-                                name='phone'
-                                label='SDT'
-                                size='small'
-                            />
-                        </FormControl>
-                        <FormControl
-                            fullWidth
-                            size='small'
-                            sx={{ margin: '10px 0' }}
-                        >
-                            <InputLabel id='store-id'>Cửa hàng</InputLabel>
-                            <Select
-                                labelId='store-id'
-                                size='small'
-                                label='Cửa hàng'
-                                name='storeId'
+                                sx={{ margin: '10px 0', width: '48%' }}
                             >
-                                {stores.map((store) => (
-                                    <MenuItem value={store.id}>
-                                        {store.name}
-                                    </MenuItem>
-                                ))}
-                            </Select>
+                                <TextField
+                                    name='fullName'
+                                    label='Họ và tên'
+                                    size='small'
+                                />
+                            </FormControl>
+
+                            <FormControl
+                                size='small'
+                                sx={{ margin: '10px 0', width: '48%' }}
+                            >
+                                <TextField
+                                    name='username'
+                                    label='Tên đăng nhập'
+                                    size='small'
+                                />
+                            </FormControl>
+                        </FormControl>
+                        <FormControl
+                            fullWidth
+                            size='small'
+                            sx={{
+                                margin: '10px 0',
+                                display: 'flex',
+                                flexDirection: 'row',
+                                justifyContent: 'space-between',
+                            }}
+                        >
+                            <FormControl
+                                size='small'
+                                sx={{ margin: '10px 0', width: '48%' }}
+                            >
+                                <TextField
+                                    name='password'
+                                    label='Mật khẩu'
+                                    type='password'
+                                    size='small'
+                                />
+                            </FormControl>
+                            <FormControl
+                                size='small'
+                                sx={{ margin: '10px 0', width: '48%' }}
+                            >
+                                <TextField
+                                    size='small'
+                                    name='confirmPassword'
+                                    label='Nhập lại mật khẩu'
+                                    type='password'
+                                />
+                            </FormControl>
+                        </FormControl>
+                        <FormControl
+                            fullWidth
+                            size='small'
+                            sx={{
+                                margin: '10px 0',
+                                display: 'flex',
+                                flexDirection: 'row',
+                                justifyContent: 'space-between',
+                            }}
+                        >
+                            <FormControl
+                                size='small'
+                                sx={{ margin: '10px 0', width: '48%' }}
+                            >
+                                <TextField
+                                    name='email'
+                                    label='Email'
+                                    size='small'
+                                    type='email'
+                                />
+                            </FormControl>
+                            <FormControl
+                                size='small'
+                                sx={{ margin: '10px 0', width: '48%' }}
+                            >
+                                <TextField
+                                    name='phone'
+                                    label='SDT'
+                                    size='small'
+                                />
+                            </FormControl>
                         </FormControl>
                         <FormControl
                             fullWidth
@@ -384,49 +376,75 @@ const StaffManager = () => {
                                 />
                             </RadioGroup>
                         </FormControl>
-                        <FormControl
-                            fullWidth
-                            size='small'
-                            sx={{ margin: '10px 0' }}
-                        >
-                            <InputLabel id='role'>Chức vụ</InputLabel>
-                            <Select
-                                labelId='role'
-                                size='small'
-                                label='Cửa hàng'
-                                name='role'
-                            >
-                                <MenuItem value='sales'>
-                                    Nhân viên bán hàng
-                                </MenuItem>
-                                <MenuItem value='warehouse'>
-                                    Nhân viên kho
-                                </MenuItem>
-                            </Select>
-                        </FormControl>
-                        <FormControl
-                            fullWidth
-                            size='small'
-                            sx={{ margin: '10px 0' }}
-                        >
-                            <TextField
-                                label='Ngày sinh'
-                                type='date'
-                                name='birthday'
-                                size='small'
-                                InputLabelProps={{
-                                    shrink: true,
-                                }}
-                            />
-                        </FormControl>
+
                         <FormControl
                             fullWidth
                             size='small'
                             sx={{
                                 margin: '10px 0',
-                                // display: 'flex',
-                                // flexDirection: 'row',
-                                // justifyContent: 'space-between',
+                                display: 'flex',
+                                flexDirection: 'row',
+                                justifyContent: 'space-between',
+                            }}
+                        >
+                            <FormControl
+                                size='small'
+                                sx={{ margin: '10px 0', width: '30%' }}
+                            >
+                                <TextField
+                                    label='Ngày sinh'
+                                    type='date'
+                                    name='birthday'
+                                    size='small'
+                                    InputLabelProps={{
+                                        shrink: true,
+                                    }}
+                                />
+                            </FormControl>
+                            <FormControl
+                                size='small'
+                                sx={{ margin: '10px 0', width: '30%' }}
+                            >
+                                <InputLabel id='store-id'>Cửa hàng</InputLabel>
+                                <Select
+                                    labelId='store-id'
+                                    size='small'
+                                    label='Cửa hàng'
+                                    name='storeId'
+                                >
+                                    {stores.map((store) => (
+                                        <MenuItem value={store.id}>
+                                            {store.name}
+                                        </MenuItem>
+                                    ))}
+                                </Select>
+                            </FormControl>
+                            <FormControl
+                                size='small'
+                                sx={{ margin: '10px 0', width: '30%' }}
+                            >
+                                <InputLabel id='role'>Chức vụ</InputLabel>
+                                <Select
+                                    labelId='role'
+                                    size='small'
+                                    label='Cửa hàng'
+                                    name='role'
+                                >
+                                    <MenuItem value='sales'>
+                                        Nhân viên bán hàng
+                                    </MenuItem>
+                                    <MenuItem value='warehouse'>
+                                        Nhân viên kho
+                                    </MenuItem>
+                                </Select>
+                            </FormControl>
+                        </FormControl>
+
+                        <FormControl
+                            fullWidth
+                            size='small'
+                            sx={{
+                                margin: '10px 0',
                             }}
                         >
                             <FormLabel>Địa chỉ</FormLabel>

@@ -375,23 +375,64 @@ const ProductManager = () => {
                     <FormControl
                         fullWidth
                         size='small'
-                        sx={{ margin: '10px 0' }}
+                        sx={{
+                            margin: '10px 0',
+                            display: 'flex',
+                            flexDirection: 'row',
+                            justifyContent: 'space-between',
+                        }}
                     >
-                        <InputLabel id='category-id'>Danh mục</InputLabel>
-                        <Select
-                            labelId='category-id'
+                        <FormControl
                             size='small'
-                            label='Danh mục'
-                            value={categoryId}
-                            onChange={(e) => setCategoryId(e.target.value)}
-                            required
+                            sx={{ margin: '10px 0', width: '50%' }}
                         >
-                            {categories.map((category) => (
-                                <MenuItem value={category.id}>
-                                    {category.name}
-                                </MenuItem>
-                            ))}
-                        </Select>
+                            <InputLabel id='category-id'>Danh mục</InputLabel>
+                            <Select
+                                labelId='category-id'
+                                size='small'
+                                label='Danh mục'
+                                value={categoryId}
+                                onChange={(e) => setCategoryId(e.target.value)}
+                                required
+                            >
+                                {categories.map((category) => (
+                                    <MenuItem value={category.id}>
+                                        {category.name}
+                                    </MenuItem>
+                                ))}
+                            </Select>
+                        </FormControl>
+                        <FormControl
+                            size='small'
+                            sx={{ margin: '10px 0', width: '23%' }}
+                        >
+                            <TextField
+                                name='unitPrice'
+                                label='Giá bán'
+                                type='number'
+                                size='small'
+                                required
+                                value={unitPrice}
+                                onChange={(e) =>
+                                    setUnitPrice(parseInt(e.target.value))
+                                }
+                            />
+                        </FormControl>
+                        <FormControl
+                            size='small'
+                            sx={{ margin: '10px 0', width: '23%' }}
+                        >
+                            <TextField
+                                name='totalQuantity'
+                                label='Số lượng'
+                                type='number'
+                                size='small'
+                                value={totalQuantity}
+                                onChange={(e) =>
+                                    setTotalQuantity(parseInt(e.target.value))
+                                }
+                            />
+                        </FormControl>
                     </FormControl>
                     <FormControl
                         fullWidth
@@ -413,39 +454,7 @@ const ProductManager = () => {
                             />
                         </div>
                     </FormControl>
-                    <FormControl
-                        fullWidth
-                        size='small'
-                        sx={{ margin: '10px 0' }}
-                    >
-                        <TextField
-                            name='unitPrice'
-                            label='Giá bán'
-                            type='number'
-                            size='small'
-                            required
-                            value={unitPrice}
-                            onChange={(e) =>
-                                setUnitPrice(parseInt(e.target.value))
-                            }
-                        />
-                    </FormControl>
-                    <FormControl
-                        fullWidth
-                        size='small'
-                        sx={{ margin: '10px 0' }}
-                    >
-                        <TextField
-                            name='totalQuantity'
-                            label='Số lượng'
-                            type='number'
-                            size='small'
-                            value={totalQuantity}
-                            onChange={(e) =>
-                                setTotalQuantity(parseInt(e.target.value))
-                            }
-                        />
-                    </FormControl>
+
                     <FormControl
                         fullWidth
                         size='small'
