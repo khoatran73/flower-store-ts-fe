@@ -47,7 +47,7 @@ export default function Register() {
             .catch((err) => setLoading(false));
     };
 
-    if (loading) return <Loading loading={loading} />;
+    // if (loading) return <Loading loading={loading} />;
     return (
         <ThemeProvider theme={theme}>
             <Grid container component='main' sx={{ height: '100vh' }}>

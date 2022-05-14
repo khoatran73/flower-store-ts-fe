@@ -22,8 +22,8 @@ export const StaffManagerColDef: ColumnDef[] = [
     {
         headerName: 'Cửa hàng',
         field: 'store.name',
-        rowGroup: true,
-        hide: true,
+        // rowGroup: true,
+        // hide: true,
     },
     {
         headerName: 'Email',

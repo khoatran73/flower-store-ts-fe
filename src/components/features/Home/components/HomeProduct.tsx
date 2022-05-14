@@ -27,7 +27,7 @@ const HomeProduct: FC = () => {
         fetchProducts();
     }, []);
 
-    if (loading) return <Loading loading={loading} />;
+    // if (loading) return <Loading loading={loading} />;
     return (
         <div className='my-10'>
             <div className='text-2xl font-semibold mb-5 text-center uppercase'>

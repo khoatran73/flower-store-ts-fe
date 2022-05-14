@@ -47,7 +47,7 @@ const ProductDetail: React.FC = () => {
         fetchRelatedProduct();
     }, [id, product?.categoryId]);
 
-    if (loading) return <Loading loading={loading} />;
+    // if (loading) return <Loading loading={loading} />;
     return (
         <Container>
             <BreadCumb product={product} />

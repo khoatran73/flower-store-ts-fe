@@ -98,13 +98,13 @@ export const Profile: React.FC = () => {
                     </SubMenu> */}
                 </Menu>
             </Sider>
-            <Layout style={{ padding: '0 24px 24px' }}>
+            <Layout style={{ padding: '0 24px 24px', height: '100%' }}>
                 <Content
                     className='site-layout-background'
                     style={{
                         padding: '12px 24px 24px 24px',
                         margin: 0,
-                        minHeight: '100%',
+                        height: '100%',
                     }}
                 >
                     <Outlet />

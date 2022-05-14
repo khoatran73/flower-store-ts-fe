@@ -59,7 +59,7 @@ const Customer: React.FC = () => {
         },
     };
 
-    if (loading) return <Loading loading={loading} />;
+    // if (loading) return <Loading loading={loading} />;
     return (
         <div className='w-full h-full'>
             <div className='grid-button'>

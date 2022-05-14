@@ -11,8 +11,8 @@ export const OrderColDef: ColumnDef[] = [
     {
         headerName: 'Tên khách hàng',
         field: 'customer.fullname',
-        rowGroup: true,
-        hide: true,
+        // rowGroup: true,
+        // hide: true,
     },
     {
         headerName: 'Địa chỉ',

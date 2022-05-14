@@ -19,8 +19,8 @@ export const ProductManagerColDef: ColumnDef[] = [
         field: 'category.name',
         minWidth: 300,
         filter: true,
-        rowGroup: true,
-        hide: true,
+        // rowGroup: true,
+        // hide: true,
     },
     {
         headerName: 'Giá bán',
