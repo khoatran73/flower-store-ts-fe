@@ -9,3 +9,12 @@ export interface UserCreateDto {
     account: AccountCreateDto;
     storeId: string;
 }
+
+export interface Province {
+    code: number;
+    codename: string;
+    districts: any[];
+    division_type: string;
+    name: string;
+    phone_code: string;
+}

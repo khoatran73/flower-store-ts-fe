@@ -12,7 +12,7 @@ export const StaffManagerColDef: ColumnDef[] = [
     {
         headerName: 'Tên nhân viên',
         field: 'fullname',
-        minWidth: 300,
+        minWidth: 200,
         filter: true,
     },
     {
@@ -74,7 +74,7 @@ export const StaffManagerColDef: ColumnDef[] = [
     {
         headerName: 'Địa chỉ',
         field: 'address',
-        minWidth: 300,
+        minWidth: 400,
     },
     // {
     //     headerName: 'Hành động',

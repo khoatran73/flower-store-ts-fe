@@ -27,12 +27,11 @@ import React, { useEffect, useRef, useState } from 'react';
 import Swal from 'sweetalert2';
 import Loading from '../../../../components/utils/Loading';
 import { customRowData } from '../../../../lib/Grid';
-import { ProductDto } from '../../../../types/product/ProductDto';
 import { StoreDto } from '../../../../types/store/StoreDto';
+import { GET_PROVINCES_API } from '../api';
 import { StaffManagerColDef } from '../config/StaffManager.ColDef';
 import { PAGE_SIZE } from '../constant';
-import { UserDto } from './../../../../types/user/UserDto';
-
+import { Province, UserDto } from './../../../../types/user/UserDto';
 import {
     STAFF_CREATE_API,
     STAFF_INDEX_API,
@@ -45,9 +44,63 @@ const StaffManager = () => {
     const [rowData, setRowData] = useState<UserDto[] | any[]>([]);
     const [stores, setStores] = useState<StoreDto[]>([]);
     const [loading, setLoading] = useState<boolean>(false);
+    const [provinces, setProvinces] = useState<Province[]>();
+    const [province, setProvince] = useState<Province>();
+    const [district, setDistrict] = useState<any>();
+
+    const fetchProvinces = () => {
+        axios
+            .get(`${GET_PROVINCES_API}/p`)
+            .then((res) => {
+                if (res.status === 200) {
+                    setProvinces(res.data);
+                }
+            })
+            .catch((err) => console.log(err));
+    };
+
+    const fetchDistricts = (code: any) => {
+        axios
+            .get(`${GET_PROVINCES_API}/p/${code}`, {
+                params: { depth: 2 },
+            })
+            .then((res) => {
+                if (res.status === 200) {
+                    setProvince(res.data);
+                }
+            })
+            .catch((err) => console.log(err));
+    };
+
+    const fetchWards = (code: any) => {
+        axios
+            .get(`${GET_PROVINCES_API}/d/${code}`, {
+                params: { depth: 2 },
+            })
+            .then((res) => {
+                if (res.status === 200) {
+                    setDistrict(res.data);
+                }
+            })
+            .catch((err) => console.log(err));
+    };
+
+    const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        const form = new FormData(e.currentTarget);
+        const wardCode = form.get('ward');
+        let provinceR = province?.name;
+        let districtR = district.name;
+        let wardR = district?.wards.find(
+            (ward: any) => ward.code == wardCode
+        ).name;
+
+        console.log(`${wardR} - ${districtR} - ${provinceR}`);
+    };
 
     useEffect(() => {
         getRowData();
+        fetchProvinces();
 
         const getStores = async () => {
             setLoading(true);
@@ -89,6 +142,13 @@ const StaffManager = () => {
         event.preventDefault();
         const form = new FormData(event.currentTarget);
 
+        const wardCode = form.get('ward');
+        let provinceR = province?.name;
+        let districtR = district.name;
+        let wardR = district?.wards.find(
+            (ward: any) => ward.code == wardCode
+        ).name;
+
         const fullName = form.get('fullName');
         const username = form.get('username');
         const password = form.get('password');
@@ -99,7 +159,7 @@ const StaffManager = () => {
         const gender = form.get('gender');
         const role = form.get('role');
         const birthday = form.get('birthday');
-        const address = form.get('address');
+        const address = `${wardR} - ${districtR} - ${provinceR}`;
 
         const staff: any = {
             storeId: storeId,
@@ -362,13 +422,92 @@ const StaffManager = () => {
                         <FormControl
                             fullWidth
                             size='small'
-                            sx={{ margin: '10px 0' }}
+                            sx={{
+                                margin: '10px 0',
+                                // display: 'flex',
+                                // flexDirection: 'row',
+                                // justifyContent: 'space-between',
+                            }}
                         >
-                            <TextField
-                                label='Địa chỉ'
-                                name='address'
-                                size='small'
-                            />
+                            <FormLabel>Địa chỉ</FormLabel>
+                            <div className='ư-full flex flex-row justify-between'>
+                                <FormControl
+                                    size='small'
+                                    sx={{ margin: '10px 0', width: '30%' }}
+                                >
+                                    <InputLabel id='province'>
+                                        Tỉnh/Thành
+                                    </InputLabel>
+                                    <Select
+                                        labelId='province'
+                                        size='small'
+                                        label='Tỉnh thành'
+                                        name='province'
+                                        onChange={(e) => {
+                                            fetchDistricts(e.target.value);
+                                        }}
+                                    >
+                                        {provinces?.map((province) => (
+                                            <MenuItem
+                                                value={province.code}
+                                                key={province.code}
+                                            >
+                                                {province.name}
+                                            </MenuItem>
+                                        ))}
+                                    </Select>
+                                </FormControl>
+                                <FormControl
+                                    size='small'
+                                    sx={{ margin: '10px 0', width: '30%' }}
+                                >
+                                    <InputLabel id='district'>
+                                        Quận/huyện
+                                    </InputLabel>
+                                    <Select
+                                        labelId='district'
+                                        size='small'
+                                        label='Quận huyện'
+                                        name='district'
+                                        onChange={(e) =>
+                                            fetchWards(e.target.value)
+                                        }
+                                    >
+                                        {province &&
+                                            province.districts &&
+                                            province.districts.map(
+                                                (district) => (
+                                                    <MenuItem
+                                                        value={district.code}
+                                                        key={province.code}
+                                                    >
+                                                        {district.name}
+                                                    </MenuItem>
+                                                )
+                                            )}
+                                    </Select>
+                                </FormControl>
+                                <FormControl
+                                    size='small'
+                                    sx={{ margin: '10px 0', width: '30%' }}
+                                >
+                                    <InputLabel id='ward'>Xã/Phường</InputLabel>
+                                    <Select
+                                        labelId='ward'
+                                        size='small'
+                                        label='Cửa hàng'
+                                        name='ward'
+                                    >
+                                        {district &&
+                                            district.wards &&
+                                            district.wards.map((ward: any) => (
+                                                <MenuItem value={ward.code}>
+                                                    {ward.name}
+                                                </MenuItem>
+                                            ))}
+                                    </Select>
+                                </FormControl>
+                            </div>
                         </FormControl>
                     </DialogContent>
                     <Divider />

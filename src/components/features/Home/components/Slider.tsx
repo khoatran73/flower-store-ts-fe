@@ -1,26 +1,12 @@
 import { FC } from 'react';
-import Carousel from 'react-material-ui-carousel';
+// import Carousel from 'react-material-ui-carousel';
+import { Carousel } from 'antd';
 
 interface ISlider {
     id: number;
     url: string;
     alt: string;
 }
-
-interface CarouselSetting {
-    autoPlay: boolean;
-    animation: 'fade' | 'slide';
-    indicators: boolean;
-    duration: number;
-    navButtonsAlwaysVisible: boolean;
-    navButtonsAlwaysInvisible: boolean;
-    fullHeightHover: boolean;
-    cycleNavigation: boolean;
-    stopAutoPlayOnHover: boolean;
-    swipe: boolean;
-    [key: string]: any;
-}
-
 const Slider: FC = () => {
     const items: ISlider[] = [
         {
@@ -40,21 +26,8 @@ const Slider: FC = () => {
         },
     ];
 
-    const settings: CarouselSetting = {
-        autoPlay: true,
-        animation: 'slide',
-        indicators: true,
-        duration: 300,
-        navButtonsAlwaysVisible: false,
-        navButtonsAlwaysInvisible: false,
-        cycleNavigation: true,
-        fullHeightHover: true,
-        stopAutoPlayOnHover: true,
-        swipe: true,
-    };
-
     return (
-        <Carousel {...settings}>
+        <Carousel dotPosition='bottom' autoplay effect='fade'>
             {items.map((item) => (
                 <img key={item.id} alt={item.alt} src={item.url}></img>
             ))}

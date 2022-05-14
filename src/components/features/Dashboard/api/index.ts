@@ -24,3 +24,6 @@ export const INDEX_ORDER_API = `${API_URL}/order`;
 
 // customer
 export const CUSTOMER_INDEX_API = `${API_URL}/user/list-customer`;
+
+// provinces
+export const GET_PROVINCES_API = 'https://provinces.open-api.vn/api';
