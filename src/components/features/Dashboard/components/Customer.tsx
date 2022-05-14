@@ -11,6 +11,7 @@ import { customRowData } from '../../../../lib/Grid';
 import { CustomerColDef } from '../config/Customer.ColDef';
 import { UserDto } from './../../../../types/user/UserDto';
 import { CUSTOMER_INDEX_API } from './../api/index';
+import { PAGE_SIZE } from './../constant/index';
 
 const Customer: React.FC = () => {
     const gridRef = useRef<AgGridReact>(null);
@@ -51,7 +52,7 @@ const Customer: React.FC = () => {
         columnDefs: CustomerColDef,
         rowData: rowData,
         pagination: true,
-        paginationPageSize: 10,
+        paginationPageSize: PAGE_SIZE,
         rowSelection: 'single',
         defaultColDef: {
             floatingFilter: true,
@@ -60,7 +61,7 @@ const Customer: React.FC = () => {
 
     if (loading) return <Loading loading={loading} />;
     return (
-        <div className='w-full'>
+        <div className='w-full h-full'>
             <div className='grid-button'>
                 <Button
                     variant='contained'

@@ -3,7 +3,12 @@ import { StoreDto } from '../store/StoreDto';
 
 export interface UserDto extends AccountDto {
     store: StoreDto;
+    storeId: string;
 }
+
+// export interface CustomerDto extends AccountDto {
+//     storeId: string;
+// }
 
 export interface UserCreateDto {
     account: AccountCreateDto;

@@ -1,4 +1,5 @@
-import { Divider, Grid, List, TextField } from '@mui/material';
+import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace';
+import { Divider, Grid, InputLabel, List, TextField } from '@mui/material';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
@@ -14,26 +15,19 @@ import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
-import { useParams, NavLink } from 'react-router-dom';
-import { STORE_LIST_API } from '../../../components/features/Dashboard/api';
+import { NavLink, useParams } from 'react-router-dom';
+import { AccountDto } from '../../../types/auth/LoginDto';
 import { CartDto } from '../../../types/cart/Cart';
 import { StoreDto } from '../../../types/store/StoreDto';
 import { CART_INDEX_API } from '../../features/ProductDetail/api';
-import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace';
-import {
-    UPDATE_ACCOUNT_API,
-    GET_ACCOUNT,
-    GET_CUSTOMER_ID_API,
-    CREATE_ORDER_API,
-} from './api';
-import { AccountDto } from '../../../types/auth/LoginDto';
+import { CREATE_ORDER_API, GET_ACCOUNT } from './api';
 
 function Copyright() {
     return (
         <Typography variant='body2' color='text.secondary' align='center'>
             {'Copyright © '}
             <Link color='inherit' href='/'>
-                Hasu Flora
+                FlowerStore
             </Link>{' '}
             {new Date().getFullYear()}
             {'.'}
@@ -44,40 +38,21 @@ function Copyright() {
 const theme = createTheme();
 
 export default function Checkout() {
-    const [stores, setStores] = useState<StoreDto[]>([]);
     const { id } = useParams();
     const [cart, setCart] = useState<CartDto>();
 
     const [fullname, setFullname] = useState<string | null>(null);
     const [phone, setPhone] = useState<string | null>(null);
     const [email, setEmail] = useState<string | null>(null);
-    const [storeId, setStoreId] = useState<any>(null);
     const [address, setAddress] = useState<string | null>(null);
     const [account, setAccount] = useState<AccountDto>();
 
     const [isLogin, setIsLogin] = useState<string | null>(
         localStorage.getItem('isLogin')
     );
-    const [role, setRole] = useState<string | null>(
-        localStorage.getItem('role')
-    );
 
     useEffect(() => {
         fetchCart();
-        const getStores = () => {
-            axios
-                .get(STORE_LIST_API)
-                .then((res) => {
-                    if (res.data.success) {
-                        const result = res.data.result as StoreDto[];
-                        setStores(result);
-                    }
-                })
-                .catch((err) => {
-                    console.log(err);
-                });
-        };
-        getStores();
         fetchAccount();
     }, []);
 
@@ -99,89 +74,69 @@ export default function Checkout() {
             case 0:
                 return (
                     <React.Fragment>
-                        <Box component='form'>
+                        <Box>
                             <Typography variant='h6' gutterBottom>
                                 Địa chỉ giao hàng
                             </Typography>
                             <Grid container spacing={3}>
                                 <Grid item xs={12} sm={12}>
+                                    <InputLabel>Họ tên</InputLabel>
                                     <TextField
                                         required
                                         id='fullname'
                                         name='fullname'
-                                        label='Họ tên'
+                                        // label='n'
                                         fullWidth
                                         variant='standard'
                                         value={fullname}
-                                        onChange={(e) =>
-                                            setFullname(e.target.value)
-                                        }
+                                        multiline={true}
+                                        disabled
+                                        // onChange={(e) =>
+                                        //     setFullname(e.target.value)
+                                        // }
                                     />
                                 </Grid>
                                 <Grid item xs={12} sm={6}>
+                                    <InputLabel>Số điện thoại</InputLabel>
                                     <TextField
                                         required
                                         id='phone'
                                         name='phone'
-                                        label='Số điện thoại'
                                         fullWidth
                                         variant='standard'
                                         value={phone}
-                                        onChange={(e) =>
-                                            setPhone(e.target.value)
-                                        }
+                                        multiline={true}
+                                        disabled
+                                        // onChange={(e) =>
+                                        //     setPhone(e.target.value)
+                                        // }
                                     />
                                 </Grid>
                                 <Grid item xs={12} sm={6}>
+                                    <InputLabel>Email</InputLabel>
                                     <TextField
                                         required
                                         id='email'
                                         name='email'
-                                        label='Email'
                                         fullWidth
                                         variant='standard'
                                         value={email}
-                                        onChange={(e) =>
-                                            setEmail(e.target.value)
-                                        }
+                                        multiline={true}
+                                        disabled
                                     />
                                 </Grid>
-                                {/* <Grid item xs={12}>
-                                    <FormControl fullWidth>
-                                        <InputLabel id='store-id'>
-                                            Cửa hàng
-                                        </InputLabel>
-                                        <Select
-                                            id='storeId'
-                                            labelId='store-id'
-                                            size='small'
-                                            label='Cửa hàng'
-                                            name='storeId'
-                                            variant='standard'
-                                            onChange={(e) =>
-                                                setStoreId(e.target.value)
-                                            }
-                                        >
-                                            {stores.map((store) => (
-                                                <MenuItem value={store.id}>
-                                                    {store.name}
-                                                </MenuItem>
-                                            ))}
-                                        </Select>
-                                    </FormControl>
-                                </Grid> */}
+
                                 <Grid item xs={12}>
+                                    <InputLabel>Địa chỉ</InputLabel>
                                     <TextField
                                         required
                                         id='address'
                                         name='address'
-                                        label='Địa chỉ'
                                         fullWidth
                                         variant='standard'
                                         value={address}
-                                        onChange={(e) =>
-                                            setAddress(e.target.value)
-                                        }
+                                        multiline={true}
+                                        disabled
                                     />
                                 </Grid>
                             </Grid>
@@ -298,34 +253,14 @@ export default function Checkout() {
     };
 
     const handleSubmit = async () => {
-        const params = {
-            id: isLogin,
-            fullname,
-            email,
-            phone,
-            address,
-        };
-
-        await axios.post(UPDATE_ACCOUNT_API, params);
-
-        const getCustomerId = async () => {
-            const res = await axios.get(GET_CUSTOMER_ID_API, {
-                params: { accountId: isLogin },
-            });
-            return res.data.result;
-        };
-
-        const customerId = await getCustomerId();
-
         const body = {
             cartId: cart?.id,
-            customerId,
+            customerId: isLogin,
             totalPrice: cart?.totalPrice,
         };
 
         await axios.post(CREATE_ORDER_API, body);
 
-        console.log('newx');
         handleNext();
     };
 
@@ -341,13 +276,13 @@ export default function Checkout() {
                     borderBottom: (t) => `1px solid ${t.palette.divider}`,
                 }}
             >
-                <NavLink to={'/'}>
-                    <Toolbar>
+                <Toolbar>
+                    <NavLink to={'/'}>
                         <Typography variant='h6' color='inherit' noWrap>
-                            Hasu Flora
+                            FlowerStore
                         </Typography>
-                    </Toolbar>
-                </NavLink>
+                    </NavLink>
+                </Toolbar>
             </AppBar>
             <Container component='main' maxWidth='sm' sx={{ mb: 4 }}>
                 <Paper

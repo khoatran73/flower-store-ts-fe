@@ -16,10 +16,13 @@ import {
 } from '@mui/material';
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
-import { Link, NavLink } from 'react-router-dom';
+import { Link, NavLink, useNavigate } from 'react-router-dom';
 import { CartDetailDto, CartDto } from '../../../types/cart/Cart';
 import { CART_INDEX_API } from '../../features/ProductDetail/api';
 import { REMOVE_CART_API } from './api';
+import { UserDto } from './../../../types/user/UserDto';
+import { GET_CUSTOMER_API } from '../../features/Profile/api';
+import Swal from 'sweetalert2';
 
 const style = {
     position: 'absolute' as 'absolute',
@@ -34,14 +37,19 @@ const style = {
 };
 
 const Navbar = () => {
+    const navigate = useNavigate();
     const [isLogin, setIsLogin] = useState<string | null>(
         localStorage.getItem('isLogin')
     );
     const [role, setRole] = useState<string | null>(
         localStorage.getItem('role')
     );
+    const [image, setImage] = useState<string | null>(
+        localStorage.getItem('image')
+    );
     const [cart, setCart] = useState<CartDto>();
     const [loading, setLoading] = useState<boolean>(false);
+    const [customer, setCustomer] = useState<UserDto>();
 
     const fetchCart = async () => {
         setLoading(true);
@@ -89,8 +97,32 @@ const Navbar = () => {
         localStorage.removeItem('isLogin');
         localStorage.removeItem('role');
         localStorage.removeItem('storeId');
+        localStorage.removeItem('image');
         setIsLogin(null);
         setRole(null);
+        navigate('/');
+    };
+
+    const checkOut = async () => {
+        const customer: UserDto = await axios.get(
+            `${GET_CUSTOMER_API}/${isLogin}`
+        );
+
+        if (!customer.address) {
+            setOpenModal(false);
+            Swal.fire({
+                title: 'Opps',
+                text: 'Vui lòng cập nhật thông tin cá nhân trước khi mua hàng',
+                showCancelButton: true,
+                confirmButtonText: 'Xác nhận',
+                cancelButtonText: 'Hủy',
+                icon: 'warning',
+            }).then((confirm) => {
+                if (confirm.isConfirmed) {
+                    navigate('/profile');
+                }
+            });
+        }
     };
 
     // if (loading) return <Loading loading={loading} />;
@@ -205,7 +237,7 @@ const Navbar = () => {
                                         <Avatar
                                             className='ml-5'
                                             alt='Khoa Henry'
-                                            src='https://res.cloudinary.com/dqrkqvtjg/image/upload/v1651996030/Flower-store/avt_ui1vae.png'
+                                            src={image || ''}
                                         />
 
                                         <IconButton
@@ -336,11 +368,14 @@ const Navbar = () => {
                             </div>
                         </div>
                         <div className='text-center'>
-                            <Link to={'/checkout/' + cart?.id}>
-                                <button className='custom-button w-3/4'>
-                                    Thanh toán
-                                </button>
-                            </Link>
+                            {/* <Link to={'/checkout/' + cart?.id}> */}
+                            <button
+                                className='custom-button w-3/4'
+                                onClick={checkOut}
+                            >
+                                Thanh toán
+                            </button>
+                            {/* </Link> */}
                         </div>
                     </div>
                 </Box>

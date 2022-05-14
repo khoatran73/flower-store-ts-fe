@@ -102,8 +102,8 @@ const ProductInfo: React.FC<Props> = (props: Props) => {
                                 - Giá không áp dụng cho các ngày Tết và lễ lớn.
                             </div>
                             <div className='my-2 font-medium'>
-                                Hasu xin chân thành cảm ơn sự ủng hộ của Quý
-                                Khách.
+                                FlowerStore xin chân thành cảm ơn sự ủng hộ của
+                                Quý Khách.
                             </div>
                         </div>
                     </div>

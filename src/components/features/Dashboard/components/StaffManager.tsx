@@ -32,6 +32,7 @@ import { GET_PROVINCES_API } from '../api';
 import { StaffManagerColDef } from '../config/StaffManager.ColDef';
 import { PAGE_SIZE } from '../constant';
 import { Province, UserDto } from './../../../../types/user/UserDto';
+// import { AppContainer } from './../../../utils/AppContainer';
 import {
     STAFF_CREATE_API,
     STAFF_INDEX_API,
@@ -42,8 +43,8 @@ const StaffManager = () => {
     const gridRef = useRef<AgGridReact>(null);
     const [openDialog, setOpenDialog] = React.useState(false);
     const [rowData, setRowData] = useState<UserDto[] | any[]>([]);
-    const [stores, setStores] = useState<StoreDto[]>([]);
     const [loading, setLoading] = useState<boolean>(false);
+    const [stores, setStores] = useState<StoreDto[]>([]);
     const [provinces, setProvinces] = useState<Province[]>();
     const [province, setProvince] = useState<Province>();
     const [district, setDistrict] = useState<any>();
@@ -227,7 +228,7 @@ const StaffManager = () => {
 
     if (loading) return <Loading loading={loading} />;
     return (
-        <div className='w-full'>
+        <div className='w-full h-full'>
             <div className='grid-button'>
                 <Button
                     variant='contained'
@@ -458,7 +459,7 @@ const StaffManager = () => {
                             }}
                         >
                             <FormLabel>Địa chỉ</FormLabel>
-                            <div className='ư-full flex flex-row justify-between'>
+                            <div className='w-full flex flex-row justify-between'>
                                 <FormControl
                                     size='small'
                                     sx={{ margin: '10px 0', width: '30%' }}

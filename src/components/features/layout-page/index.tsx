@@ -8,13 +8,12 @@ import ScrollTop from './../../shared/ScrollTop/ScrollTop';
 
 const LayoutPage: React.FC = () => {
     const { pathname } = useLocation();
-
     return (
         <>
             <Navbar />
             <div className='' id='scroll-to'></div>
             <Outlet />
-            {!pathname.includes('profile') && (
+            {!pathname.includes('profile') && !pathname.includes('dashboard') && (
                 <>
                     <div className='w-full bg-gray-200 py-8 flex justify-center'>
                         <Container>
@@ -29,7 +28,7 @@ const LayoutPage: React.FC = () => {
                     </div>
                     <Footer />
                     <div className='py-4 flex justify-center text-base'>
-                        Copyright © 2022 Hasu Flora. Powered by Khoa Tran
+                        Copyright © 2022 FlowerStore. Powered by Khoa Tran
                     </div>
                 </>
             )}

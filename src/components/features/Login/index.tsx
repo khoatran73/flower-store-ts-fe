@@ -37,6 +37,7 @@ export default function Login() {
                     localStorage.setItem('isLogin', data.result.id);
                     localStorage.setItem('role', data.result.role);
                     localStorage.setItem('storeId', data.result.storeId);
+                    localStorage.setItem('image', data.result.image);
                     navigate('/', { replace: true });
                 }
             })

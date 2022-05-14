@@ -117,7 +117,7 @@ const Footer: FC = () => {
                             alt=''
                         />
                         <div className='text-xl mt-6 font-semibold'>
-                            Hasu thay bạn trao lời yêu thương !
+                            FlowerStore thay bạn trao lời yêu thương !
                         </div>
                         <div className='text-md mt-2'>
                             Shop hoa tươi uy tín - chất lượng - giá ưu đãi

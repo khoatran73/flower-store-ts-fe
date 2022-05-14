@@ -21,6 +21,10 @@ body {
     font-weight: 300;
 }
 
+#root {
+    height: 100vh;
+}
+
 a:active,
 a:hover {
     transition: 750ms;
@@ -259,4 +263,69 @@ $text-color: #fffff6;
 
 .css-1poimk-MuiPaper-root-MuiMenu-paper-MuiPaper-root-MuiPopover-paper {
     max-height: 400px !important;
+}
+
+.ant-menu {
+    .ant-menu-item {
+        margin: 0 !important;
+        font-size: 15px;
+        padding-top: 8px;
+        padding-bottom: 8px;
+        height: auto !important;
+    }
+
+    .ant-menu-submenu {
+        margin: 0 !important;
+        font-size: 15px;
+        padding-top: 8px;
+        padding-bottom: 8px;
+        height: auto !important;
+    }
+
+    .ant-menu-item-selected a,
+    .ant-menu-item-selected a:hover {
+        color: $main-color;
+    }
+
+    .ant-menu-item-selected {
+        color: $main-color;
+    }
+
+    .ant-menu-item-selected {
+        &:after {
+            border-color: $main-color;
+        }
+    }
+
+    .ant-menu-item a:hover {
+        color: $main-color;
+    }
+
+    .ant-menu-submenu-selected {
+        .ant-menu-submenu-title {
+            color: $main-color;
+            .ant-menu-submenu-arrow {
+                color: $main-color;
+            }
+        }
+    }
+}
+
+.ant-menu-light {
+    .ant-menu-item:hover {
+        color: $main-color;
+    }
+
+    .ant-menu-submenu:hover {
+        color: $main-color;
+        .ant-menu-submenu-title {
+            .ant-menu-submenu-arrow {
+                color: $main-color;
+            }
+        }
+    }
+
+    .ant-menu-submenu-title:hover {
+        color: $main-color;
+    }
 }
