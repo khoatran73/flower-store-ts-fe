@@ -62,6 +62,10 @@ const ProductManager = () => {
 
     const [loading, setLoading] = useState<boolean>(false);
 
+    const [storeId, setStoreId] = React.useState<string | null>(
+        localStorage.getItem('storeId')
+    );
+
     useEffect(() => {
         getRowData();
 
@@ -88,7 +92,9 @@ const ProductManager = () => {
     const getRowData = async () => {
         setLoading(true);
         await axios
-            .get(PRODUCT_INDEX_API)
+            .get(PRODUCT_INDEX_API, {
+                params: { storeId: storeId },
+            })
             .then((res) => {
                 if (res.data.success) {
                     setLoading(false);
@@ -148,7 +154,9 @@ const ProductManager = () => {
 
         setLoading(true);
         axios
-            .post(PRODUCT_CREATE_API, formData)
+            .post(PRODUCT_CREATE_API, formData, {
+                params: { storeId: storeId },
+            })
             .then((res) => {
                 if (res.data.success) {
                     setLoading(false);
@@ -200,7 +208,9 @@ const ProductManager = () => {
 
         setLoading(true);
         axios
-            .put(`${PRODUCT_UPDATE_API}/${id}`, formData)
+            .put(`${PRODUCT_UPDATE_API}/${id}`, formData, {
+                params: { storeId: storeId },
+            })
             .then((res) => {
                 if (res.data.success) {
                     setLoading(false);
@@ -234,7 +244,9 @@ const ProductManager = () => {
             if (willDelete.isConfirmed) {
                 setLoading(true);
                 axios
-                    .delete(`${PRODUCT_DELETE_API}/${id}`)
+                    .delete(`${PRODUCT_DELETE_API}/${id}`, {
+                        params: { storeId: storeId },
+                    })
                     .then((res) => {
                         if (res.data.success) {
                             setLoading(false);

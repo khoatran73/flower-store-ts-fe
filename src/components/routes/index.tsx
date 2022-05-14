@@ -19,6 +19,7 @@ import Purchase from '../features/Purchase';
 import Register from '../features/Register';
 import PrivateRoute from './PrivateRoute';
 import Checkout from './../shared/CheckOut/Checkout';
+import { Profile } from '../features/Profile';
 
 const routeList = [
     {
@@ -37,13 +38,13 @@ const routeList = [
                 path: '/product/:id',
                 element: <ProductDetail />,
             },
+            // {
+            //     path: '/cart',
+            //     element: <Cart />,
+            // },
             {
-                path: '/cart',
-                element: <Cart />,
-            },
-            {
-                path: '/purchase',
-                element: <Purchase />,
+                path: '/profile',
+                element: <Profile />,
             },
         ],
     },

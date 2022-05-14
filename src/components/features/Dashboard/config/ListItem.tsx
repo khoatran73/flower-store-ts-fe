@@ -108,7 +108,7 @@ export const SecondListItem = () => {
                 component='div'
                 inset
                 sx={{
-                    color: '#7a8af8',
+                    color: '#eb2066',
                     fontWeight: '600',
                     background: '#0f172a',
                     fontSize: '16px',

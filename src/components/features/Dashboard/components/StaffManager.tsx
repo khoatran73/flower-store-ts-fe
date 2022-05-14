@@ -48,6 +48,10 @@ const StaffManager = () => {
     const [province, setProvince] = useState<Province>();
     const [district, setDistrict] = useState<any>();
 
+    const [storeId, setStoreId] = React.useState<string | null>(
+        localStorage.getItem('storeId')
+    );
+
     const fetchProvinces = () => {
         axios
             .get(`${GET_PROVINCES_API}/p`)
@@ -92,7 +96,9 @@ const StaffManager = () => {
         const getStores = async () => {
             setLoading(true);
             await axios
-                .get(STORE_LIST_API)
+                .get(STORE_LIST_API, {
+                    params: { storeId: storeId },
+                })
                 .then((res) => {
                     if (res.data.success) {
                         setLoading(false);
@@ -112,7 +118,9 @@ const StaffManager = () => {
     const getRowData = async () => {
         setLoading(true);
         await axios
-            .get(STAFF_INDEX_API)
+            .get(STAFF_INDEX_API, {
+                params: { storeId: storeId },
+            })
             .then((res) => {
                 if (res.data.success) {
                     setLoading(false);
@@ -166,7 +174,9 @@ const StaffManager = () => {
 
         setLoading(true);
         axios
-            .post(STAFF_CREATE_API, staff)
+            .post(STAFF_CREATE_API, staff, {
+                params: { storeId: storeId },
+            })
             .then((res) => {
                 if (res.data.success) {
                     setOpenDialog(false);

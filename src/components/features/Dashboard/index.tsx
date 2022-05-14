@@ -13,7 +13,7 @@ import { createTheme, styled, ThemeProvider } from '@mui/material/styles';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import * as React from 'react';
-import { Outlet, useNavigate } from 'react-router-dom';
+import { Link, Outlet, useNavigate } from 'react-router-dom';
 import Forbidden from './../../utils/Forbidden';
 import { mainListItems, SecondListItem } from './config/ListItem';
 const drawerWidth: number = 240;
@@ -76,6 +76,9 @@ const Dashboard: React.FC = () => {
     const [role, setRole] = React.useState<string | null>(
         localStorage.getItem('role')
     );
+    // const [storeId, setStoreId] = React.useState<string | null>(
+    //     localStorage.getItem('storeId')
+    // );
 
     const navigate = useNavigate();
 
@@ -86,6 +89,7 @@ const Dashboard: React.FC = () => {
     const logout = () => {
         localStorage.removeItem('isLogin');
         localStorage.removeItem('role');
+        localStorage.removeItem('storeId');
         setIsLogin(null);
         setRole(null);
         navigate('/');
@@ -152,11 +156,13 @@ const Dashboard: React.FC = () => {
                             color: '#fffff6',
                         }}
                     >
-                        <img
-                            src='https://res.cloudinary.com/dqrkqvtjg/image/upload/v1652195303/Flower-store/logo-white_uohlt8.png'
-                            className='h-16 object-cover'
-                            alt=''
-                        />
+                        <Link to='/'>
+                            <img
+                                src='https://res.cloudinary.com/dqrkqvtjg/image/upload/v1652195303/Flower-store/logo-white_uohlt8.png'
+                                className='h-16 object-cover'
+                                alt=''
+                            />
+                        </Link>
                         <IconButton onClick={toggleDrawer}>
                             <ChevronLeftIcon />
                         </IconButton>

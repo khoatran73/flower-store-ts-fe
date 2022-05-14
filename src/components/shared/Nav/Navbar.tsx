@@ -1,3 +1,4 @@
+import FiberManualRecordIcon from '@mui/icons-material/FiberManualRecord';
 import LogoutIcon from '@mui/icons-material/Logout';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import {
@@ -12,8 +13,6 @@ import {
     Modal,
     Toolbar,
     Typography,
-    InputBase,
-    Paper,
 } from '@mui/material';
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
@@ -21,8 +20,6 @@ import { Link, NavLink } from 'react-router-dom';
 import { CartDetailDto, CartDto } from '../../../types/cart/Cart';
 import { CART_INDEX_API } from '../../features/ProductDetail/api';
 import { REMOVE_CART_API } from './api';
-import FiberManualRecordIcon from '@mui/icons-material/FiberManualRecord';
-import SearchIcon from '@mui/icons-material/Search';
 
 const style = {
     position: 'absolute' as 'absolute',
@@ -91,11 +88,11 @@ const Navbar = () => {
     const logout = () => {
         localStorage.removeItem('isLogin');
         localStorage.removeItem('role');
+        localStorage.removeItem('storeId');
         setIsLogin(null);
         setRole(null);
     };
 
-    console.log(cart && cart.cartDetails && cart.cartDetails.length > 0);
     // if (loading) return <Loading loading={loading} />;
     return (
         <div
@@ -160,6 +157,14 @@ const Navbar = () => {
                                         Trang Quản Trị
                                     </NavLink>
                                 )}
+                                {role === 'customer' && (
+                                    <NavLink
+                                        to={'/profile'}
+                                        className='mr-2 ml-2 text-red-400 transition ease-in-out delay-75 duration-700'
+                                    >
+                                        Trang Cá nhân
+                                    </NavLink>
+                                )}
                             </div>
                         </Box>
                     </div>
@@ -170,25 +175,6 @@ const Navbar = () => {
                                     <Typography className='w-[100%] flex justify-end items-center'>
                                         {role === 'customer' && (
                                             <div className=''>
-                                                {/* <div className=''>
-                                                    <Paper className='mr-2'>
-                                                        <InputBase
-                                                            className='ml-3 '
-                                                            placeholder='Tìm kiếm sản phẩm'
-                                                        />
-                                                        <IconButton
-                                                            sx={{
-                                                                p: '10px',
-                                                            }}
-                                                            aria-label='search'
-                                                            onClick={(e) =>
-                                                                e.preventDefault()
-                                                            }
-                                                        >
-                                                            <SearchIcon />
-                                                        </IconButton>
-                                                    </Paper>
-                                                </div> */}
                                                 <Badge
                                                     badgeContent={
                                                         // cart?.cartDetails?.length

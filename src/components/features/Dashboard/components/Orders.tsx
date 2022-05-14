@@ -18,6 +18,9 @@ const Orders: React.FC = () => {
     const gridRef = useRef<AgGridReact>(null);
     const [rowData, setRowData] = useState<ProductDto[] | any[]>([]);
     const [loading, setLoading] = useState<boolean>(false);
+    const [storeId, setStoreId] = React.useState<string | null>(
+        localStorage.getItem('storeId')
+    );
 
     useEffect(() => {
         getRowData();
@@ -42,7 +45,9 @@ const Orders: React.FC = () => {
     const getRowData = async () => {
         setLoading(true);
         await axios
-            .get(INDEX_ORDER_API)
+            .get(INDEX_ORDER_API, {
+                params: { storeId: storeId },
+            })
             .then((res) => {
                 if (res.data.success) {
                     setLoading(false);
@@ -63,15 +68,6 @@ const Orders: React.FC = () => {
     return (
         <div className='w-full'>
             <div className='grid-button'>
-                <Button
-                    variant='contained'
-                    color='success'
-                    size='small'
-                    startIcon={<AddBoxIcon />}
-                    sx={{ opacity: 0 }}
-                >
-                    tao moi
-                </Button>
                 <Button
                     variant='contained'
                     color='primary'

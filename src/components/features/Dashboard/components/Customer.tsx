@@ -1,4 +1,4 @@
-import AddBoxIcon from '@mui/icons-material/AddBox';
+import RefreshIcon from '@mui/icons-material/Refresh';
 import { Button } from '@mui/material';
 import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-alpine.css';
@@ -8,17 +8,17 @@ import axios from 'axios';
 import React, { useEffect, useRef, useState } from 'react';
 import Loading from '../../../../components/utils/Loading';
 import { customRowData } from '../../../../lib/Grid';
-import { StoreDto } from '../../../../types/store/StoreDto';
 import { CustomerColDef } from '../config/Customer.ColDef';
 import { UserDto } from './../../../../types/user/UserDto';
 import { CUSTOMER_INDEX_API } from './../api/index';
 
 const Customer: React.FC = () => {
     const gridRef = useRef<AgGridReact>(null);
-    const [openDialog, setOpenDialog] = React.useState(false);
     const [rowData, setRowData] = useState<UserDto[] | any[]>([]);
-    const [stores, setStores] = useState<StoreDto[]>([]);
     const [loading, setLoading] = useState<boolean>(false);
+    const [storeId, setStoreId] = React.useState<string | null>(
+        localStorage.getItem('storeId')
+    );
 
     useEffect(() => {
         getRowData();
@@ -27,7 +27,9 @@ const Customer: React.FC = () => {
     const getRowData = async () => {
         setLoading(true);
         await axios
-            .get(CUSTOMER_INDEX_API)
+            .get(CUSTOMER_INDEX_API, {
+                params: { storeId: storeId },
+            })
             .then((res) => {
                 if (res.data.success) {
                     setLoading(false);
@@ -38,6 +40,10 @@ const Customer: React.FC = () => {
                 setLoading(false);
                 console.log(err);
             });
+    };
+
+    const onRefresh = () => {
+        getRowData();
     };
 
     const gridOptions = {
@@ -58,12 +64,13 @@ const Customer: React.FC = () => {
             <div className='grid-button'>
                 <Button
                     variant='contained'
-                    color='success'
+                    color='primary'
                     size='small'
-                    startIcon={<AddBoxIcon />}
-                    sx={{ opacity: 0 }}
+                    startIcon={<RefreshIcon />}
+                    sx={{ marginLeft: '10px' }}
+                    onClick={onRefresh}
                 >
-                    tao moi
+                    Refresh
                 </Button>
             </div>
             <div

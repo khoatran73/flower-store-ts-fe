@@ -36,6 +36,7 @@ export default function Login() {
                     setLoading(false);
                     localStorage.setItem('isLogin', data.result.id);
                     localStorage.setItem('role', data.result.role);
+                    localStorage.setItem('storeId', data.result.storeId);
                     navigate('/', { replace: true });
                 }
             })
