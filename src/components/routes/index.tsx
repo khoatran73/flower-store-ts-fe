@@ -25,6 +25,7 @@ import { Reply } from './../help/Reply';
 import { Contact } from './../help/Contact';
 import Checkout from './../shared/CheckOut/Checkout';
 import PrivateRoute from './PrivateRoute';
+import { BestSeller } from '../features/Dashboard/components/BestSeller';
 
 const routeList = [
     {
@@ -119,7 +120,7 @@ const routeList = [
                             },
                             {
                                 path: '/dashboard/statistics/best-seller',
-                                element: <Chart />,
+                                element: <BestSeller />,
                             },
                         ],
                     },

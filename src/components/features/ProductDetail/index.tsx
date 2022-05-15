@@ -52,7 +52,7 @@ const ProductDetail: React.FC = () => {
         <Container>
             <BreadCumb product={product} />
             <ProductInfo product={product} />
-            <ProductComment />
+            <ProductComment productId={id} />
             <RelatedProducts relatedProducts={relatedProducts} />
         </Container>
     );

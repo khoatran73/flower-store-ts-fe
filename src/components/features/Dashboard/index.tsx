@@ -73,7 +73,7 @@ const Dashboard: React.FC = () => {
                             key='/dashboard/report/turnover'
                         >
                             <Link to='/dashboard/report/turnover'>
-                                Báo cáo doanh thu
+                                Sản phẩm đã bán
                             </Link>
                         </Item>
                         <Item

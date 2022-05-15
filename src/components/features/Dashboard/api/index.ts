@@ -27,3 +27,6 @@ export const CUSTOMER_INDEX_API = `${API_URL}/user/list-customer`;
 
 // provinces
 export const GET_PROVINCES_API = 'https://provinces.open-api.vn/api';
+
+//turnover
+export const TURNOVER_API = `${API_URL}/report/turnover`;

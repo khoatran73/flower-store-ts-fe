@@ -31,17 +31,20 @@ const HomeProduct: FC = () => {
     return (
         <div className='my-10'>
             <div className='text-2xl font-semibold mb-5 text-center uppercase'>
-                danh sách sản phẩm
+                sản phẩm nổi bật
             </div>
             <div className='flex justify-start items-center flex-wrap'>
-                {products.map((product) => (
-                    <ProductItem
-                        key={product.id}
-                        product={product}
-                        width={268}
-                        height={220}
-                    />
-                ))}
+                {products.map(
+                    (product, index) =>
+                        index < 12 && (
+                            <ProductItem
+                                key={product.id}
+                                product={product}
+                                width={268}
+                                height={220}
+                            />
+                        )
+                )}
             </div>
         </div>
     );

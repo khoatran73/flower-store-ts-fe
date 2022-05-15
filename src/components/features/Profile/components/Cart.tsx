@@ -45,9 +45,9 @@ export const Cart = () => {
     };
 
     const checkOut = async () => {
-        const customer: UserDto = await axios.get(
-            `${GET_CUSTOMER_API}/${isLogin}`
-        );
+        const res = await axios.get(`${GET_CUSTOMER_API}/${isLogin}`);
+
+        const customer: UserDto = res.data.result;
 
         if (!customer.address) {
             Swal.fire({
@@ -62,6 +62,8 @@ export const Cart = () => {
                     navigate('/profile');
                 }
             });
+        } else {
+            navigate('/checkout/' + cart?.id);
         }
     };
 
