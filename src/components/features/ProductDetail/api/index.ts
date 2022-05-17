@@ -10,3 +10,4 @@ export const CART_INDEX_API = API_URL + '/cart';
 
 export const COMMENT_INDEX_API = API_URL + '/comment';
 export const COMMENT_CREATE_API = API_URL + '/comment/create';
+export const REACTION_CREATE_API = API_URL + '/comment/reaction/create';

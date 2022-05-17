@@ -23,6 +23,7 @@ import { REMOVE_CART_API } from './api';
 import { UserDto } from './../../../types/user/UserDto';
 import { GET_CUSTOMER_API } from '../../features/Profile/api';
 import Swal from 'sweetalert2';
+import CircleIcon from '@mui/icons-material/Circle';
 
 const style = {
     position: 'absolute' as 'absolute',
@@ -210,20 +211,9 @@ const Navbar = () => {
                                         {role === 'customer' && (
                                             <div className=''>
                                                 <Badge
-                                                    badgeContent={
-                                                        // cart?.cartDetails?.length
-                                                        cart &&
-                                                        cart.cartDetails &&
-                                                        cart.cartDetails
-                                                            .length > 0 && (
-                                                            <FiberManualRecordIcon
-                                                                fontSize='inherit'
-                                                                color='error'
-                                                            />
-                                                        )
-                                                    }
+                                                    variant='dot'
                                                     color='error'
-                                                    className='cursor-pointer mr-'
+                                                    className='cursor-pointer'
                                                 >
                                                     <ShoppingCartIcon
                                                         sx={{

@@ -1,23 +1,26 @@
 import SendIcon from '@mui/icons-material/Send';
+import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 import {
     Avatar,
+    Badge,
     Button,
+    Divider,
+    Grid,
     IconButton,
     Paper,
     TextField,
-    Grid,
-    Badge,
-    Divider,
 } from '@mui/material';
 import axios from 'axios';
+import moment from 'moment';
 import React, { FC, useEffect, useState } from 'react';
-import { CommentDto } from '~/types/comment/CommentDto';
-import { GET_CUSTOMER_API } from '../../Profile/api';
-import { COMMENT_CREATE_API, COMMENT_INDEX_API } from '../api';
-import Comment from './Comment';
+import { CommentDto, ReactionCreateDto } from '~/types/comment/CommentDto';
 import { UserDto } from '~/types/user/UserDto';
-import Loading from '../../../../components/utils/Loading';
-import ThumbUpIcon from '@mui/icons-material/ThumbUp';
+import { GET_CUSTOMER_API } from '../../Profile/api';
+import {
+    COMMENT_CREATE_API,
+    COMMENT_INDEX_API,
+    REACTION_CREATE_API,
+} from '../api';
 
 interface Props {
     productId: string | undefined;
@@ -28,11 +31,13 @@ const ProductComment: FC<Props> = (props) => {
     const [comments, setComments] = useState<Array<CommentDto>>();
     const [customer, setCustomer] = useState<UserDto>();
     const [loading, setLoading] = useState<boolean>(true);
+    const [content, setContent] = useState<string>('');
 
     const fetchComment = async () => {
         const res = await axios.get(`${COMMENT_INDEX_API}/${productId}`);
 
         setComments(res.data.result as Array<CommentDto>);
+
         setLoading(false);
     };
 
@@ -52,22 +57,73 @@ const ProductComment: FC<Props> = (props) => {
 
     const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        const form = new FormData(event.currentTarget);
-        const comment = form.get('comment');
 
         const createDto = {
             customerId: customer?.id,
             productId: productId,
-            content: comment,
+            content: content,
         };
 
         setLoading(true);
         await axios.post(COMMENT_CREATE_API, createDto).then((res) => {
             if (res.data.success) {
                 setLoading(false);
+                setContent('');
                 fetchComment();
             }
         });
+    };
+
+    const handleLikeComment = async (
+        customerId: string | undefined,
+        commentId: string | undefined
+    ) => {
+        const createDto: ReactionCreateDto = {
+            customerId,
+            commentId,
+        };
+
+        await axios.post(REACTION_CREATE_API, createDto).then((res) => {
+            if (res.data.success) {
+                fetchComment();
+            }
+        });
+    };
+
+    const likedOrnot = (
+        customerId: string | undefined,
+        comment: CommentDto
+    ) => {
+        const filteredArray = comment.reactions.filter((element) => {
+            if (
+                element.customerId === customerId &&
+                element.commentId === comment.id
+            ) {
+                return true;
+            }
+
+            return false;
+        });
+
+        if (filteredArray.length > 0) {
+            return (
+                <span
+                    className='text-blue-700 font-semibold text-sm hover:underline hover:cursor-pointer'
+                    onClick={() => handleLikeComment(customer?.id, comment?.id)}
+                >
+                    Thích
+                </span>
+            );
+        } else {
+            return (
+                <span
+                    className='text-blue-700 text-sm hover:underline hover:cursor-pointer'
+                    onClick={() => handleLikeComment(customer?.id, comment?.id)}
+                >
+                    Thích
+                </span>
+            );
+        }
     };
 
     // if (loading) return <Loading loading={loading} />;
@@ -104,22 +160,7 @@ const ProductComment: FC<Props> = (props) => {
                                 </h4>
                                 <p className='text-left'>{comment.content}</p>
                                 <div className='flex items-center mt-1 select-none'>
-                                    {/* {like ? ( */}
-                                    <span
-                                        className='text-blue-700 font-semibold text-sm hover:underline hover:cursor-pointer'
-                                        // onClick={handleLikeComment}
-                                    >
-                                        Thích
-                                    </span>
-                                    {/* ) : (
-                                        <span
-                                            className='text-blue-700 text-sm hover:underline hover:cursor-pointer'
-                                            onClick={handleLikeComment}
-                                        >
-                                            Thích
-                                        </span>
-                                    )} */}
-
+                                    {likedOrnot(customer?.id, comment)}
                                     <span className='mx-1 text-gray-400 text-xs'>
                                         •
                                     </span>
@@ -134,7 +175,7 @@ const ProductComment: FC<Props> = (props) => {
                                     </span>
                                     <span className='text-xs flex items-center'>
                                         <Badge
-                                            // badgeContent={countLike}
+                                            badgeContent={comment?.countLike}
                                             color='error'
                                         >
                                             <ThumbUpIcon
@@ -145,7 +186,9 @@ const ProductComment: FC<Props> = (props) => {
                                         </Badge>
                                     </span>
                                     <span className='text-left text-gray-400 text-sm ml-2'>
-                                        {comment.createdAt}
+                                        {moment(comment.createdAt)
+                                            .locale('vi')
+                                            .fromNow()}
                                     </span>
                                 </div>
                             </Grid>
@@ -163,12 +206,12 @@ const ProductComment: FC<Props> = (props) => {
                     <form className='w-[95%]' onSubmit={onSubmit}>
                         <div className='flex items-center justify-between'>
                             <TextField
-                                className='w-[93%] '
-                                placeholder='Aa...'
+                                className='w-[93%]'
+                                label='Aa...'
                                 size='small'
                                 name='comment'
-                                // value={comment}
-                                // onChange={(e) => setComment(e.target.value)}
+                                value={content}
+                                onChange={(e) => setContent(e.target.value)}
                                 // onKeyDown={(e) => {
                                 //     if (e.keyCode === 13) handleSubmitComment();
                                 // }}
