@@ -78,7 +78,10 @@ export const Cart = () => {
                 className='w-full  bg-white rounded-md shadow-md mb-4'
                 style={{ height: '97%' }}
             >
-                <div className='overflow-y-auto' style={{ height: '80%' }}>
+                <div
+                    className='overflow-y-auto border-b border-gray-200'
+                    style={{ height: '80%' }}
+                >
                     {cart?.cartDetails?.map(
                         (cartDetail: CartDetailDto, index: number) => (
                             <div key={index}>
@@ -100,7 +103,7 @@ export const Cart = () => {
                                                     {cartDetail.product?.name}
                                                 </div>
                                             </Link>
-                                            <div className='font-semibold text-gray-600 text-base'>
+                                            <div className='font-semibold text-red-500 py-1 text-sm '>
                                                 {cartDetail.product?.unitPrice.toLocaleString()}
                                                 đ
                                             </div>
@@ -117,7 +120,7 @@ export const Cart = () => {
                                             <div className='border border-gray-100 bg-gray-100 text-center w-6 h-6 rounded text-base'>
                                                 {cartDetail.quantity}
                                             </div>
-                                            <div className='font-semibold  text-base'>
+                                            <div className='font-semibold text-red-500 text-base'>
                                                 {cartDetail.price?.toLocaleString()}
                                                 đ
                                             </div>
@@ -152,8 +155,8 @@ export const Cart = () => {
                 <div className='flex flex-col justify-between px-6 py-3 mt-4 text-lg'>
                     <div className='flex justify-between mb-3'>
                         <div className='uppercase font-normal'>Tổng tiền:</div>
-                        <div className='text-red-500'>
-                            {cart?.totalPrice?.toLocaleString()}đ
+                        <div className='text-red-500 text-2xl'>
+                            {cart?.totalPrice?.toLocaleString()}₫
                         </div>
                     </div>
                     <div className='text-center'>

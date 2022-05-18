@@ -21,7 +21,7 @@ const LayoutPage: React.FC = () => {
                                 <PhoneIcon />
                                 <span className='mx-2'>Call us:</span>
                                 <span className='text-red-500'>
-                                    07989 12 333
+                                    0865 997 531
                                 </span>
                             </div>
                         </Container>

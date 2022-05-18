@@ -75,7 +75,7 @@ export default function Review() {
                                     {cartDetail.quantity}
                                 </div>
                                 <div className='font-semibold  '>
-                                    {cartDetail.price?.toLocaleString()}đ
+                                    {cartDetail.price?.toLocaleString()}₫
                                 </div>
                             </div>
                         </div>
@@ -88,7 +88,7 @@ export default function Review() {
                             Tổng tiền:
                         </div>
                         <div className='text-red-500'>
-                            {cart?.totalPrice?.toLocaleString()}đ
+                            {cart?.totalPrice?.toLocaleString()}₫
                         </div>
                     </div>
                 </div>

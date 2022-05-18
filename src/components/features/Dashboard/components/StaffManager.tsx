@@ -151,7 +151,6 @@ const StaffManager = () => {
         const confirmPassword = form.get('confirmPassword');
         const email = form.get('email');
         const phone = form.get('phone');
-        const storeId = form.get('storeId');
         const gender = form.get('gender');
         const role = form.get('role');
         const birthday = form.get('birthday');
@@ -170,6 +169,7 @@ const StaffManager = () => {
                 email: email,
                 address: address,
                 birthday: birthday,
+                storeId: form.get('storeId'),
             },
         };
 
@@ -195,7 +195,7 @@ const StaffManager = () => {
                 setLoading(false);
                 console.log(err.message);
                 setOpenDialog(false);
-                Swal.fire('Thông báo', 'Thêm sản phẩm thất bại!', 'error');
+                Swal.fire('Thông báo', 'Thêm nhân viên thất bại!', 'error');
             });
     };
 

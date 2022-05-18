@@ -18,7 +18,6 @@ import React, { useEffect, useState } from 'react';
 import { NavLink, useParams } from 'react-router-dom';
 import { AccountDto } from '../../../types/auth/LoginDto';
 import { CartDto } from '../../../types/cart/Cart';
-import { StoreDto } from '../../../types/store/StoreDto';
 import { CART_INDEX_API } from '../../features/ProductDetail/api';
 import { CREATE_ORDER_API, GET_ACCOUNT } from './api';
 
@@ -82,7 +81,6 @@ export default function Checkout() {
                                 <Grid item xs={12} sm={12}>
                                     <InputLabel>Họ tên</InputLabel>
                                     <TextField
-                                        required
                                         id='fullname'
                                         name='fullname'
                                         // label='n'
@@ -99,7 +97,6 @@ export default function Checkout() {
                                 <Grid item xs={12} sm={6}>
                                     <InputLabel>Số điện thoại</InputLabel>
                                     <TextField
-                                        required
                                         id='phone'
                                         name='phone'
                                         fullWidth
@@ -115,7 +112,6 @@ export default function Checkout() {
                                 <Grid item xs={12} sm={6}>
                                     <InputLabel>Email</InputLabel>
                                     <TextField
-                                        required
                                         id='email'
                                         name='email'
                                         fullWidth
@@ -129,7 +125,6 @@ export default function Checkout() {
                                 <Grid item xs={12}>
                                     <InputLabel>Địa chỉ</InputLabel>
                                     <TextField
-                                        required
                                         id='address'
                                         name='address'
                                         fullWidth
@@ -190,7 +185,7 @@ export default function Checkout() {
                                         Tổng tiền:
                                     </div>
                                     <div className='text-red-500'>
-                                        {cart?.totalPrice?.toLocaleString()}đ
+                                        {cart?.totalPrice?.toLocaleString()}₫
                                     </div>
                                 </div>
                             </div>
@@ -277,10 +272,8 @@ export default function Checkout() {
                 }}
             >
                 <Toolbar>
-                    <NavLink to={'/'}>
-                        <Typography variant='h6' color='inherit' noWrap>
-                            FlowerStore
-                        </Typography>
+                    <NavLink to={'/'} className='flex items-center'>
+                        <KeyboardBackspaceIcon fontSize='large' />
                     </NavLink>
                 </Toolbar>
             </AppBar>
@@ -295,7 +288,9 @@ export default function Checkout() {
                     <Stepper activeStep={activeStep} sx={{ pt: 3, pb: 5 }}>
                         {steps.map((label) => (
                             <Step key={label}>
-                                <StepLabel>{label}</StepLabel>
+                                <StepLabel sx={{ color: 'red' }}>
+                                    {label}
+                                </StepLabel>
                             </Step>
                         ))}
                     </Stepper>
@@ -328,28 +323,30 @@ export default function Checkout() {
                                     {activeStep !== 0 && (
                                         <Button
                                             onClick={handleBack}
-                                            sx={{ mt: 3, ml: 1 }}
+                                            sx={{
+                                                mt: 3,
+                                                ml: 1,
+                                                color: '#eb2066',
+                                            }}
                                         >
                                             Trở về
                                         </Button>
                                     )}
 
                                     {activeStep === steps.length - 1 ? (
-                                        <Button
-                                            variant='contained'
+                                        <button
+                                            className='custom-button mt-5 ml-2'
                                             onClick={handleSubmit}
-                                            sx={{ mt: 3, ml: 1 }}
                                         >
                                             Xác nhận
-                                        </Button>
+                                        </button>
                                     ) : (
-                                        <Button
-                                            variant='contained'
+                                        <button
+                                            className='custom-button mt-3'
                                             onClick={handleNext}
-                                            sx={{ mt: 3, ml: 1 }}
                                         >
                                             Tiếp theo
-                                        </Button>
+                                        </button>
                                     )}
                                 </Box>
                             </React.Fragment>

@@ -21,6 +21,7 @@ const ProductItem: FC<Props> = (props) => {
             <Card
                 className='flex-initial my-3 place-content-stretch mx-[10px] cursor-pointer'
                 style={{ width: width }}
+                variant='outlined'
             >
                 <div className='overflow-hidden' style={{ height: height }}>
                     <CardMedia
@@ -43,7 +44,7 @@ const ProductItem: FC<Props> = (props) => {
                         {name}
                     </div>
                     <div className='text-center mt-1 text-md text-red-500'>
-                        Giá: {unitPrice.toLocaleString()}đ
+                        Giá: {unitPrice.toLocaleString()}₫
                     </div>
                     <div className='mt-3 text-center'>
                         <button className='custom-button'>Mua ngay</button>

@@ -1,7 +1,7 @@
 import React from 'react';
 import { RouteObject, useRoutes } from 'react-router-dom';
 import Dashboard from '../features/Dashboard';
-import Chart from '../features/Dashboard/components/Chart';
+import { BestSeller } from '../features/Dashboard/components/BestSeller';
 import Customer from '../features/Dashboard/components/Customer';
 import { Expense } from '../features/Dashboard/components/Expense';
 import Orders from '../features/Dashboard/components/Orders';
@@ -20,12 +20,14 @@ import { Cart } from '../features/Profile/components/Cart';
 import { History } from '../features/Profile/components/History';
 import { UserProfile } from '../features/Profile/components/UserProfile';
 import Register from '../features/Register';
+import { Contact } from './../help/Contact';
 import { Help } from './../help/Help';
 import { Reply } from './../help/Reply';
-import { Contact } from './../help/Contact';
 import Checkout from './../shared/CheckOut/Checkout';
 import PrivateRoute from './PrivateRoute';
-import { BestSeller } from '../features/Dashboard/components/BestSeller';
+import PrivateRouteAdmin from './PrivateRouteAdmin';
+import PrivateRouteSales from './PrivateRouteSales';
+import PrivateRouteWarehouse from './PrivateRouteWarehouse';
 
 const routeList = [
     {
@@ -84,30 +86,54 @@ const routeList = [
                 children: [
                     {
                         path: '/dashboard',
-                        element: <ProductManager />,
+                        element: (
+                            <PrivateRouteWarehouse>
+                                <ProductManager />
+                            </PrivateRouteWarehouse>
+                        ),
                     },
                     {
                         path: '/dashboard/order',
-                        element: <Orders />,
+                        element: (
+                            <PrivateRouteSales>
+                                <Orders />
+                            </PrivateRouteSales>
+                        ),
                     },
                     {
                         path: '/dashboard/staff',
-                        element: <StaffManager />,
+                        element: (
+                            <PrivateRouteAdmin>
+                                <StaffManager />
+                            </PrivateRouteAdmin>
+                        ),
                     },
                     {
                         path: '/dashboard/customer',
-                        element: <Customer />,
+                        element: (
+                            <PrivateRouteSales>
+                                <Customer />
+                            </PrivateRouteSales>
+                        ),
                     },
                     {
                         path: '/dashboard/report',
                         children: [
                             {
                                 path: '/dashboard/report/turnover',
-                                element: <Turnover />,
+                                element: (
+                                    <PrivateRouteAdmin>
+                                        <Turnover />
+                                    </PrivateRouteAdmin>
+                                ),
                             },
                             {
                                 path: '/dashboard/report/expense',
-                                element: <Expense />,
+                                element: (
+                                    <PrivateRouteAdmin>
+                                        <Expense />
+                                    </PrivateRouteAdmin>
+                                ),
                             },
                         ],
                     },
@@ -116,11 +142,19 @@ const routeList = [
                         children: [
                             {
                                 path: '/dashboard/statistics/traffic',
-                                element: <TrafficStatistics />,
+                                element: (
+                                    <PrivateRouteAdmin>
+                                        <TrafficStatistics />
+                                    </PrivateRouteAdmin>
+                                ),
                             },
                             {
                                 path: '/dashboard/statistics/best-seller',
-                                element: <BestSeller />,
+                                element: (
+                                    <PrivateRouteAdmin>
+                                        <BestSeller />
+                                    </PrivateRouteAdmin>
+                                ),
                             },
                         ],
                     },

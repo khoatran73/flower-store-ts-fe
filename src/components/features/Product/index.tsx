@@ -17,7 +17,7 @@ const Product: React.FC = () => {
     const [loading, setLoading] = useState<boolean>(false);
 
     const [page, setPage] = useState<number>(1);
-    const PER_PAGE = 8;
+    const PER_PAGE = 12;
 
     const count = Math.ceil(products.length / PER_PAGE);
     const _DATA = usePagination(products, PER_PAGE);
@@ -79,11 +79,11 @@ const Product: React.FC = () => {
                         // type='card'
                     >
                         <TabPane tab={'Tất cả sản phẩm'} key={''}>
-                            Tất cả sản phẩm
+                            {/* Tất cả sản phẩm */}
                         </TabPane>
                         {categories.map((category) => (
                             <TabPane tab={category.name} key={category.id}>
-                                {category.name}
+                                {/* {category.name} */}
                             </TabPane>
                         ))}
                     </Tabs>
@@ -99,12 +99,18 @@ const Product: React.FC = () => {
                     ))}
                 </div>
                 <div className='mt-4 flex justify-center pagination'>
-                    <Pagination
-                        color='primary'
-                        count={count}
-                        page={page}
-                        onChange={handleChange}
-                    />
+                    {_DATA.currentData().length > 0 ? (
+                        <Pagination
+                            color='primary'
+                            count={count}
+                            page={page}
+                            onChange={handleChange}
+                        />
+                    ) : (
+                        <div className='text-base'>
+                            Chưa có sản phẩm cho mục này
+                        </div>
+                    )}
                 </div>
             </div>
         </Container>

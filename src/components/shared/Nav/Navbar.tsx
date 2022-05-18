@@ -1,4 +1,3 @@
-import FiberManualRecordIcon from '@mui/icons-material/FiberManualRecord';
 import LogoutIcon from '@mui/icons-material/Logout';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import {
@@ -17,13 +16,12 @@ import {
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { Link, NavLink, useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2';
 import { CartDetailDto, CartDto } from '../../../types/cart/Cart';
 import { CART_INDEX_API } from '../../features/ProductDetail/api';
-import { REMOVE_CART_API } from './api';
-import { UserDto } from './../../../types/user/UserDto';
 import { GET_CUSTOMER_API } from '../../features/Profile/api';
-import Swal from 'sweetalert2';
-import CircleIcon from '@mui/icons-material/Circle';
+import { UserDto } from './../../../types/user/UserDto';
+import { REMOVE_CART_API } from './api';
 
 const style = {
     position: 'absolute' as 'absolute',
@@ -184,7 +182,9 @@ const Navbar = () => {
                                 >
                                     Trợ giúp
                                 </NavLink>
-                                {role === 'admin' && (
+                                {(role === 'admin' ||
+                                    role === 'sales' ||
+                                    role === 'warehouse') && (
                                     <NavLink
                                         to={'/dashboard'}
                                         className='mr-2 ml-2 text-red-400 transition ease-in-out delay-75 duration-700'
@@ -228,7 +228,7 @@ const Navbar = () => {
                                         )}
                                         <Avatar
                                             className='ml-5'
-                                            alt='Khoa Henry'
+                                            alt=''
                                             src={image || ''}
                                         />
 
@@ -304,7 +304,7 @@ const Navbar = () => {
                                                             }
                                                         </div>
                                                     </Link>
-                                                    <div className='font-semibold text-gray-600'>
+                                                    <div className='font-semibold text-red-500'>
                                                         {cartDetail.product?.unitPrice.toLocaleString()}
                                                         đ
                                                     </div>
@@ -315,7 +315,7 @@ const Navbar = () => {
                                                     <div className='border border-gray-100 bg-gray-100 text-center w-6 h-6 rounded'>
                                                         {cartDetail.quantity}
                                                     </div>
-                                                    <div className='font-semibold  '>
+                                                    <div className='font-semibold text-red-500'>
                                                         {cartDetail.price?.toLocaleString()}
                                                         đ
                                                     </div>
@@ -355,8 +355,8 @@ const Navbar = () => {
                             <div className='uppercase font-normal text-sm'>
                                 Tổng tiền:
                             </div>
-                            <div className='text-red-500'>
-                                {cart?.totalPrice?.toLocaleString()}đ
+                            <div className='text-red-500 text-lg'>
+                                {cart?.totalPrice?.toLocaleString()}₫
                             </div>
                         </div>
                         <div className='text-center'>

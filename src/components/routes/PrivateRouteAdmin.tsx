@@ -5,7 +5,7 @@ export interface Props {
     children: React.ReactNode;
 }
 
-const PrivateRoute: FC<Props> = (props) => {
+const PrivateRouteAdmin: FC<Props> = (props) => {
     const [isLogin, setIsLogin] = useState<string | null>();
     const [role, setRole] = useState<string | null>();
     useEffect(() => {
@@ -13,11 +13,7 @@ const PrivateRoute: FC<Props> = (props) => {
         setRole(localStorage.getItem('role'));
     }, []);
 
-    return role === 'admin' || role === 'sales' || role === 'warehouse' ? (
-        <>{props.children} </>
-    ) : (
-        <Forbidden />
-    );
+    return role === 'admin' ? <>{props.children} </> : <Forbidden />;
 };
 
-export default PrivateRoute;
+export default PrivateRouteAdmin;

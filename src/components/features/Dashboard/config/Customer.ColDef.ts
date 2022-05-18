@@ -10,7 +10,13 @@ export const CustomerColDef: ColumnDef[] = [
     {
         headerName: 'Tên khách hàng',
         field: 'fullname',
-        minWidth: 500,
+        minWidth: 150,
+        filter: true,
+    },
+    {
+        headerName: 'Cửa hàng',
+        field: 'store.name',
+        minWidth: 120,
         filter: true,
     },
     {

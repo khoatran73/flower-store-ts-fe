@@ -138,7 +138,7 @@ const Footer: FC = () => {
                                     </div>
                                     <div className='flex'>
                                         <PhoneIcon fontSize='small' />
-                                        <div className='ml-1'>07989 12 333</div>
+                                        <div className='ml-1'>0865 997 531</div>
                                     </div>
                                 </li>
                             </ul>

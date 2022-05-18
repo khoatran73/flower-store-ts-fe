@@ -4,15 +4,14 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import Grid from '@mui/material/Grid';
-import Link from '@mui/material/Link';
 import Paper from '@mui/material/Paper';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import axios from 'axios';
 import React, { useState } from 'react';
-import { NavLink, useNavigate } from 'react-router-dom';
-import Loading from '../../../components/utils/Loading';
+import { Link, NavLink, useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2';
 import { API_LOGIN } from '../../../constant';
 
 const theme = createTheme();
@@ -41,7 +40,14 @@ export default function Login() {
                     navigate('/', { replace: true });
                 }
             })
-            .catch((err) => setLoading(false));
+            .catch((err) => {
+                Swal.fire(
+                    'Thông báo',
+                    'Đăng nhập không thành công, hãy thử lại!',
+                    'error'
+                );
+                setLoading(false);
+            });
     };
 
     // if (loading) return <Loading loading={loading} />;
@@ -51,9 +57,7 @@ export default function Login() {
                 <CssBaseline />
                 <Grid
                     item
-                    xs={false}
-                    sm={4}
-                    md={7}
+                    md={8}
                     sx={{
                         backgroundImage:
                             'url(https://images.unsplash.com/photo-1447875569765-2b3db822bec9?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80)',
@@ -66,15 +70,7 @@ export default function Login() {
                         backgroundPosition: 'center',
                     }}
                 />
-                <Grid
-                    item
-                    xs={12}
-                    sm={8}
-                    md={5}
-                    component={Paper}
-                    elevation={6}
-                    square
-                >
+                <Grid item md={4} component={Paper} elevation={6} square>
                     <Box
                         sx={{
                             my: 8,
@@ -94,29 +90,25 @@ export default function Login() {
                         </Typography>
                         <Box
                             component='form'
-                            noValidate
                             onSubmit={handleSubmit}
                             sx={{ mt: 1 }}
+                            className='w-full'
                         >
                             <TextField
                                 margin='normal'
-                                required
                                 fullWidth
                                 id='username'
                                 label='Tài khoản'
                                 name='username'
-                                autoComplete='username'
                                 autoFocus
                             />
                             <TextField
                                 margin='normal'
-                                required
                                 fullWidth
                                 name='password'
                                 label='Mật khẩu'
                                 type='password'
                                 id='password'
-                                autoComplete='current-password'
                             />
                             <Button
                                 type='submit'
@@ -128,7 +120,10 @@ export default function Login() {
                             </Button>
                             <Grid container>
                                 <Grid item xs>
-                                    <Link href='#' variant='body2'>
+                                    <Link
+                                        to='/forgot-pass'
+                                        className='underline text-blue-500'
+                                    >
                                         Quên mật khẩu
                                     </Link>
                                 </Grid>
@@ -136,7 +131,10 @@ export default function Login() {
                                     <span className='mr-2'>
                                         Bạn chưa có tài khoản?
                                     </span>
-                                    <Link href='/register' variant='body2'>
+                                    <Link
+                                        to='/register'
+                                        className='underline text-blue-500'
+                                    >
                                         Đăng ký
                                     </Link>
                                 </Grid>

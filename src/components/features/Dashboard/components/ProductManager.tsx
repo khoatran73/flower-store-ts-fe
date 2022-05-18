@@ -62,10 +62,6 @@ const ProductManager = () => {
 
     const [loading, setLoading] = useState<boolean>(false);
 
-    const [storeId, setStoreId] = React.useState<string | null>(
-        localStorage.getItem('storeId')
-    );
-
     useEffect(() => {
         getRowData();
 
@@ -92,9 +88,7 @@ const ProductManager = () => {
     const getRowData = async () => {
         setLoading(true);
         await axios
-            .get(PRODUCT_INDEX_API, {
-                params: { storeId: storeId },
-            })
+            .get(PRODUCT_INDEX_API)
             .then((res) => {
                 if (res.data.success) {
                     setLoading(false);
@@ -154,9 +148,7 @@ const ProductManager = () => {
 
         setLoading(true);
         axios
-            .post(PRODUCT_CREATE_API, formData, {
-                params: { storeId: storeId },
-            })
+            .post(PRODUCT_CREATE_API, formData)
             .then((res) => {
                 if (res.data.success) {
                     setLoading(false);
@@ -208,9 +200,7 @@ const ProductManager = () => {
 
         setLoading(true);
         axios
-            .put(`${PRODUCT_UPDATE_API}/${id}`, formData, {
-                params: { storeId: storeId },
-            })
+            .post(`${PRODUCT_UPDATE_API}/${id}`, formData)
             .then((res) => {
                 if (res.data.success) {
                     setLoading(false);
@@ -244,9 +234,7 @@ const ProductManager = () => {
             if (willDelete.isConfirmed) {
                 setLoading(true);
                 axios
-                    .delete(`${PRODUCT_DELETE_API}/${id}`, {
-                        params: { storeId: storeId },
-                    })
+                    .delete(`${PRODUCT_DELETE_API}/${id}`)
                     .then((res) => {
                         if (res.data.success) {
                             setLoading(false);
@@ -379,7 +367,6 @@ const ProductManager = () => {
                             name='name'
                             label='Tên sản phẩm'
                             size='small'
-                            required
                             value={name}
                             onChange={(e) => setName(e.target.value)}
                         />
@@ -405,7 +392,6 @@ const ProductManager = () => {
                                 label='Danh mục'
                                 value={categoryId}
                                 onChange={(e) => setCategoryId(e.target.value)}
-                                required
                             >
                                 {categories.map((category) => (
                                     <MenuItem value={category.id}>
@@ -423,7 +409,6 @@ const ProductManager = () => {
                                 label='Giá bán'
                                 type='number'
                                 size='small'
-                                required
                                 value={unitPrice}
                                 onChange={(e) =>
                                     setUnitPrice(parseInt(e.target.value))

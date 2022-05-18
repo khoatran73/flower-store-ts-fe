@@ -26,7 +26,6 @@ export const AddressForm: React.FC<Props> = (props) => {
                 <Grid container spacing={3}>
                     <Grid item xs={12} sm={12}>
                         <TextField
-                            required
                             id='fullname'
                             name='fullname'
                             label='Họ tên'
@@ -36,7 +35,6 @@ export const AddressForm: React.FC<Props> = (props) => {
                     </Grid>
                     <Grid item xs={12} sm={6}>
                         <TextField
-                            required
                             id='phone'
                             name='phone'
                             label='Số điện thoại'
@@ -46,7 +44,6 @@ export const AddressForm: React.FC<Props> = (props) => {
                     </Grid>
                     <Grid item xs={12} sm={6}>
                         <TextField
-                            required
                             id='email'
                             name='email'
                             label='Email'
@@ -74,7 +71,6 @@ export const AddressForm: React.FC<Props> = (props) => {
                     </Grid>
                     <Grid item xs={12}>
                         <TextField
-                            required
                             id='address'
                             name='address'
                             label='Địa chỉ'

@@ -1,3 +1,5 @@
+import { ProductDto } from '../product/ProductDto';
+
 export interface HistoryDto {
     id: string;
     customerId: string;
@@ -17,9 +19,9 @@ export interface HistoryCart {
 export interface HistoryCartDetail {
     quantity: number;
     price: number;
-    product: HistoryProduct;
+    product: ProductDto;
 }
 
-export interface HistoryProduct {
-    name: string;
-}
+// export interface HistoryProduct {
+//     name: string;
+// }

@@ -79,7 +79,7 @@ const ProductInfo: React.FC<Props> = (props: Props) => {
                         </div>
                     </div>
                     <div className='text-lg font-semibold text-red-400 py-2 border-b border-gray-200'>
-                        {product?.unitPrice.toLocaleString()}đ
+                        {product?.unitPrice.toLocaleString()}₫
                     </div>
                     <div className='py-2'>
                         <div className='font-semibold'>Mô tả:</div>

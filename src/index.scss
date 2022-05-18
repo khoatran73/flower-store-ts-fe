@@ -202,6 +202,12 @@ a:hover {
     .css-mg2cnq-MuiButtonBase-root-MuiFab-root {
         background-color: $main-color;
         color: #fff;
+        transition: all 0.3s;
+    }
+
+    .css-mg2cnq-MuiButtonBase-root-MuiFab-root:hover {
+        background-color: $main-color;
+        opacity: 0.8;
     }
 }
 
@@ -336,4 +342,9 @@ $text-color: #fffff6;
     height: 14px !important;
     font-size: 8px !important;
     right: -2px !important;
+}
+
+.css-1u4zpwo-MuiSvgIcon-root-MuiStepIcon-root.Mui-active,
+.css-1u4zpwo-MuiSvgIcon-root-MuiStepIcon-root.Mui-completed {
+    color: $main-color !important;
 }
