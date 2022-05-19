@@ -39,6 +39,16 @@ export const History = () => {
                 {histories.map((history) => (
                     <CartDetailItem history={history} key={history.id} />
                 ))}
+                {(!histories || histories?.length === 0) && (
+                    <div className='flex items-center justify-center flex-col h-full'>
+                        <img
+                            className='w-52'
+                            src='https://res.cloudinary.com/dqrkqvtjg/image/upload/v1652970603/Flower-store/cart_gtpbcm.png'
+                            alt=''
+                        />
+                        <div className='text-lg mt-5'>Bạn chưa mua hàng</div>
+                    </div>
+                )}
             </div>
         </div>
     );
