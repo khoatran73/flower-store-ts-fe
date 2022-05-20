@@ -22,6 +22,8 @@ import { CART_INDEX_API } from '../../features/ProductDetail/api';
 import { GET_CUSTOMER_API } from '../../features/Profile/api';
 import { UserDto } from './../../../types/user/UserDto';
 import { REMOVE_CART_API } from './api';
+import LockResetIcon from '@mui/icons-material/LockReset';
+import { Tooltip } from 'antd';
 
 const style = {
     position: 'absolute' as 'absolute',
@@ -100,6 +102,10 @@ const Navbar = () => {
         setIsLogin(null);
         setRole(null);
         navigate('/');
+    };
+
+    const resetPassword = () => {
+        navigate('/reset-password');
     };
 
     const checkOut = async () => {
@@ -231,18 +237,36 @@ const Navbar = () => {
                                             alt=''
                                             src={image || ''}
                                         />
-
-                                        <IconButton
-                                            sx={{
-                                                p: '10px',
-                                                marginLeft: '10px',
-                                                color: '#eb2066',
-                                            }}
-                                            aria-label='cart'
-                                            onClick={logout}
+                                        <Tooltip
+                                            placement='bottom'
+                                            title='Đổi mật khẩu'
                                         >
-                                            <LogoutIcon />
-                                        </IconButton>
+                                            <IconButton
+                                                sx={{
+                                                    p: '10px',
+                                                    marginLeft: '10px',
+                                                    color: '#eb2066',
+                                                }}
+                                                onClick={resetPassword}
+                                            >
+                                                <LockResetIcon />
+                                            </IconButton>
+                                        </Tooltip>
+                                        <Tooltip
+                                            placement='bottom'
+                                            title='Đăng xuất'
+                                        >
+                                            <IconButton
+                                                sx={{
+                                                    p: '10px',
+                                                    marginLeft: '10px',
+                                                    color: '#eb2066',
+                                                }}
+                                                onClick={logout}
+                                            >
+                                                <LogoutIcon />
+                                            </IconButton>
+                                        </Tooltip>
                                     </Typography>
                                 </>
                             ) : (

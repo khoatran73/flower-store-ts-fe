@@ -20,6 +20,7 @@ import { Cart } from '../features/Profile/components/Cart';
 import { History } from '../features/Profile/components/History';
 import { UserProfile } from '../features/Profile/components/UserProfile';
 import Register from '../features/Register';
+import { ResetPassword } from '../features/reset-password/ResetPassword';
 import { Contact } from './../help/Contact';
 import { Help } from './../help/Help';
 import { Reply } from './../help/Reply';
@@ -169,6 +170,10 @@ const routeList = [
     {
         path: '/register',
         element: <Register />,
+    },
+    {
+        path: '/reset-password',
+        element: <ResetPassword />,
     },
     {
         path: '/checkout/:id',

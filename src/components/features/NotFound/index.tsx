@@ -15,7 +15,7 @@ export const NotFound = () => {
                 justifyItems: 'center',
                 justifyContent: 'center',
                 width: '100%',
-                height: '100%',
+                // height: '100%',
             }}
             status='404'
             title='404'
