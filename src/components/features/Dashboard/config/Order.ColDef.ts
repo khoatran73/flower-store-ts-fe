@@ -21,6 +21,12 @@ export const OrderColDef: ColumnDef[] = [
         filter: true,
     },
     {
+        headerName: 'Cửa hàng',
+        field: 'customer.store.name',
+        minWidth: 120,
+        filter: true,
+    },
+    {
         headerName: 'Số điện thoại',
         field: 'customer.phone',
     },

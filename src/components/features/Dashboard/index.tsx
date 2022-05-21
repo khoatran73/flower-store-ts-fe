@@ -1,4 +1,4 @@
-import EqualizerIcon from '@mui/icons-material/Equalizer';
+import FiberManualRecordIcon from '@mui/icons-material/FiberManualRecord';
 import LocalFloristIcon from '@mui/icons-material/LocalFlorist';
 import PeopleIcon from '@mui/icons-material/People';
 import PersonIcon from '@mui/icons-material/Person';
@@ -9,8 +9,6 @@ import SubMenu from 'antd/lib/menu/SubMenu';
 import React from 'react';
 import { Link, Outlet } from 'react-router-dom';
 import Forbidden from './../../utils/Forbidden';
-import FiberManualRecordIcon from '@mui/icons-material/FiberManualRecord';
-import { MenuLayout } from '../../../types/utils/MenuLayout';
 
 const { Header, Content, Sider } = Layout;
 const { Item } = Menu;
@@ -76,16 +74,16 @@ const Dashboard: React.FC = () => {
                                 Sản phẩm đã bán
                             </Link>
                         </Item>
-                        <Item
+                        {/* <Item
                             key='/dashboard/report/expense'
                             icon={<FiberManualRecordIcon />}
                         >
                             <Link to='/dashboard/report/expense'>
                                 Báo cáo chi tiêu
                             </Link>
-                        </Item>
+                        </Item> */}
                     </SubMenu>
-                    <SubMenu
+                    {/* <SubMenu
                         title={
                             <span style={{ marginLeft: '10px' }}>Thống kê</span>
                         }
@@ -107,7 +105,7 @@ const Dashboard: React.FC = () => {
                                 Sản phẩm bán chạy
                             </Link>
                         </Item>
-                    </SubMenu>
+                    </SubMenu> */}
                 </Menu>
             </Sider>
             <Layout style={{ padding: '0 24px 24px' }}>

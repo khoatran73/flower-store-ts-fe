@@ -1,21 +1,20 @@
+import LockResetIcon from '@mui/icons-material/LockReset';
 import {
-    CssBaseline,
-    Paper,
+    Avatar,
     Box,
+    Button,
+    CssBaseline,
+    Grid,
+    Paper,
     TextField,
     Typography,
-    Grid,
-    Button,
-    Avatar,
 } from '@mui/material';
-import React from 'react';
-import { NavLink, Link, useNavigate } from 'react-router-dom';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import HomeIcon from '@mui/icons-material/Home';
-import LockResetIcon from '@mui/icons-material/LockReset';
 import axios from 'axios';
-import { API_URL } from '../../../constant';
+import React from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
+import { API_URL } from '../../../constant';
 
 const theme = createTheme();
 

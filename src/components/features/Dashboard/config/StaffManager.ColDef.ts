@@ -30,7 +30,7 @@ export const StaffManagerColDef: ColumnDef[] = [
         field: 'email',
     },
     {
-        headerName: 'Role',
+        headerName: 'Vai trò',
         field: 'role',
         valueGetter: function (params) {
             if (params.data) {
