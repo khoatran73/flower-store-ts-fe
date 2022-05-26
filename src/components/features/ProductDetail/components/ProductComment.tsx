@@ -22,6 +22,9 @@ import {
     REACTION_CREATE_API,
 } from '../api';
 
+import { format, formatDistance, differenceInMinutes } from 'date-fns';
+import vi from 'date-fns/locale/vi';
+
 interface Props {
     productId: string | undefined;
 }
@@ -126,6 +129,22 @@ const ProductComment: FC<Props> = (props) => {
         }
     };
 
+    const convertDistanceDate = (date: Date) => {
+        const subDate = differenceInMinutes(new Date(), new Date(date));
+        let output;
+        if (subDate < 1440 * 2) {
+            const distanceDate = formatDistance(new Date(date), new Date(), {
+                locale: vi,
+                addSuffix: true,
+            });
+            output = distanceDate;
+        } else {
+            output = format(new Date(date), 'dd/MM/yyyy');
+        }
+
+        return output;
+    };
+
     // if (loading) return <Loading loading={loading} />;
     return (
         <div className='my-10'>
@@ -185,10 +204,8 @@ const ProductComment: FC<Props> = (props) => {
                                             />
                                         </Badge>
                                     </span>
-                                    <span className='text-left text-gray-400 text-sm ml-2'>
-                                        {moment(comment.createdAt)
-                                            .locale('vi')
-                                            .fromNow()}
+                                    <span className='text-left text-gray-400 text-sm ml-3'>
+                                        {convertDistanceDate(comment.createdAt)}
                                     </span>
                                 </div>
                             </Grid>

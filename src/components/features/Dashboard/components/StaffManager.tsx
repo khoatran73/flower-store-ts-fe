@@ -61,7 +61,7 @@ const StaffManager = () => {
                     setProvinces(res.data);
                 }
             })
-            .catch((err) => console.log(err));
+            .catch((err) => {});
     };
 
     const fetchDistricts = (code: any) => {
@@ -74,7 +74,7 @@ const StaffManager = () => {
                     setProvince(res.data);
                 }
             })
-            .catch((err) => console.log(err));
+            .catch((err) => {});
     };
 
     const fetchWards = (code: any) => {
@@ -87,7 +87,7 @@ const StaffManager = () => {
                     setDistrict(res.data);
                 }
             })
-            .catch((err) => console.log(err));
+            .catch((err) => {});
     };
 
     useEffect(() => {
@@ -109,7 +109,6 @@ const StaffManager = () => {
                 })
                 .catch((err) => {
                     setLoading(false);
-                    console.log(err);
                 });
         };
 
@@ -130,7 +129,6 @@ const StaffManager = () => {
             })
             .catch((err) => {
                 setLoading(false);
-                console.log(err);
             });
     };
 
@@ -193,7 +191,6 @@ const StaffManager = () => {
             })
             .catch((err) => {
                 setLoading(false);
-                console.log(err.message);
                 setOpenDialog(false);
                 Swal.fire('Thông báo', 'Thêm nhân viên thất bại!', 'error');
             });

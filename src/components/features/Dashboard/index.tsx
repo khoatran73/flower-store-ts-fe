@@ -10,110 +10,73 @@ import React from 'react';
 import { Link, Outlet } from 'react-router-dom';
 import Forbidden from './../../utils/Forbidden';
 
-const { Header, Content, Sider } = Layout;
+const { Content, Sider } = Layout;
 const { Item } = Menu;
 
 const Dashboard: React.FC = () => {
-    const [isLogin, setIsLogin] = React.useState<string | null>(
-        localStorage.getItem('isLogin')
-    );
-    const [role, setRole] = React.useState<string | null>(
-        localStorage.getItem('role')
-    );
+    const isLogin = localStorage.getItem('isLogin');
+    const role = localStorage.getItem('role');
 
-    if (!isLogin && role !== 'admin') return <Forbidden />;
+    if (!isLogin || role === 'customer') return <Forbidden />;
+
+    const isAdmin = role === 'admin';
+    const isAdminWareHouse = role === 'admin' || role === 'warehouse';
+    const isAdminSales = role === 'admin' || role === 'sales';
+
+    const activeTab = role === 'sales' ? 'order' : 'dashboard';
+
     return (
         <Layout className='' style={{ height: '89%' }}>
             <Sider width={240} className='site-layout-background'>
                 <Menu
                     mode='inline'
-                    defaultSelectedKeys={['1']}
-                    defaultOpenKeys={['sub1']}
                     style={{ height: '100%', borderRight: 0 }}
+                    defaultSelectedKeys={[activeTab]}
                 >
-                    <Item
-                        icon={<LocalFloristIcon />}
-                        key='dashboard'
-                        // title='dashboard'
-                    >
-                        <Link to='/dashboard'>Quản lý sản phẩm</Link>
-                    </Item>
-                    <Item
-                        icon={<ShoppingCartIcon />}
-                        key='dashboard/order'
-                        // title='dashboard'
-                    >
-                        <Link to='/dashboard/order'>Đặt hàng</Link>
-                    </Item>
-                    <Item
-                        icon={<PersonIcon />}
-                        key='dashboard/staff'
-                        // title='dashboard'
-                    >
-                        <Link to='/dashboard/staff'>Quản lý nhân viên</Link>
-                    </Item>
-                    <Item
-                        icon={<PeopleIcon />}
-                        key='dashboard/customer'
-                        // title='dashboard'
-                    >
-                        <Link to='/dashboard/customer'>Khách hàng</Link>
-                    </Item>
+                    {isAdminWareHouse && (
+                        <Item icon={<LocalFloristIcon />} key='dashboard'>
+                            <Link to='/dashboard'>Quản lý sản phẩm</Link>
+                        </Item>
+                    )}
+                    {isAdminSales && (
+                        <Item icon={<ShoppingCartIcon />} key='order'>
+                            <Link to='/dashboard/order'>Đặt hàng</Link>
+                        </Item>
+                    )}
 
-                    <SubMenu
-                        title={
-                            <span style={{ marginLeft: '10px' }}>Báo cáo</span>
-                        }
-                        icon={<PieChartIcon fontSize='small' />}
-                    >
-                        <Item
-                            icon={<FiberManualRecordIcon />}
-                            key='/dashboard/report/turnover'
-                        >
-                            <Link to='/dashboard/report/turnover'>
-                                Sản phẩm đã bán
-                            </Link>
+                    {isAdmin && (
+                        <Item icon={<PersonIcon />} key='staff'>
+                            <Link to='/dashboard/staff'>Quản lý nhân viên</Link>
                         </Item>
-                        {/* <Item
-                            key='/dashboard/report/expense'
-                            icon={<FiberManualRecordIcon />}
-                        >
-                            <Link to='/dashboard/report/expense'>
-                                Báo cáo chi tiêu
-                            </Link>
-                        </Item> */}
-                    </SubMenu>
-                    {/* <SubMenu
-                        title={
-                            <span style={{ marginLeft: '10px' }}>Thống kê</span>
-                        }
-                        icon={<EqualizerIcon fontSize='small' />}
-                    >
-                        <Item
-                            icon={<FiberManualRecordIcon />}
-                            key='/dashboard/statistics/traffic'
-                        >
-                            <Link to='/dashboard/statistics/traffic'>
-                                Lượng truy cập
-                            </Link>
+                    )}
+
+                    {isAdminSales && (
+                        <Item icon={<PeopleIcon />} key='customer'>
+                            <Link to='/dashboard/customer'>Khách hàng</Link>
                         </Item>
-                        <Item
-                            key='/dashboard/statistics/best-seller'
-                            icon={<FiberManualRecordIcon />}
+                    )}
+                    {isAdmin && (
+                        <SubMenu
+                            title={
+                                <span style={{ marginLeft: '10px' }}>
+                                    Báo cáo
+                                </span>
+                            }
+                            icon={<PieChartIcon fontSize='small' />}
                         >
-                            <Link to='/dashboard/statistics/best-seller'>
-                                Sản phẩm bán chạy
-                            </Link>
-                        </Item>
-                    </SubMenu> */}
+                            <Item
+                                icon={<FiberManualRecordIcon />}
+                                key='/dashboard/report/turnover'
+                            >
+                                <Link to='/dashboard/report/turnover'>
+                                    Sản phẩm đã bán
+                                </Link>
+                            </Item>
+                        </SubMenu>
+                    )}
                 </Menu>
             </Sider>
             <Layout style={{ padding: '0 24px 24px' }}>
-                {/* <Breadcrumb style={{ margin: '16px 0' }}>
-                    <Breadcrumb.Item>Home</Breadcrumb.Item>
-                    <Breadcrumb.Item>List</Breadcrumb.Item>
-                    <Breadcrumb.Item>App</Breadcrumb.Item>
-                </Breadcrumb> */}
                 <Content
                     className='site-layout-background'
                     style={{

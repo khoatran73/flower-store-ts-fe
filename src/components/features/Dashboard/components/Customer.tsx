@@ -76,7 +76,6 @@ const Customer: React.FC = () => {
                 })
                 .catch((err) => {
                     setLoading(false);
-                    console.log(err);
                 });
         };
 
@@ -97,7 +96,6 @@ const Customer: React.FC = () => {
             })
             .catch((err) => {
                 setLoading(false);
-                console.log(err);
             });
     };
 
@@ -125,7 +123,7 @@ const Customer: React.FC = () => {
                     setProvinces(res.data);
                 }
             })
-            .catch((err) => console.log(err));
+            .catch((err) => {});
     };
 
     const fetchDistricts = (code: any) => {
@@ -138,7 +136,7 @@ const Customer: React.FC = () => {
                     setProvince(res.data);
                 }
             })
-            .catch((err) => console.log(err));
+            .catch((err) => {});
     };
 
     const fetchWards = (code: any) => {
@@ -151,7 +149,7 @@ const Customer: React.FC = () => {
                     setDistrict(res.data);
                 }
             })
-            .catch((err) => console.log(err));
+            .catch((err) => {});
     };
 
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
@@ -207,7 +205,6 @@ const Customer: React.FC = () => {
             })
             .catch((err) => {
                 setLoading(false);
-                console.log(err.message);
                 setOpenDialog(false);
                 Swal.fire('Thông báo', 'Thêm khách hàng bại!', 'error');
             });

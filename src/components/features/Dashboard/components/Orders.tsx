@@ -56,7 +56,6 @@ const Orders: React.FC = () => {
             })
             .catch((err) => {
                 setLoading(false);
-                console.log(err);
             });
     };
 

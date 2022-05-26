@@ -78,7 +78,6 @@ const ProductManager = () => {
                 })
                 .catch((err) => {
                     setLoading(false);
-                    console.log(err);
                 });
         };
 
@@ -97,7 +96,6 @@ const ProductManager = () => {
             })
             .catch((err) => {
                 setLoading(false);
-                console.log(err);
             });
     };
 

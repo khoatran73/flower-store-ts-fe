@@ -13,6 +13,7 @@ export interface ProductDto {
 export interface CategoryDto {
     id: string;
     name: string;
+    code: string;
 }
 export interface ProductCreateDto {
     name: string;

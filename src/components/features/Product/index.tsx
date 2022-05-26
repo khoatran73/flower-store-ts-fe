@@ -1,13 +1,14 @@
 import { Container, Pagination } from '@mui/material';
-import React, { useEffect, useState } from 'react';
-import { CategoryDto, ProductDto } from '../../../types/product/ProductDto';
-import ProductItem from '../Home/components/ProductItem';
-import axios from 'axios';
-import { PRODUCT_DETAIL_API } from '../ProductDetail/api';
-import { CATEGORY_INDEX_API } from '../Dashboard/api';
-import Loading from '../../../components/utils/Loading';
-import { usePagination } from './config/usePagination';
 import { Tabs } from 'antd';
+import axios from 'axios';
+import React, { useEffect, useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
+import Loading from '../../../components/utils/Loading';
+import { CategoryDto, ProductDto } from '../../../types/product/ProductDto';
+import { CATEGORY_INDEX_API } from '../Dashboard/api';
+import ProductItem from '../Home/components/ProductItem';
+import { PRODUCT_DETAIL_API } from '../ProductDetail/api';
+import { usePagination } from './config/usePagination';
 
 const { TabPane } = Tabs;
 
@@ -15,6 +16,10 @@ const Product: React.FC = () => {
     const [products, setProducts] = useState<ProductDto[]>([]);
     const [categories, setCategories] = useState<CategoryDto[]>([]);
     const [loading, setLoading] = useState<boolean>(false);
+
+    const [searchParams, setSearchParams] = useSearchParams();
+    const categoryCode = searchParams?.get('code')?.toString() || '';
+    const [activeTab, setActiveTab] = useState<string>(categoryCode);
 
     const [page, setPage] = useState<number>(1);
     const PER_PAGE = 12;
@@ -27,8 +32,8 @@ const Product: React.FC = () => {
         _DATA.jump(p);
     };
 
-    const fetchProducts = async (categoryId: string | null) => {
-        const params = categoryId ? { categoryId: categoryId } : '';
+    const fetchProducts = async (categoryCode: string | null) => {
+        const params = categoryCode ? { categoryCode: categoryCode } : '';
         setLoading(true);
         await axios
             .get(PRODUCT_DETAIL_API, { params })
@@ -39,32 +44,36 @@ const Product: React.FC = () => {
             .catch((err) => setLoading(false));
     };
 
-    useEffect(() => {
-        const getCategories = async () => {
-            setLoading(true);
-            await axios
-                .get(CATEGORY_INDEX_API)
-                .then((res) => {
-                    if (res.data.success) {
-                        setLoading(false);
-                        const result = res.data.result as CategoryDto[];
-                        setCategories(result);
-                    }
-                })
-                .catch((err) => {
+    const getCategories = async () => {
+        setLoading(true);
+        await axios
+            .get(CATEGORY_INDEX_API)
+            .then((res) => {
+                if (res.data.success) {
                     setLoading(false);
-                });
-        };
+                    const result = res.data.result as CategoryDto[];
+                    setCategories(result);
+                }
+            })
+            .catch((err) => {
+                setLoading(false);
+            });
+    };
 
+    useEffect(() => {
         getCategories();
-
-        fetchProducts(null);
-    }, []);
+        fetchProducts(categoryCode);
+        setActiveTab(categoryCode);
+    }, [categoryCode]);
 
     const onTabChange = (key: string) => {
+        setActiveTab(key);
+        searchParams.set('code', key);
+        setSearchParams(searchParams);
         fetchProducts(key);
     };
 
+    // if (loading) return <Loading loading={loading} />;
     return (
         <Container>
             <div className='my-10'>
@@ -73,7 +82,8 @@ const Product: React.FC = () => {
                 </div>
                 <div className='flex mb-5'>
                     <Tabs
-                        defaultActiveKey='1'
+                        defaultActiveKey={activeTab}
+                        activeKey={activeTab}
                         size='large'
                         onChange={onTabChange}
                         // type='card'
@@ -82,7 +92,7 @@ const Product: React.FC = () => {
                             {/* Tất cả sản phẩm */}
                         </TabPane>
                         {categories.map((category) => (
-                            <TabPane tab={category.name} key={category.id}>
+                            <TabPane tab={category.name} key={category.code}>
                                 {/* {category.name} */}
                             </TabPane>
                         ))}

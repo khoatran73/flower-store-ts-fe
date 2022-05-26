@@ -26,3 +26,6 @@ yarn-error.log*
 /src/Uploads
 package-lock.json
 package-lock.json
+yarn.lock
+package-lock.json
+package-lock.json

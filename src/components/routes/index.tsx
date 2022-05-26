@@ -29,6 +29,8 @@ import PrivateRoute from './PrivateRoute';
 import PrivateRouteAdmin from './PrivateRouteAdmin';
 import PrivateRouteSales from './PrivateRouteSales';
 import PrivateRouteWarehouse from './PrivateRouteWarehouse';
+import { store } from './../../redux/store';
+import { Store } from './../features/Store/Store';
 
 const routeList = [
     {
@@ -50,6 +52,10 @@ const routeList = [
             {
                 path: '/contact',
                 element: <Contact />,
+            },
+            {
+                path: '/store',
+                element: <Store />,
             },
             {
                 path: '/reply',
@@ -179,7 +185,6 @@ const routeList = [
         path: '/checkout/:id',
         element: <Checkout />,
     },
-
     {
         path: '/*',
         element: <NotFound />,

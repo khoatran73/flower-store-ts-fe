@@ -1,22 +1,23 @@
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { ProductDto } from 'src/types/product/ProductDto';
+import { CategoryDto, ProductDto } from 'src/types/product/ProductDto';
 import ProductItem from '../../Home/components/ProductItem';
 
 interface Props {
     relatedProducts: ProductDto[];
+    category: CategoryDto;
 }
 
 const RelatedProducts: React.FC<Props> = (props) => {
-    const { relatedProducts } = props;
+    const { relatedProducts, category } = props;
     return (
         <div className='my-10'>
             <div className='flex items-center mb-5 justify-between'>
                 <div className='text-2xl font-semibold text-left uppercase'>
                     Sản phẩm liên quan
                 </div>
-                <Link to='/product'>
+                <Link to={'/product?code=' + category.code}>
                     <div className='flex items-center text-md text-blue-600 hover:cursor-pointer'>
                         Xem thêm <ChevronRightIcon fontSize='small' />
                     </div>

@@ -28,8 +28,6 @@ export const ResetPassword = () => {
         const oldPassword = data.get('oldPassword');
         const newPassword = data.get('newPassword');
         const confirmNewPassword = data.get('confirmNewPassword');
-
-        console.log(oldPassword, newPassword, confirmNewPassword);
         axios
             .post(`${API_URL}/auth/reset-password`, {
                 id: isLogin,

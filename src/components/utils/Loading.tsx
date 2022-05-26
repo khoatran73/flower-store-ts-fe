@@ -1,6 +1,4 @@
-import { CircularProgress } from '@mui/material';
 import React, { CSSProperties } from 'react';
-// import { ReactComponent as SpiralLoading } from 'https://res.cloudinary.com/dqrkqvtjg/image/upload/v1652262545/Flower-store/spiral_mundrf.svg';
 
 type LoadingProps = {
     text?: string;
@@ -16,7 +14,7 @@ const Loading = (props: LoadingProps) => {
                 display: props.loading ? 'flex' : 'none',
                 width: '100%',
                 height: '100%',
-                position: 'fixed',
+                position: 'absolute',
                 top: 'calc(50% + 24px)',
                 left: 'calc(50% + 24px)',
                 zIndex: 999,

@@ -1,57 +1,62 @@
+import CameraAltIcon from '@mui/icons-material/CameraAlt';
 import {
     Avatar,
     Box,
+    FormControl,
     FormControlLabel,
     FormLabel,
     Grid,
+    InputLabel,
+    MenuItem,
     Radio,
     RadioGroup,
+    Select,
     TextField,
     Typography,
-    InputLabel,
-    Select,
-    MenuItem,
-    FormControl,
 } from '@mui/material';
 import { Breadcrumb } from 'antd';
-import React, { useState, useEffect } from 'react';
-import { Province, UserDto } from './../../../../types/user/UserDto';
-import { StoreDto } from '../../../../types/store/StoreDto';
 import axios from 'axios';
+import { format } from 'date-fns';
+import React, { useEffect, useState } from 'react';
+import Swal from 'sweetalert2';
+import { serializeToFromData } from '../../../../lib/formFileData';
+import { StoreDto } from '../../../../types/store/StoreDto';
 import { GET_PROVINCES_API, STORE_LIST_API } from '../../Dashboard/api';
 import {
     GET_CUSTOMER_API,
     UPDATE_CUSTOMER_API,
     UPDATE_CUSTOMER_IMAGE_API,
 } from '../api';
-import Swal from 'sweetalert2';
-import CameraAltIcon from '@mui/icons-material/CameraAlt';
-import { serializeToFromData } from '../../../../lib/formFileData';
+import { Province, UserDto } from './../../../../types/user/UserDto';
 import Loading from './../../../utils/Loading';
 
 export const UserProfile = () => {
     const [stores, setStores] = useState<StoreDto[]>([]);
-    const [storeId, setStoreId] = React.useState<string | null>(
-        localStorage.getItem('storeId')
-    );
+    // const storeId = localStorage.getItem('storeId');
     const [provinces, setProvinces] = useState<Province[]>();
     const [province, setProvince] = useState<Province>();
     const [district, setDistrict] = useState<any>();
     const [loading, setLoading] = useState<boolean>(false);
-    const [isLogin, setIsLogin] = React.useState<string | null>(
-        localStorage.getItem('isLogin')
-    );
-    const [customer, setCustomer] = useState<UserDto>();
+    const isLogin = localStorage.getItem('isLogin');
+    const [customer, setCustomer] = useState<UserDto>({} as UserDto);
 
     const fetchProvinces = () => {
-        axios.get(`${GET_PROVINCES_API}/p`).then((res) => {
-            if (res.status === 200) {
-                setProvinces(res.data);
-            }
-        });
+        setLoading(true);
+        axios
+            .get(`${GET_PROVINCES_API}/p`)
+            .then((res) => {
+                if (res.status === 200) {
+                    setProvinces(res.data);
+                }
+            })
+            .catch((err) => {})
+            .finally(() => {
+                setLoading(false);
+            });
     };
 
     const fetchDistricts = (code: any) => {
+        setLoading(true);
         axios
             .get(`${GET_PROVINCES_API}/p/${code}`, {
                 params: { depth: 2 },
@@ -60,10 +65,15 @@ export const UserProfile = () => {
                 if (res.status === 200) {
                     setProvince(res.data);
                 }
+            })
+            .catch((err) => {})
+            .finally(() => {
+                setLoading(false);
             });
     };
 
     const fetchWards = (code: any) => {
+        setLoading(true);
         axios
             .get(`${GET_PROVINCES_API}/d/${code}`, {
                 params: { depth: 2 },
@@ -72,32 +82,48 @@ export const UserProfile = () => {
                 if (res.status === 200) {
                     setDistrict(res.data);
                 }
+            })
+            .catch((err) => {})
+            .finally(() => {
+                setLoading(false);
             });
     };
 
     const fetchCustomer = () => {
-        axios.get(`${GET_CUSTOMER_API}/${isLogin}`).then((res) => {
-            if (res.data.success) {
-                setCustomer(res.data.result);
-            }
-        });
+        setLoading(true);
+        axios
+            .get(`${GET_CUSTOMER_API}/${isLogin}`)
+            .then((res) => {
+                if (res.data.success) {
+                    setCustomer(res.data.result);
+                }
+            })
+            .catch((err) => {})
+            .finally(() => {
+                setLoading(false);
+            });
     };
 
-    useEffect(() => {
-        fetchProvinces();
-
-        const getStores = async () => {
-            await axios.get(STORE_LIST_API).then((res) => {
+    const getStores = async () => {
+        setLoading(true);
+        await axios
+            .get(STORE_LIST_API)
+            .then((res) => {
                 if (res.data.success) {
                     const result = res.data.result as StoreDto[];
                     setStores(result);
                 }
+            })
+            .catch((err) => {})
+            .finally(() => {
+                setLoading(false);
             });
-        };
-
+    };
+    useEffect(() => {
+        fetchProvinces();
         fetchCustomer();
-
         getStores();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
@@ -108,10 +134,11 @@ export const UserProfile = () => {
         let provinceR = province?.name;
         let districtR = district?.name;
         let wardR = district?.wards.find(
+            // eslint-disable-next-line eqeqeq
             (ward: any) => ward.code == wardCode
         ).name;
 
-        const fullName = form.get('fullName');
+        const fullname = form.get('fullname');
         const email = form.get('email');
         const phone = form.get('phone');
         const storeId = form.get('storeId');
@@ -122,7 +149,7 @@ export const UserProfile = () => {
             : `${wardR} - ${districtR} - ${provinceR}`;
 
         if (
-            !fullName ||
+            !fullname ||
             !gender ||
             !birthday ||
             !address ||
@@ -136,7 +163,7 @@ export const UserProfile = () => {
 
         const body: any = {
             storeId: storeId,
-            fullName: fullName,
+            fullname: fullname,
             gender: gender === 'true',
             phone: phone,
             email: email,
@@ -145,7 +172,11 @@ export const UserProfile = () => {
         };
         axios.post(`${UPDATE_CUSTOMER_API}/${isLogin}`, body).then((res) => {
             if (res.data.success) {
-                Swal.fire('Thông báo', 'Thêm nhân viên thành công!', 'success');
+                Swal.fire(
+                    'Thông báo',
+                    'Cập nhật thông tin thành công!',
+                    'success'
+                );
             }
         });
     };
@@ -172,6 +203,11 @@ export const UserProfile = () => {
         fetchCustomer();
     };
 
+    const isDisabled = (value: any) => {
+        if (value) return true;
+        return false;
+    };
+
     if (loading) return <Loading loading={loading} />;
     return (
         <div>
@@ -190,7 +226,7 @@ export const UserProfile = () => {
                                         width: 200,
                                         height: 200,
                                     }}
-                                    src={customer?.image}
+                                    src={customer.image}
                                 ></Avatar>
                                 <label htmlFor='file'>
                                     <CameraAltIcon
@@ -213,7 +249,7 @@ export const UserProfile = () => {
                                 <FormLabel id='gender'>Giới tính</FormLabel>
                                 <RadioGroup
                                     aria-labelledby='gender'
-                                    defaultValue='true'
+                                    defaultValue={customer.gender}
                                     name='gender'
                                     row
                                 >
@@ -221,10 +257,16 @@ export const UserProfile = () => {
                                         value='true'
                                         control={<Radio />}
                                         label='Nam'
+                                        disabled={isDisabled(
+                                            customer.gender?.toString()
+                                        )}
                                     />
                                     <FormControlLabel
                                         value='false'
                                         control={<Radio />}
+                                        disabled={isDisabled(
+                                            customer.gender?.toString()
+                                        )}
                                         label='Nữ'
                                     />
                                 </RadioGroup>
@@ -243,11 +285,16 @@ export const UserProfile = () => {
                                     name='birthday'
                                     size='small'
                                     variant='standard'
-                                    value={customer?.birthday}
-                                    // defaultValue={customer?.birthday}
+                                    defaultValue={format(
+                                        new Date(
+                                            customer.birthday || Date.now()
+                                        ),
+                                        'yyyy-MM-dd'
+                                    ).toString()}
+                                    disabled={isDisabled(customer.birthday)}
                                     InputLabelProps={{
                                         shrink: true,
-                                        required: true,
+                                        // required: true,
                                     }}
                                 />
                             </Grid>
@@ -263,13 +310,16 @@ export const UserProfile = () => {
                                             InputLabelProps={{
                                                 shrink: true,
                                             }}
-                                            value={customer?.fullname}
+                                            value={customer.fullname}
                                             id='fullname'
                                             name='fullname'
                                             label='Họ tên'
                                             fullWidth
                                             variant='standard'
                                             multiline={true}
+                                            disabled={isDisabled(
+                                                customer.fullname
+                                            )}
                                         />
                                     </Grid>
                                     <Grid item xs={12} sm={4}>
@@ -282,8 +332,11 @@ export const UserProfile = () => {
                                             label='Số điện thoại'
                                             fullWidth
                                             variant='standard'
-                                            value={customer?.phone}
+                                            value={customer.phone}
                                             multiline={true}
+                                            disabled={isDisabled(
+                                                customer.phone
+                                            )}
                                         />
                                     </Grid>
                                     <Grid item xs={12} sm={4}>
@@ -296,8 +349,11 @@ export const UserProfile = () => {
                                             label='Email'
                                             fullWidth
                                             variant='standard'
-                                            value={customer?.email}
+                                            value={customer.email}
                                             multiline={true}
+                                            disabled={isDisabled(
+                                                customer.email
+                                            )}
                                         />
                                     </Grid>
                                     <Grid item xs={12} sm={4}>
@@ -317,17 +373,23 @@ export const UserProfile = () => {
                                                 label='Cửa hàng'
                                                 name='storeId'
                                                 variant='standard'
-                                                value={storeId}
+                                                defaultValue={customer.storeId}
+                                                disabled={isDisabled(
+                                                    customer.storeId
+                                                )}
                                             >
                                                 {stores.map((store) => (
-                                                    <MenuItem value={store.id}>
+                                                    <MenuItem
+                                                        value={store.id}
+                                                        key={store.id}
+                                                    >
                                                         {store.name}
                                                     </MenuItem>
                                                 ))}
                                             </Select>
                                         </FormControl>
                                     </Grid>
-                                    {!customer?.address && (
+                                    {!customer.address && (
                                         <Grid
                                             item
                                             xs={12}
@@ -460,7 +522,7 @@ export const UserProfile = () => {
                                             </Grid>
                                         </Grid>
                                     )}
-                                    {customer?.address && (
+                                    {customer.address && (
                                         <Grid
                                             item
                                             xs={12}
@@ -472,7 +534,7 @@ export const UserProfile = () => {
                                                 className='w-3/4'
                                                 label='Địa chỉ'
                                                 variant='standard'
-                                                value={customer?.address}
+                                                value={customer.address}
                                                 disabled
                                                 name='address'
                                                 InputLabelProps={{

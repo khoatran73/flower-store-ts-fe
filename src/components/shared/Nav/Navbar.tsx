@@ -24,6 +24,7 @@ import { UserDto } from './../../../types/user/UserDto';
 import { REMOVE_CART_API } from './api';
 import LockResetIcon from '@mui/icons-material/LockReset';
 import { Tooltip } from 'antd';
+import Loading from './../../utils/Loading';
 
 const style = {
     position: 'absolute' as 'absolute',
@@ -45,12 +46,10 @@ const Navbar = () => {
     const [role, setRole] = useState<string | null>(
         localStorage.getItem('role')
     );
-    const [image, setImage] = useState<string | null>(
-        localStorage.getItem('image')
-    );
+    const image = localStorage.getItem('image');
+
     const [cart, setCart] = useState<CartDto>();
     const [loading, setLoading] = useState<boolean>(false);
-    const [customer, setCustomer] = useState<UserDto>();
 
     const fetchCart = async () => {
         setLoading(true);
@@ -132,7 +131,7 @@ const Navbar = () => {
         }
     };
 
-    // if (loading) return <Loading loading={loading} />;
+    if (loading) return <Loading loading={loading} />;
     return (
         <div
             className='max-h-[100px] overflow-hidden bg-white  w-full border-b border-gray-200 '
@@ -164,13 +163,18 @@ const Navbar = () => {
                                     Trang Chủ
                                 </NavLink>
                                 <NavLink
-                                    to={'/product'}
+                                    to={'/product?code='}
                                     className='mr-2 ml-2 nav-item transition ease-in-out delay-75 duration-700'
                                 >
                                     Sản Phẩm
                                 </NavLink>
-
                                 <NavLink
+                                    to={'/store'}
+                                    className='mr-2 ml-2 nav-item transition ease-in-out delay-75 duration-700'
+                                >
+                                    Cửa hàng
+                                </NavLink>
+                                {/* <NavLink
                                     to={'/contact'}
                                     className='mr-2 ml-2 nav-item transition ease-in-out delay-75 duration-700'
                                 >
@@ -187,12 +191,18 @@ const Navbar = () => {
                                     className='mr-2 ml-2 nav-item transition ease-in-out delay-75 duration-700'
                                 >
                                     Trợ giúp
-                                </NavLink>
-                                {(role === 'admin' ||
-                                    role === 'sales' ||
-                                    role === 'warehouse') && (
+                                </NavLink> */}
+                                {(role === 'admin' || role === 'warehouse') && (
                                     <NavLink
                                         to={'/dashboard'}
+                                        className='mr-2 ml-2 text-red-400 transition ease-in-out delay-75 duration-700'
+                                    >
+                                        Trang Quản Trị
+                                    </NavLink>
+                                )}
+                                {role === 'sales' && (
+                                    <NavLink
+                                        to={'/dashboard/order'}
                                         className='mr-2 ml-2 text-red-400 transition ease-in-out delay-75 duration-700'
                                     >
                                         Trang Quản Trị

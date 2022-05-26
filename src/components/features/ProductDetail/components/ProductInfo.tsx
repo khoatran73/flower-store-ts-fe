@@ -3,8 +3,7 @@ import RemoveIcon from '@mui/icons-material/Remove';
 import Button from '@mui/material/Button';
 import ButtonGroup from '@mui/material/ButtonGroup';
 import axios from 'axios';
-import React, { useEffect, useState } from 'react';
-import Loading from '../../../../components/utils/Loading';
+import React, { useState } from 'react';
 import { ProductDto } from '../../../../types/product/ProductDto';
 import { CREATE_CART_DETAIL_API } from '../api';
 
@@ -15,14 +14,9 @@ interface Props {
 const ProductInfo: React.FC<Props> = (props: Props) => {
     const { product } = props;
     const [count, setCount] = React.useState(1);
-    const [isLogin, setIsLogin] = useState<string | null>();
-    const [role, setRole] = useState<string | null>();
     const [loading, setLoading] = useState<boolean>(false);
-
-    useEffect(() => {
-        setIsLogin(localStorage.getItem('isLogin'));
-        setRole(localStorage.getItem('role'));
-    }, []);
+    const isLogin = localStorage.getItem('isLogin');
+    // const role = localStorage.getItem('role');
 
     const onAddCart = () => {
         const params = {
@@ -36,7 +30,7 @@ const ProductInfo: React.FC<Props> = (props: Props) => {
             cartDetailCreateDto: {
                 productId: product?.id,
                 quantity: count,
-                price: product?.unitPrice * count,
+                price: (product?.unitPrice as number) * count,
             },
         };
 
@@ -79,7 +73,7 @@ const ProductInfo: React.FC<Props> = (props: Props) => {
                         </div>
                     </div>
                     <div className='text-lg font-semibold text-red-400 py-2 border-b border-gray-200'>
-                        {product?.unitPrice.toLocaleString()}₫
+                        {product?.unitPrice?.toLocaleString()}₫
                     </div>
                     <div className='py-2'>
                         <div className='font-semibold'>Mô tả:</div>

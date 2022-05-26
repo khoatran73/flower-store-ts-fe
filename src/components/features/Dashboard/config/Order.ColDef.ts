@@ -27,9 +27,24 @@ export const OrderColDef: ColumnDef[] = [
         filter: true,
     },
     {
+        headerName: 'Ngày mua hàng',
+        field: 'createdAt',
+        valueGetter: function (params) {
+            if (params.data) {
+                const createdAt = params.data.createdAt;
+                return moment(createdAt)
+                    .format('DD/MM/YYYY hh:mm:ss')
+                    .toString();
+            }
+        },
+        minWidth: 200,
+        cellStyle: { textAlign: 'center' },
+    },
+    {
         headerName: 'Số điện thoại',
         field: 'customer.phone',
     },
+
     {
         headerName: 'Discount',
         field: 'discount',
@@ -66,20 +81,6 @@ export const OrderColDef: ColumnDef[] = [
         headerName: 'Email',
         field: 'customer.email',
         minWidth: 150,
-    },
-    {
-        headerName: 'Ngày mua hàng',
-        field: 'createdAt',
-        valueGetter: function (params) {
-            if (params.data) {
-                const createdAt = params.data.createdAt;
-                return moment(createdAt)
-                    .format('DD/MM/YYYY hh:mm:ss')
-                    .toString();
-            }
-        },
-        minWidth: 200,
-        cellStyle: { textAlign: 'center' },
     },
     {
         headerName: 'Trạng thái',
