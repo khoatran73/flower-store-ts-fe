@@ -1,14 +1,13 @@
-import { Container, Pagination } from '@mui/material';
+import { Container, IconButton, Pagination, TextField } from '@mui/material';
 import { Tabs } from 'antd';
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import Loading from '../../../components/utils/Loading';
 import { CategoryDto, ProductDto } from '../../../types/product/ProductDto';
-import { CATEGORY_INDEX_API } from '../Dashboard/api';
+import { CATEGORY_INDEX_API, LIST_CATEGORY_API } from '../Dashboard/api';
 import ProductItem from '../Home/components/ProductItem';
-import { PRODUCT_DETAIL_API } from '../ProductDetail/api';
 import { usePagination } from './config/usePagination';
+import SearchIcon from '@mui/icons-material/Search';
 
 const { TabPane } = Tabs;
 
@@ -19,6 +18,7 @@ const Product: React.FC = () => {
 
     const [searchParams, setSearchParams] = useSearchParams();
     const categoryCode = searchParams?.get('code')?.toString() || '';
+    const searchKey = searchParams?.get('searchKey')?.toString() || '';
     const [activeTab, setActiveTab] = useState<string>(categoryCode);
 
     const [page, setPage] = useState<number>(1);
@@ -32,11 +32,14 @@ const Product: React.FC = () => {
         _DATA.jump(p);
     };
 
-    const fetchProducts = async (categoryCode: string | null) => {
-        const params = categoryCode ? { categoryCode: categoryCode } : '';
+    const fetchProducts = async (
+        categoryCode: string | undefined,
+        searchKey: string | undefined
+    ) => {
+        const params = { categoryCode: categoryCode, searchKey: searchKey };
         setLoading(true);
         await axios
-            .get(PRODUCT_DETAIL_API, { params })
+            .get(LIST_CATEGORY_API, { params })
             .then((res) => {
                 setLoading(false);
                 if (res.data.success) setProducts(res.data.result);
@@ -62,25 +65,60 @@ const Product: React.FC = () => {
 
     useEffect(() => {
         getCategories();
-        fetchProducts(categoryCode);
+        fetchProducts(categoryCode, searchKey);
         setActiveTab(categoryCode);
-    }, [categoryCode]);
+    }, [categoryCode, searchKey]);
 
     const onTabChange = (key: string) => {
         setActiveTab(key);
         searchParams.set('code', key);
         setSearchParams(searchParams);
-        fetchProducts(key);
+        fetchProducts(key, searchKey);
+    };
+
+    const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        const data = new FormData(e.currentTarget);
+        const searchKey = data.get('searchKey')?.toString();
+        searchParams.set('searchKey', searchKey || '');
+        setSearchParams(searchParams);
+
+        fetchProducts(categoryCode, searchKey);
     };
 
     // if (loading) return <Loading loading={loading} />;
     return (
         <Container>
             <div className='my-10'>
-                <div className='text-3xl font-semibold mb-5 text-center uppercase'>
-                    Danh sách sản phẩm
+                <div className=' mb-5 text-center '>
+                    <div className='text-3xl font-semibold uppercase'>
+                        Danh sách sản phẩm
+                    </div>
+                    <div className='my-5'>
+                        <form
+                            onSubmit={onSubmit}
+                            className='flex items-center justify-center'
+                        >
+                            <TextField
+                                name='searchKey'
+                                label='Tìm kiếm sản phẩm...'
+                                size='small'
+                                sx={{ width: '50%' }}
+                                color='primary'
+                            />
+                            <IconButton
+                                color='primary'
+                                sx={{ p: '10px', marginLeft: '6px' }}
+                                aria-label='directions'
+                                type='submit'
+                            >
+                                <SearchIcon />
+                            </IconButton>
+                        </form>
+                    </div>
                 </div>
-                <div className='flex mb-5'>
+
+                <div className='flex'>
                     <Tabs
                         defaultActiveKey={activeTab}
                         activeKey={activeTab}
@@ -97,6 +135,21 @@ const Product: React.FC = () => {
                             </TabPane>
                         ))}
                     </Tabs>
+                </div>
+                <div className='my-2 text-lg'>
+                    Tìm thấy{' '}
+                    <span className='text-red-500'>{products.length}</span> sản
+                    phẩm
+                    {searchKey.length > 0 && (
+                        <>
+                            {' '}
+                            chứa{' '}
+                            <span className='text-red-500'>
+                                {searchKey}
+                            </span>{' '}
+                            trong tên
+                        </>
+                    )}
                 </div>
                 <div className=' flex justify-start items-center flex-wrap'>
                     {_DATA.currentData().map((product) => (

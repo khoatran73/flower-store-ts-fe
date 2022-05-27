@@ -14,7 +14,9 @@ export const BreadCumb: React.FC<Props> = (props) => {
         <div className='mt-10'>
             <Breadcrumbs aria-label='breadcrumb'>
                 <Link to='/'>Trang chủ</Link>
-                <Link to='/product'>{product?.category?.name}</Link>
+                <Link to={'/product?code=' + product?.category?.code}>
+                    {product?.category?.name}
+                </Link>
                 <div className='text-md'>{product?.name}</div>
             </Breadcrumbs>
         </div>
